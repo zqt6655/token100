@@ -22,7 +22,7 @@ class Api extends Controller
      */
     public function formsave(){
             return [
-                'code' => -5,
+                'code' => -1,
                 'msg'  => "插入失败"
             ];
     }
