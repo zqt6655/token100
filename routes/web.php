@@ -14,4 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::any('api/v1/formsave', "Api@formsave")->name("api/formsave");
+Route::any('api/get_industry/{id}', "Api@get_industry")->name("api/get_industry");
+Route::any('api/upload', "Upload@upload_img")->name("api/upload");
+Route::any('api/get_industry_list', "Industry@get_industry_list")->name("api/get_industry_list");

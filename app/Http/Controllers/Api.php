@@ -11,19 +11,11 @@ namespace App\Http\Controllers;
 
 class Api extends Controller
 {
-    /**
-     * 上报尚未建立联系之时用户发送的信息
-     * @url ims/api/v1/formsave
-     * @method POST
-     * @param int $openid openid
-     * @param int $form_id formid
-     * @return int $code 状态码
-     * @return string $msg 描述信息
-     */
-    public function formsave(){
-            return [
-                'code' => -1,
-                'msg'  => "插入失败"
-            ];
+    public function get_industry_list(){
+        $model =  new \App\Industry();
+        $indus = $model->get_industry_list();
+        $data['data'] = $indus;
+        $data['code'] = 0;
+        return $data;
     }
 }

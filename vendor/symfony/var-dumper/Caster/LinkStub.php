@@ -89,13 +89,14 @@ class LinkStub extends ConstStub
         }
 
         $parent = $dir;
-        while (!file_exists($parent.'/composer.json')) {
-            if ($parent === dirname($parent)) {
-                return self::$composerRoots[$dir] = false;
-            }
-
-            $parent = dirname($parent);
-        }
+        //update 18-10-23 zqt
+//        while (!file_exists($parent.'/composer.json')) {
+//            if ($parent === dirname($parent)) {
+//                return self::$composerRoots[$dir] = false;
+//            }
+//
+//            $parent = dirname($parent);
+//        }
 
         return self::$composerRoots[$dir] = $parent.DIRECTORY_SEPARATOR;
     }
