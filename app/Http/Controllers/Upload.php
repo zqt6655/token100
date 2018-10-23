@@ -33,7 +33,7 @@ class Upload extends Controller
             } else {
                 $store_result = $photo->storeAs('photo', $new_name);
             }
-            $data['file_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/uploads' . $store_result;
+            $data['file_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/uploads/' . $store_result;
             return $this->returnData($data);
         }
         return $this->returnFail('未获取到上传文件或上传过程出错');
