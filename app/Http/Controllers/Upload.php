@@ -15,49 +15,28 @@ class Upload extends Controller
 {
     public function upload_img(Request $request)
     {
-//        echo 123;
-//        die;
-//        dd($_POST);
-//        dd($_FILES);
-//        $img = $request->file('files');
-//        dd($img);
-//        dd( $photo = $request->file('photo'));
-        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
-            $rule = ['jpg', 'png', 'gif','jpeg','pdf'];
-            $photo = $request->file('photo');
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $rule = ['jpg', 'png', 'gif', 'jpeg', 'pdf'];
+            $photo = $request->file('file');
             $orig_name = $photo->getClientOriginalName();
             $extension = $photo->extension(); //$store_result = $photo->store('photo');
             if (!in_array($extension, $rule)) {
-                return '格式不正确';
+                return $this->returnFail('格式不正确');
             }
-            $houzui='__abc__'.time().rand(100,999);
-            $new_name = str_replace('.'.$extension,'',$orig_name).$houzui.'.'.$extension;
-
-            $store_result = $photo->storeAs('photo', $new_name);
-//            if($extension=='pdf'){
-//                $store_result = $photo->storeAs('photo', 'test1.pdf');
-//            }
-//            $store_result = $photo->storeAs('photo', 'test1.jpg');
-            $output = [ 'extension' => $extension, 'store_result' => $store_result ];
-            print_r($output);
-            exit();
+            $houzui = '__abc__' . time() . rand(100, 999);
+            $new_name = str_replace('.' . $extension, '', $orig_name) . $houzui . '.' . $extension;
+            if ($extension == 'pdf') {
+                $store_result = $photo->storeAs('pdf', $new_name);
+            } elseif ($extension == 'jpeg') {
+                $new_name = str_replace('.jpg', '', $orig_name) . $houzui . '.jpg';
+                $store_result = $photo->storeAs('photo', $new_name);
+            } else {
+                $store_result = $photo->storeAs('photo', $new_name);
+            }
+            $data['file_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/uploads' . $store_result;
+            return $this->returnData($data);
         }
-            exit('未获取到上传文件或上传过程出错');
-//        $url_path = 'uploads/cover';
-//        $rule = ['jpg', 'png', 'gif'];
-//        if ($file->isValid()) {
-//            $clientName = $file->getClientOriginalName();
-//            $tmpName = $file->getFileName();
-//            $realPath = $file->getRealPath();
-//            $entension = $file->getClientOriginalExtension();
-//            if (!in_array($entension, $rule)) {
-//                return '图片格式为jpg,png,gif';
-//            }
-//            $newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
-//            $path = $file->move($url_path, $newName);
-//            $namePath = $url_path . '/' . $newName;
-//            return $path;
-//        }
+        return $this->returnFail('未获取到上传文件或上传过程出错');
     }
 
 }

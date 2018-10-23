@@ -14,6 +14,13 @@ class Controller extends BaseController
     public function returnData($data){
         $returnData['data'] = $data;
         $returnData['code'] = 0;
+        $returnData['msg'] = 'success';
+        return $returnData;
+    }
+    public function returnFail($msg='fail'){
+        $returnData['data'] = [];
+        $returnData['code'] = -1;
+        $returnData['msg'] = $msg;
         return $returnData;
     }
 }
