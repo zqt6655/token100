@@ -30,7 +30,7 @@ class Upload extends Controller
             if (!in_array($extension, $rule)) {
                 return '格式不正确';
             }
-            $houzui='__%__'.time().rand(100,999);
+            $houzui='__abc__'.time().rand(100,999);
             $new_name = str_replace('.'.$extension,'',$orig_name).$houzui.'.'.$extension;
 
             $store_result = $photo->storeAs('photo', $new_name);
