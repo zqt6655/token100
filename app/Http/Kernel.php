@@ -29,12 +29,14 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
+
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             //\App\Http\Middleware\VerifyCsrfToken::class, //zqt update 18-10-22 解除CSRF限制
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\CrossHttp::class,
         ],
 
         'api' => [
