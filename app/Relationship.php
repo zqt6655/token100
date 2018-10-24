@@ -22,7 +22,8 @@ class Relationship extends Model
             ->leftJoin('category as c','r.category_id','=','c.id')
             ->where('r.is_delete','=',0)
             ->select('r.*','c.name as category_id_text')
-            ->orderBy('id','desc')->paginate($this->perPage);
+            ->orderBy('id','desc')
+            ->paginate($this->perPage);
     }
     public function get_by_category_id($category_id){
         return DB::table("$this->table_name as r")
@@ -115,6 +116,19 @@ class Relationship extends Model
         DB::table($this->table_name)
             ->where('id','=',$id)
             ->update($data);
+    }
+
+    public function search($keyword){
+        return $this::where('is_delete', '=', 0)
+            ->where(function($query) use ($keyword){
+                $query->where('name', 'like', '%'.$keyword.'%')
+                    ->orWhere('phone', 'like', '%'.$keyword.'%')
+                    ->orWhere('email', 'like', '%'.$keyword.'%')
+                    ->orWhere('company', 'like', '%'.$keyword.'%')
+                    ->orWhere('position', 'like', '%'.$keyword.'%')
+                    ->orWhere('title', 'like', '%'.$keyword.'%');
+            })
+            ->get()->makeHidden(['is_delete','created_at','updated_at'])->toArray();
 
     }
 

@@ -28,7 +28,7 @@ class Upload extends Controller
             if($size>$this->size){
                 return $this->returnFail('文件不能超过5M');
             }
-            $houzui = '__abc__' . time() . rand(100, 999);
+            $houzui = '__collinstar__' . time() . rand(100, 999);
             $new_name = str_replace('.' . $extension, '', $orig_name) . $houzui . '.' . $extension;
             if ($extension == 'pdf') {
                 $store_result = $file->storeAs('pdf', $new_name);

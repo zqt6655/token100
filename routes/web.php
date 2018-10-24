@@ -24,6 +24,7 @@ Route::any('api/relationship/update', "Relationship@update")->name("api/relation
 Route::any('api/relationship/delete', "Relationship@delete")->name("api/relationship/delete");
 Route::any('api/relationship/group', "Relationship@group")->name("api/relationship/group");
 Route::any('api/relationship/detail', "Relationship@detail")->name("api/relationship/detail");
+Route::any('api/relationship/search', "Relationship@search");
 
 //category
 Route::any('api/category/get', "Category@get");

@@ -79,6 +79,14 @@ class Relationship extends Controller
         $model->delete_by_id($id);
         return $this->returnSuccess();
     }
+    public function search(Request $request){
+        $key_word = $request->get('keyword');
+        if(!$key_word){
+            return $this->returnFail('关键字不能为空');
+        }
+        $model = $this->getModel();
+        return $this->returnData($model->search($key_word));
+    }
 
     protected function getModel(){
         $model = new \App\Relationship();
