@@ -7,7 +7,7 @@
  */
 
 namespace App\Http\Controllers;
-
+header("Access-Control-Allow-Origin: *");
 class Industry extends Controller
 {
 

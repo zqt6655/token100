@@ -10,7 +10,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-
+header("Access-Control-Allow-Origin: *");
 class Upload extends Controller
 {
     public $size=1024*1024*5;
