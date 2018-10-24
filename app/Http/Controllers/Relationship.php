@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-header("Access-Control-Allow-Origin: *");
 class Relationship extends Controller
 {
     //

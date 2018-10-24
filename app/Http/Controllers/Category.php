@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-header("Access-Control-Allow-Origin: *");
+
 class Category extends Controller
 {
     //
