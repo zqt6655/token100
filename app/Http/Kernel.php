@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             //\App\Http\Middleware\VerifyCsrfToken::class, //zqt update 18-10-22 解除CSRF限制
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\CrossHttp::class,
+//            \App\Http\Middleware\CrossHttp::class,
         ],
 
         'api' => [

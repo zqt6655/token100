@@ -17,7 +17,8 @@ Route::get('/', function () {
 Route::any('api/get_industry/{id}', "Api@get_industry")->name("api/get_industry");
 Route::any('api/upload', "Upload@upload");
 Route::any('api/get_industry_list', "Industry@get_industry_list")->name("api/get_industry_list");
-
+//token检测
+Route::any('api/token/get', "Token@get");
 //relationship
 Route::any('api/relationship/add', "Relationship@add")->name("api/relationship/add");
 Route::any('api/relationship/update', "Relationship@update")->name("api/relationship/update");
