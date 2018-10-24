@@ -23,4 +23,10 @@ class Controller extends BaseController
         $returnData['msg'] = $msg;
         return $returnData;
     }
+    public function returnSuccess($msg='success'){
+        $returnData['data'] = [];
+        $returnData['code'] = 0;
+        $returnData['msg'] = $msg;
+        return $returnData;
+    }
 }
