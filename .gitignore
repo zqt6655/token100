@@ -2,6 +2,7 @@
 /public/hot
 /config/database.php
 /public/storage
+/public/uploads
 /storage/*.key
 /.idea
 /.vagrant
