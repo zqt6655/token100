@@ -27,6 +27,9 @@ Route::any('api/relationship/detail', "Relationship@detail")->name("api/relation
 
 //category
 Route::any('api/category/get', "Category@get");
-
 //industry
 Route::any('api/industry/get', "Industry@get");
+//job_title
+Route::any('api/job_title/get', "JobTitle@get");
+//job_position
+Route::any('api/job_position/get', "JobPosition@get");
