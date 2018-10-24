@@ -18,7 +18,12 @@ class Relationship extends Model
     public $table_name = 'relationship';
     public $perPage=10;
     public function get_all(){
-        return DB::table($this->table_name)->where('is_delete','=',0)->orderBy('updated_at','desc')->paginate($this->perPage);
+        return DB::table("$this->table_name as r")
+            ->leftJoin('category as c','r.category_id','=','c.id')
+            ->leftJoin('industries as i','r.industry_id','=','i.id')
+            ->where('r.is_delete','=',0)
+            ->select('r.*','c.name as category_id_text','i.name as industry_id_text')
+            ->orderBy('updated_at','desc')->paginate($this->perPage);
     }
     public function get_by_category_id($category_id){
         return DB::table($this->table_name)
