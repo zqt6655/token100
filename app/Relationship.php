@@ -20,31 +20,34 @@ class Relationship extends Model
     public function get_all(){
         return DB::table("$this->table_name as r")
             ->leftJoin('category as c','r.category_id','=','c.id')
-            ->leftJoin('industries as i','r.industry_id','=','i.id')
             ->where('r.is_delete','=',0)
-            ->select('r.*','c.name as category_id_text','i.name as industry_id_text')
-            ->orderBy('updated_at','desc')->paginate($this->perPage);
+            ->select('r.*','c.name as category_id_text')
+            ->orderBy('id','desc')->paginate($this->perPage);
     }
     public function get_by_category_id($category_id){
-        return DB::table($this->table_name)
-            ->where('is_delete','=',0)
-            ->where('category_id','=',$category_id)
-            ->orderBy('updated_at')
+        return DB::table("$this->table_name as r")
+            ->leftJoin('category as c','r.category_id','=','c.id')
+            ->where('r.is_delete','=',0)
+            ->where('r.category_id','=',$category_id)
+            ->select('r.*','c.name as category_id_text')
+            ->orderBy('id','desc')
             ->paginate($this->perPage);
     }
     public function get_detail($id){
-//        return DB::table($this->table_name)
-        $data= $this::where('id','=',$id)
-            ->first()
+        return  DB::table("$this->table_name as r")
+            ->leftJoin('category as c','r.category_id','=','c.id')
+            ->leftJoin('industries as i','r.industry_id','=','i.id')
+            ->where('r.id','=',$id)
+            ->select('r.*','c.name as category_id_text','i.name as industry_id_text')
+            ->get()
+            ->toArray();
+//        $data= $this::where('id','=',$id)
+//            ->first()
 //            return $this::where('is_delete','=',0)
 //                ->orderBy('industry_id', 'desc')
 //                ->get()
-            ->makeHidden(['is_delete','created_at','updated_at'])
-            ->toArray();
-        if(is_null($data['note'])){
-            $data['note'] = '';
-        }
-        return $data;
+//            ->makeHidden(['is_delete','created_at','updated_at'])
+//            ->toArray();
     }
 
     public function delete_by_id($id){
