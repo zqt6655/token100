@@ -9,13 +9,14 @@ class InvestmentLayout extends Model
 {
     //
 
-    public $table='article';
+    public $table='investment_layout';
     public $timestamps = false;
-    public $perPage = 10;
+    public $perPage = 5;
 
     public function add($data){
         $data = $this->check_field($data);
         //说明字段没有空值，插入数据库即可。
+        $data['add_time'] = date('Y-m-d H:i:s');
         $id = DB::table($this->table)->insertGetId($data);
         if($id>0){
             return true;
