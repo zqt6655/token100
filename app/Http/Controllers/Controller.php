@@ -6,6 +6,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
+
 header("Access-Control-Allow-Origin: *");
 class Controller extends BaseController
 {
@@ -28,5 +30,12 @@ class Controller extends BaseController
         $returnData['code'] = 0;
         $returnData['msg'] = $msg;
         return $returnData;
+    }
+    public function set_cache($key,$value,$minute=60*24*30){
+        Cache::put($key,$value,$minute);
+        return true;
+    }
+    public function get_cache($key){
+        return Cache::get($key);
     }
 }

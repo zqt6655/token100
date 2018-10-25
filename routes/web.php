@@ -35,3 +35,10 @@ Route::any('api/industry/get', "Industry@get");
 Route::any('api/job_title/get', "JobTitle@get");
 //job_position
 Route::any('api/job_position/get', "JobPosition@get");
+
+//article
+Route::any('api/article/add', "Article@add");
+Route::any('api/article/pub_cancel', "Article@pub_cancel");
+Route::any('api/article/delete', "Article@delete");
+Route::any('api/article/get', "Article@get");
+Route::any('api/article/detail', "Article@detail");

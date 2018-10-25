@@ -16,6 +16,7 @@ class Relationship extends Model
 {
     public $table='relationship';
     public $table_name = 'relationship';
+    public $timestamps = false;
     public $perPage=10;
     public function get_all(){
         return DB::table("$this->table_name as r")

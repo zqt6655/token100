@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\ApiException;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -48,6 +49,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //自定义Api异常处理
+        if ($exception instanceof ApiException) {
+            $result = [
+                "data" => [],
+                "code" => $exception->getCode(),
+                "msg" => $exception->getMessage()
+            ];
+            return response()->json($result);
+        }
         return parent::render($request, $exception);
     }
 }
