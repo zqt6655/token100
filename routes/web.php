@@ -38,7 +38,15 @@ Route::any('api/job_position/get', "JobPosition@get");
 
 //article
 Route::any('api/article/add', "Article@add");
+Route::any('api/article/update', "Article@update");
 Route::any('api/article/pub_cancel', "Article@pub_cancel");
 Route::any('api/article/delete', "Article@delete");
 Route::any('api/article/get', "Article@get");
 Route::any('api/article/detail', "Article@detail");
+
+//investmentLayout
+Route::any('api/investment_layout/add', "InvestmentLayout@add");
+Route::any('api/investment_layout/update', "InvestmentLayout@update");
+Route::any('api/investment_layout/delete', "InvestmentLayout@delete");
+Route::any('api/investment_layout/get', "InvestmentLayout@get");
+Route::any('api/investment_layout/detail', "InvestmentLayout@detail");
