@@ -31,6 +31,9 @@ class Controller extends BaseController
         $returnData['msg'] = $msg;
         return $returnData;
     }
+    public function returnApiError($message,$code=-1){
+        throw new ApiException($message,$code);
+    }
     public function set_cache($key,$value,$minute=60*24*30){
         Cache::put($key,$value,$minute);
         return true;

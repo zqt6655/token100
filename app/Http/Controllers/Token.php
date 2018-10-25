@@ -12,6 +12,7 @@ class Token extends Controller
     {
 //        $token = $request->header('token');
 //        if(! $this->check($token) ){
+//            $this->returnApiError('Token值不存在，请重新登录',-99);
 //            throw new ApiException('Token值不存在，请重新登录',-99);
 //        }
     }
