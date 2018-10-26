@@ -14,9 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::any('api/get_industry/{id}', "Api@get_industry")->name("api/get_industry");
+//文件上传
 Route::any('api/upload', "Upload@upload");
-Route::any('api/get_industry_list', "Industry@get_industry_list")->name("api/get_industry_list");
 //token检测
 Route::any('api/token/get', "Token@get");
 //relationship
@@ -42,6 +41,7 @@ Route::any('api/article/update', "Article@update");
 Route::any('api/article/pub_cancel', "Article@pub_cancel");
 Route::any('api/article/delete', "Article@delete");
 Route::any('api/article/get', "Article@get");
+Route::any('api/article/get_publish', "Article@get_publish");
 Route::any('api/article/detail', "Article@detail");
 
 //investmentLayout
@@ -49,4 +49,5 @@ Route::any('api/investment_layout/add', "InvestmentLayout@add");
 Route::any('api/investment_layout/update', "InvestmentLayout@update");
 Route::any('api/investment_layout/delete', "InvestmentLayout@delete");
 Route::any('api/investment_layout/get', "InvestmentLayout@get");
-Route::any('api/investment_layout/detail', "InvestmentLayout@detail");
+Route::any('api/investment_layout/get_by_industry', "InvestmentLayout@get_by_industry");
+Route::any('api/investment_layout/get_by_alp', "InvestmentLayout@get_by_alp");

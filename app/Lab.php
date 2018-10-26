@@ -5,10 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Article extends Model
+class Lab extends Model
 {
-
-    public $table='article';
+    //
+    public $table='lab';
     public $timestamps = false;
     public $perPage = 10;
 
@@ -25,17 +25,8 @@ class Article extends Model
     public function get(){
         return $this::where('is_delete','=',0)
             ->orderBy('publish_time','desc')
-            ->select('id','title', 'author', 'summary', 'publish_time','img','status')
             ->paginate($this->perPage);
     }
-    public function get_publish(){
-        return $this::where('is_delete','=',0)
-            ->where('status','=',1)
-            ->orderBy('publish_time','desc')
-            ->select('id','title', 'author', 'summary', 'publish_time','img')
-            ->paginate($this->perPage);
-    }
-
     public function detail($id){
         return $this::where('id','=',$id)
             ->get()
@@ -55,17 +46,15 @@ class Article extends Model
             ->update($data);
     }
     protected function check_field($data){
-        $field = ['title', 'author', 'summary',
-            'publish_time', 'content','user_id','img'
+        $field = ['id', 'parent_id', 'lab_name',
+           'user_id'
         ];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);
             }
         }
-        //获取当前时间的时分秒
-        $hour_minute = date('H:i:s');
-        $data['publish_time'] = $data['publish_time'].' '.$hour_minute;
+
         return $data;
     }
 }

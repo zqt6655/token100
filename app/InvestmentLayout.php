@@ -2,10 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class InvestmentLayout extends Model
+class InvestmentLayout extends BaseModel
 {
     //
 
@@ -18,10 +17,8 @@ class InvestmentLayout extends Model
         //说明字段没有空值，插入数据库即可。
         $data['add_time'] = date('Y-m-d H:i:s');
         $id = DB::table($this->table)->insertGetId($data);
-        if($id>0){
-            return true;
-        }else{
-            return false;
+        if($id<0){
+            $this->returnApiError('系统繁忙，请重试');
         }
     }
     public function get(){
@@ -29,15 +26,53 @@ class InvestmentLayout extends Model
             ->orderBy('id','desc')
             ->paginate($this->perPage);
     }
+    public function get_by_industry(){
+        $data= DB::table("$this->table as in")
+            ->leftJoin('industries as i','in.industry_id','=','i.id')
+            ->where('in.is_delete','=',0)
+            ->select('in.*','i.name as industry_id_text')
+            ->orderBy('in.id','desc')
+            ->get() ->toArray();
+//            ->toSql();
+        if($data){
+            $new_data = [];
+           foreach ($data as $one){
+               $new_data[$one->industry_id_text][] = $one;
+           }
+           return $new_data;
+        }
+        return $data;
+    }
+    public function get_by_alp(){
+
+        $data =  $this::where('is_delete','=',0)
+            ->orderBy('id','desc')
+            ->select('id','title','img','link','summary')
+            ->get()
+            ->toArray();
+        if($data){
+            $new_data = [];
+            foreach ($data as $one){
+                $first_alp = $this->getFirstCharter($one['title']);
+                $new_data[$first_alp][] = $one;
+            }
+            ksort($new_data);
+            return $new_data;
+        }
+        return $data;
+    }
     public function delete_by_id($id){
         $this::where('id','=',$id)->update(['is_delete'=>1]);
     }
     public function update_by_id($data,$id){
         $data = $this->check_field($data);
         //说明字段没有空值，插入数据库即可。
-        return DB::table($this->table)
+        $result =  DB::table($this->table)
             ->where('id','=',$id)
             ->update($data);
+        if(!$result){
+            $this->returnApiError('系统繁忙，请重试');
+        }
     }
     protected function check_field($data){
         $field = ['title', 'img', 'link',

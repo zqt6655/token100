@@ -12,7 +12,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Relationship extends Model
+class Relationship extends BaseModel
 {
     public $table='relationship';
     public $table_name = 'relationship';
@@ -58,11 +58,7 @@ class Relationship extends Model
             ->update(['is_delete'=>1]);
     }
     public function add($data){
-        $result = $this->check_field($data);
-        if($result ==='必填字段中存在空值'){
-            return $result;
-        }
-        $data = $result;
+        $data = $this->check_field($data);
         $time = time();
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
@@ -102,16 +98,12 @@ class Relationship extends Model
 
         }
         if($empty==1){
-            return '必填字段中存在空值';
+            $this->returnApiError('必填字段中存在空值');
         }
         return $data;
     }
     public function update_by_id($data,$id){
-        $result = $this->check_field($data);
-        if($result ==='必填字段中存在空值'){
-            return $result;
-        }
-        $data = $result;
+        $data = $this->check_field($data);
         $data['updated_at'] = time();
         //说明字段没有空值，插入数据库即可。
         DB::table($this->table_name)

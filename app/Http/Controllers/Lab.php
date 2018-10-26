@@ -6,47 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
-class Article extends Token
+class Lab extends Token
 {
     //
     protected function rule(){
         return [
             'id' => 'integer',
-            'title' => 'required|string',
-            'author' => 'required|string',
-            'img' => 'required|string',
-            'summary' => 'required|string',
-            'publish_time' => 'required|string',
-            'content' => 'required|string',
+            'parent_id' => 'integer',
+            'user_id' => 'integer',
+            'lab_name' => 'required|string|max:64',
         ];
     }
     public function get(){
         $model = $this->getModel();
         return $this->returnData($model->get());
     }
-    public function get_publish(){
-        $model = $this->getModel();
-        return $this->returnData($model->get_publish());
-    }
-    public function detail(){
-        $id = Input::get('id');
-        if(!is_numeric($id)){
-           return $this->returnFail('id必须为整数');
-        }
-        $model = $this->getModel();
-        return $this->returnData($model->detail($id));
-    }
-    public function pub_cancel(){
-        $id = Input::get('id');
-        $status = Input::get('status');
-        if(is_numeric($id) && is_numeric($status)){
-           $model = $this->getModel();
-           $model->publish_or_cancel($id,$status);
-           return $this->returnSuccess();
-        }
-        return $this->returnFail('id或者status必须为整数');
 
-    }
     public function delete(){
         $id = Input::get('id');
         if(!is_numeric($id)){
@@ -86,7 +61,7 @@ class Article extends Token
     }
 
     protected function getModel(){
-        $model = new \App\Article();
+        $model = new \App\Lab();
         return $model;
     }
     public function validate_input($data){

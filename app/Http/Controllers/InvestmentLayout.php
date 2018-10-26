@@ -13,6 +13,14 @@ class InvestmentLayout extends Token
         $model = $this->getModel();
         return $this->returnData($model->get());
     }
+    public function get_by_industry(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_by_industry());
+    }
+    public function get_by_alp(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_by_alp());
+    }
     public function delete(){
         $id = Input::get('id');
         if(!is_numeric($id)){
@@ -24,31 +32,17 @@ class InvestmentLayout extends Token
     }
     public function add(Request $request){
         $data = $request->all();
-        $result = $this->validate_input($data);
-        if($result !='ok'){
-            return $this->returnFail($result);
-        }
+        $this->validate_input($data);
         $model = $this->getModel();
-        $result = $model->add($data);
-        if($result){
-            return $this->returnSuccess();
-        }else{
-            return $this->returnFail('系统繁忙，请重试一次');
-        }
+        $model->add($data);
+        return $this->returnSuccess();
     }
     public function update(Request $request){
         $data = $request->all();
-        $result = $this->validate_input($data);
-        if($result !='ok'){
-            return $this->returnFail($result);
-        }
+        $this->validate_input($data);
         $model = $this->getModel();
-        $result = $model->update_by_id($data,$data['id']);
-        if($result){
-            return $this->returnSuccess();
-        }else{
-            return $this->returnFail('系统繁忙，请重试一次');
-        }
+        $model->update_by_id($data,$data['id']);
+        return $this->returnSuccess();
     }
 
     protected function getModel(){
@@ -60,9 +54,8 @@ class InvestmentLayout extends Token
         if($validate->fails())
         {
             $message = $validate->errors()->first();
-            return $message;
+            $this->returnApiError($message);
         }
-        return 'ok';
     }
     protected function rule(){
         return [
