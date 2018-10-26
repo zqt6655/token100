@@ -35,8 +35,7 @@ class Controller extends BaseController
         throw new ApiException($message,$code);
     }
     public function set_cache($key,$value,$minute=60*24*30){
-        Cache::put($key,$value,$minute);
-        return true;
+        return Cache::put($key,$value,$minute);
     }
     public function get_cache($key){
         return Cache::get($key);

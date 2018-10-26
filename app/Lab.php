@@ -2,10 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Lab extends Model
+class Lab extends BaseModel
 {
     //
     public $table='lab';
@@ -16,25 +15,36 @@ class Lab extends Model
         $data = $this->check_field($data);
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
-        if($id>0){
-            return true;
-        }else{
-            return false;
+        if($id<0){
+            $this->returnApiError('系统繁忙，请重试一次。');
         }
+        $new_data['id'] = $id;
+        return $new_data;
     }
     public function get(){
-        return $this::where('is_delete','=',0)
-            ->orderBy('publish_time','desc')
-            ->paginate($this->perPage);
+        $data = $this::where('is_delete','=',0)
+            ->orderBy('id')
+            ->select('id','parent_id','lab_name')
+            ->get()->toArray();
+        $new_data = [];
+        $parent_info = [];
+        foreach ($data as $key=>$one){
+            if($one['parent_id']==0){
+                $parent_info[$one['id']] = $one['lab_name'];
+            }
+        }
+        foreach ($parent_info as $k=>$val){
+            $new_data[$val]['id'] = $k;
+            $new_data[$val]['sub']=[] ;
+            foreach ($data as $key=>$one){
+                if($one['parent_id']==$k){
+                    $new_data[$val]['sub'][]= $one;
+                }
+            }
+        }
+        return $new_data;
     }
-    public function detail($id){
-        return $this::where('id','=',$id)
-            ->get()
-            ->toArray();
-    }
-    public function publish_or_cancel($id,$status){
-        $this::where('id','=',$id)->update(['status'=>$status]);
-    }
+
     public function delete_by_id($id){
         $this::where('id','=',$id)->update(['is_delete'=>1]);
     }
@@ -46,15 +56,12 @@ class Lab extends Model
             ->update($data);
     }
     protected function check_field($data){
-        $field = ['id', 'parent_id', 'lab_name',
-           'user_id'
-        ];
+        $field = [ 'parent_id', 'lab_name'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);
             }
         }
-
         return $data;
     }
 }

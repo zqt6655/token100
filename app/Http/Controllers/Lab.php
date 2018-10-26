@@ -13,7 +13,6 @@ class Lab extends Token
         return [
             'id' => 'integer',
             'parent_id' => 'integer',
-            'user_id' => 'integer',
             'lab_name' => 'required|string|max:64',
         ];
     }
@@ -33,31 +32,16 @@ class Lab extends Token
     }
     public function add(Request $request){
         $data = $request->all();
-        $result = $this->validate_input($data);
-        if($result !='ok'){
-            return $this->returnFail($result);
-        }
+        $this->validate_input($data);
         $model = $this->getModel();
-        $result = $model->add($data);
-        if($result){
-            return $this->returnSuccess();
-        }else{
-            return $this->returnFail('系统繁忙，请重试一次');
-        }
+        return $this->returnData( $model->add($data) );
     }
     public function update(Request $request){
         $data = $request->all();
-        $result = $this->validate_input($data);
-        if($result !='ok'){
-            return $this->returnFail($result);
-        }
+        $this->validate_input($data);
         $model = $this->getModel();
-        $result = $model->update_by_id($data,$data['id']);
-        if($result){
-            return $this->returnSuccess();
-        }else{
-            return $this->returnFail('系统繁忙，请重试一次');
-        }
+        $model->update_by_id($data,$data['id']);
+        return $this->returnSuccess();
     }
 
     protected function getModel(){
@@ -69,8 +53,7 @@ class Lab extends Token
         if($validate->fails())
         {
             $message = $validate->errors()->first();
-            return $message;
+            $this->returnApiError($message);
         }
-        return 'ok';
     }
 }

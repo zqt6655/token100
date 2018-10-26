@@ -51,3 +51,11 @@ Route::any('api/investment_layout/delete', "InvestmentLayout@delete");
 Route::any('api/investment_layout/get', "InvestmentLayout@get");
 Route::any('api/investment_layout/get_by_industry', "InvestmentLayout@get_by_industry");
 Route::any('api/investment_layout/get_by_alp', "InvestmentLayout@get_by_alp");
+
+//lab
+Route::post('api/lab/add', "Lab@add");
+Route::post('api/lab/update', "Lab@update");
+Route::any('api/lab/delete', "Lab@delete");
+Route::any('api/lab/get', "Lab@get");
+Route::any('api/lab/get_by_industry', "Lab@get_by_industry");
+Route::any('api/lab/get_by_alp', "Lab@get_by_alp");
