@@ -72,9 +72,9 @@ class Article extends Token
     }
     public function update(Request $request){
         $data = $request->all();
-        $result = $this->validate_input($data);
-        if($result !='ok'){
-            return $this->returnFail($result);
+        $this->validate_input($data);
+        if(!isset($data['id'])){
+            return $this->returnFail('id不能为空');
         }
         $model = $this->getModel();
         $result = $model->update_by_id($data,$data['id']);
@@ -94,8 +94,7 @@ class Article extends Token
         if($validate->fails())
         {
             $message = $validate->errors()->first();
-            return $message;
+            $this->returnApiError($message);
         }
-        return 'ok';
     }
 }

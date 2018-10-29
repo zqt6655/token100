@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
-class Lab extends Token
+class Project extends Token
 {
     //
     protected function rule(){
         return [
             'id' => 'integer',
-            'parent_id' => 'integer',
-            'lab_name' => 'required|string|max:64',
+            'industry_id' => 'required|integer',
+            'name' => 'required|string|max:32',
+            'token_symbol' => 'required|string|max:32',
         ];
     }
     public function get(){
@@ -48,7 +49,7 @@ class Lab extends Token
     }
 
     protected function getModel(){
-        $model = new \App\Lab();
+        $model = new \App\Project();
         return $model;
     }
     public function validate_input($data){

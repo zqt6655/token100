@@ -59,3 +59,19 @@ Route::any('api/lab/delete', "Lab@delete");
 Route::any('api/lab/get', "Lab@get");
 Route::any('api/lab/get_by_industry', "Lab@get_by_industry");
 Route::any('api/lab/get_by_alp', "Lab@get_by_alp");
+
+//project
+Route::post('api/project/add', "Project@add");
+Route::post('api/project/update', "Project@update");
+Route::any('api/project/delete', "Project@delete");
+Route::any('api/project/get', "Project@get");
+Route::any('api/project/get_by_industry', "Project@get_by_industry");
+Route::any('api/project/get_by_alp', "Project@get_by_alp");
+
+//project_detail
+Route::post('api/project_detail/update', "ProjectDetail@update");
+Route::any('api/project_detail/get', "ProjectDetail@get");
+
+//project_lab
+Route::post('api/project_lab/update', "ProjectLab@update");
+Route::any('api/project_lab/get', "ProjectLab@get");

@@ -40,6 +40,9 @@ class InvestmentLayout extends Token
     public function update(Request $request){
         $data = $request->all();
         $this->validate_input($data);
+        if(!isset($data['id'])){
+            return $this->returnFail('id不能为空');
+        }
         $model = $this->getModel();
         $model->update_by_id($data,$data['id']);
         return $this->returnSuccess();

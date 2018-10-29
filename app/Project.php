@@ -4,48 +4,38 @@ namespace App;
 
 use Illuminate\Support\Facades\DB;
 
-class Lab extends BaseModel
+class Project extends BaseModel
 {
     //
-    public $table='lab';
+    public $table='project';
     public $timestamps = false;
     public $perPage = 10;
 
     public function add($data){
         $data = $this->check_field($data);
+        $upload_time = date('Y-m-d H:i:s');
+        $data['upload_time'] = $upload_time;
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){
             $this->returnApiError('系统繁忙，请重试一次。');
         }
-        $new_data['id'] = $id;
+        //插入项目详情，预先获取到详情id
+        $detail_data['project_id'] = $id;
+        $detail_data['upload_time'] = $upload_time;
+        $detail_id =  ProjectDetail::add($detail_data);
+        //返回项目id和详情id
+        $new_data['project_id'] = $id;
+        $new_data['detail_id'] = $detail_id;
         return $new_data;
     }
     public function get(){
-        $data = $this::where('is_delete','=',0)
-            ->orderBy('id')
-            ->select('id','parent_id','lab_name')
-            ->get()->toArray();
-        if(!$data){
-            return [];
-        }
-        $new_data = [];
-        $parent_info = [];
-        foreach ($data as $key=>$one){
-            if($one['parent_id']==0){
-                $parent_info[$one['id']] = $one['lab_name'];
-            }
-        }
-        foreach ($parent_info as $k=>$val){
-            $new_data[$val]['id'] = $k;
-            $new_data[$val]['sub']=[] ;
-            foreach ($data as $key=>$one){
-                if($one['parent_id']==$k){
-                    $new_data[$val]['sub'][]= $one;
-                }
-            }
-        }
-        return $new_data;
+       return  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->select('p.*','i.name as industry_id_text')
+            ->get()
+            ->toArray();
     }
 
     public function delete_by_id($id){
@@ -59,7 +49,8 @@ class Lab extends BaseModel
             ->update($data);
     }
     protected function check_field($data){
-        $field = [ 'parent_id', 'lab_name'];
+        $field = [ 'name', 'company_name', 'token_symbol', 'foundle', 'website', 'logo', 'country', 'grade', 'analysis',
+            'opinion', 'industry_id', 'requirements', 'refer_name', 'refer_introduce', 'domain_from'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);

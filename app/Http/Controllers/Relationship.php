@@ -57,7 +57,7 @@ class Relationship extends Controller
         }
     }
     public function update(Request $request){
-        $id = $request->get('id');
+        $id = $request->post('id');
         if(!is_numeric($id)){
             return $this->returnFail('id必须为整数');
         }
