@@ -14,6 +14,10 @@ class Login extends Controller
         $cacheValue['login_time'] = date('Y-m-d H:i:s');
         $data['token'] = $this->saveToCache($cacheValue);
     }
+    //注册
+    public function register(){
+
+    }
     protected  function  saveToCache($cacheValue){
         $token = $this->generateToken();
         $value = json_encode($cacheValue);

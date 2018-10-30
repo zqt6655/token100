@@ -13,9 +13,9 @@ class InvestmentLayout extends Token
         $model = $this->getModel();
         return $this->returnData($model->get());
     }
-    public function get_by_industry(){
+    public function get_by_category(){
         $model = $this->getModel();
-        return $this->returnData($model->get_by_industry());
+        return $this->returnData($model->get_by_category());
     }
     public function get_by_alp(){
         $model = $this->getModel();
@@ -67,7 +67,7 @@ class InvestmentLayout extends Token
             'link' => 'required|string',
             'img' => 'required|string',
             'summary' => 'required|string',
-            'industry_id' => 'required|integer',
+            'category_id' => 'required|integer',
         ];
     }
 }

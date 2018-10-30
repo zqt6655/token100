@@ -49,7 +49,7 @@ Route::any('api/investment_layout/add', "InvestmentLayout@add");
 Route::any('api/investment_layout/update', "InvestmentLayout@update");
 Route::any('api/investment_layout/delete', "InvestmentLayout@delete");
 Route::any('api/investment_layout/get', "InvestmentLayout@get");
-Route::any('api/investment_layout/get_by_industry', "InvestmentLayout@get_by_industry");
+Route::any('api/investment_layout/get_by_category', "InvestmentLayout@get_by_category");
 Route::any('api/investment_layout/get_by_alp', "InvestmentLayout@get_by_alp");
 
 //lab
@@ -65,8 +65,6 @@ Route::post('api/project/add', "Project@add");
 Route::post('api/project/update', "Project@update");
 Route::any('api/project/delete', "Project@delete");
 Route::any('api/project/get', "Project@get");
-Route::any('api/project/get_by_industry', "Project@get_by_industry");
-Route::any('api/project/get_by_alp', "Project@get_by_alp");
 
 //project_detail
 Route::post('api/project_detail/update', "ProjectDetail@update");
@@ -74,4 +72,3 @@ Route::any('api/project_detail/get', "ProjectDetail@get");
 
 //project_lab
 Route::post('api/project_lab/update', "ProjectLab@update");
-Route::any('api/project_lab/get', "ProjectLab@get");

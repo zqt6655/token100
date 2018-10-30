@@ -26,11 +26,11 @@ class InvestmentLayout extends BaseModel
             ->orderBy('id','desc')
             ->paginate($this->perPage);
     }
-    public function get_by_industry(){
+    public function get_by_category(){
         $data= DB::table("$this->table as in")
-            ->leftJoin('industries as i','in.industry_id','=','i.id')
+            ->leftJoin('category as c','in.category_id','=','c.id')
             ->where('in.is_delete','=',0)
-            ->select('in.*','i.name as industry_id_text')
+            ->select('in.*','i.name as category_id_text')
             ->orderBy('in.id','desc')
             ->get() ->toArray();
 //            ->toSql();
@@ -76,7 +76,7 @@ class InvestmentLayout extends BaseModel
     }
     protected function check_field($data){
         $field = ['title', 'img', 'link',
-            'summary', 'industry_id','user_id',
+            'summary', 'category_id','user_id',
         ];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {

@@ -28,8 +28,8 @@ class ProjectLab extends BaseModel
             ->pluck('lab_id')
             ->toArray();
         if(!$lab_ids){
-            $data['lab_ids'] = '';
-            $data['lab_name'] = '';
+            $data['lab_ids'] = [];
+            $data['lab_name'] = [];
             return $data;
         }
         //查询所有的标签
@@ -43,8 +43,8 @@ class ProjectLab extends BaseModel
                 }
             }
         }
-        $lab_ids = implode(',',$lab_ids);
-        $lab_name = implode(',',$lab_name);
+//        $lab_ids = implode(',',$lab_ids);
+//        $lab_name = implode(',',$lab_name);
         $data['lab_ids'] = $lab_ids;
         $data['lab_name'] = $lab_name;
         return $data;

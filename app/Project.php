@@ -26,7 +26,7 @@ class Project extends BaseModel
         $detail_id =  ProjectDetail::add($detail_data);
         //返回项目id和详情id
         $new_data['project_id'] = $id;
-        $new_data['detail_id'] = $detail_id;
+        $new_data['project_detail_id'] = $detail_id;
         return $new_data;
     }
     public function get(){
