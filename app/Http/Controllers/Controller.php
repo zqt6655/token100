@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
 
 header("Access-Control-Allow-Origin: *");
 class Controller extends BaseController
@@ -39,5 +40,13 @@ class Controller extends BaseController
     }
     public function get_cache($key){
         return Cache::get($key);
+    }
+    public function validate_all_input($data,$rule){
+        $validate = Validator::make($data, $rule);
+        if($validate->fails())
+        {
+            $message = $validate->errors()->first();
+            $this->returnApiError($message);
+        }
     }
 }

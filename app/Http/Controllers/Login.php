@@ -15,7 +15,8 @@ class Login extends Controller
         $data['token'] = $this->saveToCache($cacheValue);
     }
     //注册
-    public function register(){
+    public function register(Request $request){
+        $data = $request->all();
 
     }
     protected  function  saveToCache($cacheValue){
@@ -46,6 +47,13 @@ class Login extends Controller
             $str .= $strPol[rand(0, $max)];
         }
         return $str;
+    }
+    protected function rule(){
+        return [
+            'id' => 'integer',
+            'phone' => 'required|string|size:11',
+            'code' => 'required|string',
+        ];
     }
 
 

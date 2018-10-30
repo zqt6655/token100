@@ -22,8 +22,11 @@ class InvestmentLayout extends BaseModel
         }
     }
     public function get(){
-        return $this::where('is_delete','=',0)
-            ->orderBy('id','desc')
+        return DB::table("$this->table as in")
+            ->leftJoin('category as c','in.category_id','=','c.id')
+            ->where('in.is_delete','=',0)
+            ->select('in.*','i.name as category_id_text')
+            ->orderBy('in.id','desc')
             ->paginate($this->perPage);
     }
     public function get_by_category(){
