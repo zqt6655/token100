@@ -14,12 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//login 控制器
 //发送验证码
 Route::get('api/send_sms', "Login@send_sms");
 //注册
 Route::post('api/admin/register', "Login@register");
+
+//绑定邮箱
+Route::post('api/admin/bind_email', "Login@bind_email");
 //登录
 Route::post('api/admin/login', "Login@login");
+
+
 //文件上传
 Route::any('api/upload', "Upload@upload");
 //token检测

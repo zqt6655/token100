@@ -70,6 +70,9 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         ),
         'M' => 
         array (
+            'Mrgoon\\Dysmsapi\\Request\\V20170525\\' => 34,
+            'Mrgoon\\AliyunSmsSdk\\' => 20,
+            'Mrgoon\\AliSms\\' => 14,
             'Monolog\\' => 8,
         ),
         'L' => 
@@ -229,6 +232,18 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
+        'Mrgoon\\Dysmsapi\\Request\\V20170525\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/Dysmsapi/Request/V20170525',
+        ),
+        'Mrgoon\\AliyunSmsSdk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core',
+        ),
+        'Mrgoon\\AliSms\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mrgoon/aliyun-sms/src',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -373,7 +388,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Category' => __DIR__ . '/../..' . '/app/Http/Controllers/Category.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\Industry' => __DIR__ . '/../..' . '/app/Http/Controllers/Industry.php',
         'App\\Http\\Controllers\\InvestmentLayout' => __DIR__ . '/../..' . '/app/Http/Controllers/InvestmentLayout.php',
         'App\\Http\\Controllers\\JobPosition' => __DIR__ . '/../..' . '/app/Http/Controllers/JobPosition.php',
         'App\\Http\\Controllers\\JobTitle' => __DIR__ . '/../..' . '/app/Http/Controllers/JobTitle.php',
@@ -2045,6 +2059,33 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'Monolog\\Processor\\UidProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/UidProcessor.php',
         'Monolog\\Processor\\WebProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
+        'Mrgoon\\AliSms\\AliSms' => __DIR__ . '/..' . '/mrgoon/aliyun-sms/src/AliSms.php',
+        'Mrgoon\\AliSms\\ServiceProvider' => __DIR__ . '/..' . '/mrgoon/aliyun-sms/src/ServiceProvider.php',
+        'Mrgoon\\AliyunSmsSdk\\AcsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/AcsRequest.php',
+        'Mrgoon\\AliyunSmsSdk\\AcsResponse' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/AcsResponse.php',
+        'Mrgoon\\AliyunSmsSdk\\Auth\\Credential' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Auth/Credential.php',
+        'Mrgoon\\AliyunSmsSdk\\Auth\\ISigner' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Auth/ISigner.php',
+        'Mrgoon\\AliyunSmsSdk\\Auth\\ShaHmac1Signer' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Auth/ShaHmac1Signer.php',
+        'Mrgoon\\AliyunSmsSdk\\Auth\\ShaHmac256Signer' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Auth/ShaHmac256Signer.php',
+        'Mrgoon\\AliyunSmsSdk\\AutoLoader\\Autoloader' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Autoloader/Autoloader.php',
+        'Mrgoon\\AliyunSmsSdk\\Autoload' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Autoload.php',
+        'Mrgoon\\AliyunSmsSdk\\DefaultAcsClient' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/DefaultAcsClient.php',
+        'Mrgoon\\AliyunSmsSdk\\Exception\\ClientException' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Exception/ClientException.php',
+        'Mrgoon\\AliyunSmsSdk\\Exception\\ServerException' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Exception/ServerException.php',
+        'Mrgoon\\AliyunSmsSdk\\Http\\HttpHelper' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Http/HttpHelper.php',
+        'Mrgoon\\AliyunSmsSdk\\Http\\HttpResponse' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Http/HttpResponse.php',
+        'Mrgoon\\AliyunSmsSdk\\IAcsClient' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/IAcsClient.php',
+        'Mrgoon\\AliyunSmsSdk\\Profile\\DefaultProfile' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Profile/DefaultProfile.php',
+        'Mrgoon\\AliyunSmsSdk\\Profile\\IClientProfile' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Profile/IClientProfile.php',
+        'Mrgoon\\AliyunSmsSdk\\Regions\\DescribeEndpointRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Regions/LocationService.php',
+        'Mrgoon\\AliyunSmsSdk\\Regions\\Endpoint' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Regions/Endpoint.php',
+        'Mrgoon\\AliyunSmsSdk\\Regions\\EndpointProvider' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Regions/EndpointProvider.php',
+        'Mrgoon\\AliyunSmsSdk\\Regions\\LocationService' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Regions/LocationService.php',
+        'Mrgoon\\AliyunSmsSdk\\Regions\\ProductDomain' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/Regions/ProductDomain.php',
+        'Mrgoon\\AliyunSmsSdk\\RoaAcsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/RoaAcsRequest.php',
+        'Mrgoon\\AliyunSmsSdk\\RpcAcsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/RpcAcsRequest.php',
+        'Mrgoon\\Dysmsapi\\Request\\V20170525\\QuerySendDetailsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/Dysmsapi/Request/V20170525/QuerySendDetailsRequest.php',
+        'Mrgoon\\Dysmsapi\\Request\\V20170525\\SendSmsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/Dysmsapi/Request/V20170525/SendSmsRequest.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/AssertionFailedError.php',

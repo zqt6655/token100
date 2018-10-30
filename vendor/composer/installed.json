@@ -1238,6 +1238,106 @@
         ]
     },
     {
+        "name": "mrgoon/aliyun-sms",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/MissMyCat/aliyun-sms.git",
+            "reference": "64e6e4cb4ae9678dfdc5c46cf759c5e21e9f6a35"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/MissMyCat/aliyun-sms/zipball/64e6e4cb4ae9678dfdc5c46cf759c5e21e9f6a35",
+            "reference": "64e6e4cb4ae9678dfdc5c46cf759c5e21e9f6a35",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "mrgoon/aliyun-sms-sdk": ">=1.1.2",
+            "php": ">5.3"
+        },
+        "time": "2017-10-19T08:02:14+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Mrgoon\\AliSms\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "mrgoon",
+                "email": "mrgoon@foxmail.com"
+            }
+        ],
+        "description": "阿里云短信服务php调用代码",
+        "keywords": [
+            "Aliyun-Sms",
+            "aliyun",
+            "sdk"
+        ]
+    },
+    {
+        "name": "mrgoon/aliyun-sms-sdk",
+        "version": "v1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/MissMyCat/aliyun-sms-sdk.git",
+            "reference": "5c8863dce9643fb46180520586bb8d1362e52d7f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/MissMyCat/aliyun-sms-sdk/zipball/5c8863dce9643fb46180520586bb8d1362e52d7f",
+            "reference": "5c8863dce9643fb46180520586bb8d1362e52d7f",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">5.3"
+        },
+        "time": "2017-10-19T08:33:11+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Mrgoon\\AliyunSmsSdk\\": "aliyun-php-sdk-core/",
+                "Mrgoon\\Dysmsapi\\Request\\V20170525\\": "Dysmsapi/Request/V20170525"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "mrgoon",
+                "email": "mrgoon@foxmail.com"
+            }
+        ],
+        "description": "阿里云短信服务核心代码",
+        "keywords": [
+            "Aliyun-Sms",
+            "aliyun",
+            "sdk"
+        ]
+    },
+    {
         "name": "mtdowling/cron-expression",
         "version": "v1.2.1",
         "version_normalized": "1.2.1.0",

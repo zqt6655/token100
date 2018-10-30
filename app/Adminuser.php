@@ -32,6 +32,11 @@ class Adminuser extends BaseModel
             $this->returnApiError('手机号已注册，请直接登录');
         }
     }
+    public function bind_emali($user_id,$email){
+        $this->checkEmailIsAvailable($email);
+        return $this::where('id','=',$user_id)
+            ->update(['email'=>$email]);
+    }
     public function checkEmailIsAvailable($email){
         $exist = $this::where('email','=',$email)
             ->select('id')
@@ -48,11 +53,13 @@ class Adminuser extends BaseModel
     }
     protected function login_by_email($email,$password){
         $data = $this::where('email','=',$email)
-            ->where('password','=',Hash::make($password))
-            ->select('id','name','permission')
+            ->select('id','name','permission','password')
             ->first();
         if(!$data){
-            $this->returnApiError('邮箱或者密码错误');
+            $this->returnApiError('邮箱未注册');
+        }
+        if( sha1(md5($password)) !=$data->password){
+            $this->returnApiError('密码错误');
         }
         return ($data->toArray());
 

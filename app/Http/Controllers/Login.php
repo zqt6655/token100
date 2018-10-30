@@ -33,6 +33,15 @@ class Login extends Controller
         return $this->returnSuccess('发送成功');
     }
 
+    //绑定邮箱
+    public function bind_email(Request $request){
+            $data = $request->all();
+            $this->validate_all_input($data,$this->bind_email_rule());
+            $model = $this->getModel();
+            $model->bind_emali($data['user_id'],$data['email']);
+            return $this->returnSuccess();
+    }
+
     //注册
     public function register(Request $request){
         $data = $request->all();
@@ -99,6 +108,12 @@ class Login extends Controller
         return [
             'user' => 'required',
             'password' => 'required|string|min:6',
+        ];
+    }
+    protected function bind_email_rule(){
+        return [
+            'user_id' => 'required|integer',
+            'email' => 'required|email',
         ];
     }
     protected function getModel(){
