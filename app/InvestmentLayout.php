@@ -40,7 +40,7 @@ class InvestmentLayout extends BaseModel
         if($data){
             $new_data = [];
            foreach ($data as $one){
-               $new_data[$one->industry_id_text][] = $one;
+               $new_data[$one->category_id_text][] = $one;
            }
            return $new_data;
         }

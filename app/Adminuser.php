@@ -39,18 +39,36 @@ class Adminuser extends BaseModel
             $this->returnApiError('该邮箱已经被绑定');
         }
     }
-    public function get(){
-        return $this::where('is_delete','=',0)
-            ->orderBy('publish_time','desc')
-            ->select('id','title', 'author', 'summary', 'publish_time','img','status')
-            ->paginate($this->perPage);
+    public function login($data){
+        if(strstr($data['user'],'@')){
+            return $this->login_by_email($data['user'],$data['password']);
+        }
+        return $this->login_by_phone($data['user'],$data['password']);
+    }
+    protected function login_by_email($email,$password){
+        $data = $this::where('email','=',$email)
+            ->where('password','=',Hash::make($password))
+            ->select('id','name','permission')
+            ->first();
+        if(!$data){
+            $this->returnApiError('邮箱或者密码错误');
+        }
+        return ($data->toArray());
+
+    }
+    protected function login_by_phone($phone,$password){
+        $password = Hash::make($password);
+        dd($password);
+        $data = $this::where('phone','=',$phone)
+            ->where('password','=',Hash::make($password))
+            ->select('id','name','permission')
+            ->first();
+        if(!$data){
+            $this->returnApiError('手机号或者密码错误');
+        }
+        return ($data->toArray());
     }
 
-    public function detail($id){
-        return $this::where('id','=',$id)
-            ->get()
-            ->toArray();
-    }
 
     public function update_by_id($data,$id){
         $data = $this->check_field($data);

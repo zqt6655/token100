@@ -12,7 +12,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
@@ -35,18 +34,13 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         ),
         'T' => 
         array (
-            'Toplan\\TaskBalance\\' => 19,
-            'Toplan\\PhpSms\\Facades\\' => 22,
-            'Toplan\\PhpSms\\' => 14,
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
             'Tests\\' => 6,
         ),
         'S' => 
         array (
             'Symfony\\Thanks\\' => 15,
-            'Symfony\\Polyfill\\Util\\' => 22,
             'Symfony\\Polyfill\\Php70\\' => 23,
-            'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
@@ -60,7 +54,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
-            'SuperClosure\\' => 13,
         ),
         'R' => 
         array (
@@ -83,6 +76,7 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         array (
             'League\\Flysystem\\' => 17,
             'Laravel\\Tinker\\' => 15,
+            'LaraMall\\AlidySms\\' => 18,
         ),
         'J' => 
         array (
@@ -116,6 +110,7 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'A' => 
         array (
             'App\\' => 4,
+            'Aliyun\\' => 7,
         ),
     );
 
@@ -138,20 +133,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Toplan\\TaskBalance\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/toplan/task-balancer/src/TaskBalancer',
-        ),
-        'Toplan\\PhpSms\\Facades\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/facades',
-        ),
-        'Toplan\\PhpSms\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms',
-            1 => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents',
-            2 => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/interfaces',
-        ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
@@ -164,17 +145,9 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         array (
             0 => __DIR__ . '/..' . '/symfony/thanks/src',
         ),
-        'Symfony\\Polyfill\\Util\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-util',
-        ),
         'Symfony\\Polyfill\\Php70\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php70',
-        ),
-        'Symfony\\Polyfill\\Php56\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php56',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
@@ -228,10 +201,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
-        'SuperClosure\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src',
-        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -271,6 +240,10 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'Laravel\\Tinker\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
+        ),
+        'LaraMall\\AlidySms\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laramall/aliyun-dysms/src',
         ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
@@ -320,6 +293,10 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Aliyun\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib',
+        ),
     );
 
     public static $fallbackDirsPsr4 = array (
@@ -327,13 +304,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
     );
 
     public static $prefixesPsr0 = array (
-        'T' => 
-        array (
-            'Toplan\\Sms' => 
-            array (
-                0 => __DIR__ . '/..' . '/toplan/laravel-sms/src',
-            ),
-        ),
         'P' => 
         array (
             'Prophecy\\' => 
@@ -362,6 +332,31 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
     );
 
     public static $classMap = array (
+        'Aliyun\\Api\\Sms\\Request\\V20170525\\QueryInterSmsIsoInfoRequest' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Api/Sms/Request/V20170525/QueryInterSmsIsoInfoRequest.php',
+        'Aliyun\\Api\\Sms\\Request\\V20170525\\QuerySendDetailsRequest' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Api/Sms/Request/V20170525/QuerySendDetailsRequest.php',
+        'Aliyun\\Api\\Sms\\Request\\V20170525\\SendInterSmsRequest' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Api/Sms/Request/V20170525/SendInterSmsRequest.php',
+        'Aliyun\\Api\\Sms\\Request\\V20170525\\SendSmsRequest' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Api/Sms/Request/V20170525/SendSmsRequest.php',
+        'Aliyun\\Core\\AcsRequest' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/AcsRequest.php',
+        'Aliyun\\Core\\AcsResponse' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/AcsResponse.php',
+        'Aliyun\\Core\\Auth\\Credential' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Auth/Credential.php',
+        'Aliyun\\Core\\Auth\\ISigner' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Auth/ISigner.php',
+        'Aliyun\\Core\\Auth\\ShaHmac1Signer' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Auth/ShaHmac1Signer.php',
+        'Aliyun\\Core\\Auth\\ShaHmac256Signer' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Auth/ShaHmac256Signer.php',
+        'Aliyun\\Core\\Config' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Config.php',
+        'Aliyun\\Core\\DefaultAcsClient' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/DefaultAcsClient.php',
+        'Aliyun\\Core\\Exception\\ClientException' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Exception/ClientException.php',
+        'Aliyun\\Core\\Exception\\ServerException' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Exception/ServerException.php',
+        'Aliyun\\Core\\Http\\HttpHelper' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Http/HttpHelper.php',
+        'Aliyun\\Core\\Http\\HttpResponse' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Http/HttpResponse.php',
+        'Aliyun\\Core\\IAcsClient' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/IAcsClient.php',
+        'Aliyun\\Core\\Profile\\DefaultProfile' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Profile/DefaultProfile.php',
+        'Aliyun\\Core\\Profile\\IClientProfile' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Profile/IClientProfile.php',
+        'Aliyun\\Core\\Regions\\Endpoint' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Regions/Endpoint.php',
+        'Aliyun\\Core\\Regions\\EndpointConfig' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Regions/EndpointConfig.php',
+        'Aliyun\\Core\\Regions\\EndpointProvider' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Regions/EndpointProvider.php',
+        'Aliyun\\Core\\Regions\\ProductDomain' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/Regions/ProductDomain.php',
+        'Aliyun\\Core\\RoaAcsRequest' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/RoaAcsRequest.php',
+        'Aliyun\\Core\\RpcAcsRequest' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/lib/Core/RpcAcsRequest.php',
         'App\\Adminuser' => __DIR__ . '/../..' . '/app/Adminuser.php',
         'App\\Article' => __DIR__ . '/../..' . '/app/Article.php',
         'App\\BaseModel' => __DIR__ . '/../..' . '/app/BaseModel.php',
@@ -1824,6 +1819,10 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/Highlighter.php',
         'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
+        'LaraMall\\AlidySms\\Alidayu' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/Alidayu.php',
+        'LaraMall\\AlidySms\\AlidySmsServiceProvider' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/AlidySmsServiceProvider.php',
+        'LaraMall\\AlidySms\\Facades\\Sms' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/Facades/Sms.php',
+        'LaraMall\\AlidySms\\Sms' => __DIR__ . '/..' . '/laramall/aliyun-dysms/src/Sms.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
@@ -3215,7 +3214,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'Psy\\VersionUpdater\\GitHubChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/GitHubChecker.php',
         'Psy\\VersionUpdater\\IntervalChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/IntervalChecker.php',
         'Psy\\VersionUpdater\\NoopChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/NoopChecker.php',
-        'REST' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/lib/CCPRestSmsSDK.php',
         'Ramsey\\Uuid\\BinaryUtils' => __DIR__ . '/..' . '/ramsey/uuid/src/BinaryUtils.php',
         'Ramsey\\Uuid\\Builder\\DefaultUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DefaultUuidBuilder.php',
         'Ramsey\\Uuid\\Builder\\DegradedUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DegradedUuidBuilder.php',
@@ -3355,20 +3353,6 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
-        'SuperClosure\\Analyzer\\AstAnalyzer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/AstAnalyzer.php',
-        'SuperClosure\\Analyzer\\ClosureAnalyzer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/ClosureAnalyzer.php',
-        'SuperClosure\\Analyzer\\Token' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Token.php',
-        'SuperClosure\\Analyzer\\TokenAnalyzer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/TokenAnalyzer.php',
-        'SuperClosure\\Analyzer\\Visitor\\ClosureLocatorVisitor' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Visitor/ClosureLocatorVisitor.php',
-        'SuperClosure\\Analyzer\\Visitor\\MagicConstantVisitor' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Visitor/MagicConstantVisitor.php',
-        'SuperClosure\\Analyzer\\Visitor\\ThisDetectorVisitor' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Visitor/ThisDetectorVisitor.php',
-        'SuperClosure\\Exception\\ClosureAnalysisException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/ClosureAnalysisException.php',
-        'SuperClosure\\Exception\\ClosureSerializationException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/ClosureSerializationException.php',
-        'SuperClosure\\Exception\\ClosureUnserializationException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/ClosureUnserializationException.php',
-        'SuperClosure\\Exception\\SuperClosureException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/SuperClosureException.php',
-        'SuperClosure\\SerializableClosure' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/SerializableClosure.php',
-        'SuperClosure\\Serializer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Serializer.php',
-        'SuperClosure\\SerializerInterface' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/SerializerInterface.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface' => __DIR__ . '/..' . '/symfony/console/CommandLoader/CommandLoaderInterface.php',
         'Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader' => __DIR__ . '/..' . '/symfony/console/CommandLoader/ContainerCommandLoader.php',
@@ -3926,14 +3910,7 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'Symfony\\Component\\VarDumper\\VarDumper' => __DIR__ . '/..' . '/symfony/var-dumper/VarDumper.php',
         'Symfony\\Polyfill\\Ctype\\Ctype' => __DIR__ . '/..' . '/symfony/polyfill-ctype/Ctype.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
-        'Symfony\\Polyfill\\Php56\\Php56' => __DIR__ . '/..' . '/symfony/polyfill-php56/Php56.php',
         'Symfony\\Polyfill\\Php70\\Php70' => __DIR__ . '/..' . '/symfony/polyfill-php70/Php70.php',
-        'Symfony\\Polyfill\\Util\\Binary' => __DIR__ . '/..' . '/symfony/polyfill-util/Binary.php',
-        'Symfony\\Polyfill\\Util\\BinaryNoFuncOverload' => __DIR__ . '/..' . '/symfony/polyfill-util/BinaryNoFuncOverload.php',
-        'Symfony\\Polyfill\\Util\\BinaryOnFuncOverload' => __DIR__ . '/..' . '/symfony/polyfill-util/BinaryOnFuncOverload.php',
-        'Symfony\\Polyfill\\Util\\LegacyTestListener' => __DIR__ . '/..' . '/symfony/polyfill-util/LegacyTestListener.php',
-        'Symfony\\Polyfill\\Util\\TestListener' => __DIR__ . '/..' . '/symfony/polyfill-util/TestListener.php',
-        'Symfony\\Polyfill\\Util\\TestListenerTrait' => __DIR__ . '/..' . '/symfony/polyfill-util/TestListenerTrait.php',
         'Symfony\\Thanks\\Command\\ThanksCommand' => __DIR__ . '/..' . '/symfony/thanks/src/Command/ThanksCommand.php',
         'Symfony\\Thanks\\GitHubClient' => __DIR__ . '/..' . '/symfony/thanks/src/GitHubClient.php',
         'Symfony\\Thanks\\Thanks' => __DIR__ . '/..' . '/symfony/thanks/src/Thanks.php',
@@ -3956,47 +3933,7 @@ class ComposerStaticInitfea1cadfcd774e1ef96ff7bf2e96819a
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
-        'Toplan\\PhpSms\\Agent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/Agent.php',
-        'Toplan\\PhpSms\\AlidayuAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/AlidayuAgent.php',
-        'Toplan\\PhpSms\\AliyunAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/AliyunAgent.php',
-        'Toplan\\PhpSms\\ContentSms' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/interfaces/ContentSms.php',
-        'Toplan\\PhpSms\\ContentVoice' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/interfaces/ContentVoice.php',
-        'Toplan\\PhpSms\\Facades\\Sms' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/facades/Sms.php',
-        'Toplan\\PhpSms\\FileVoice' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/interfaces/FileVoice.php',
-        'Toplan\\PhpSms\\JuHeAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/JuHeAgent.php',
-        'Toplan\\PhpSms\\LogAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/LogAgent.php',
-        'Toplan\\PhpSms\\LuosimaoAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/LuosimaoAgent.php',
-        'Toplan\\PhpSms\\ParasiticAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/ParasiticAgent.php',
-        'Toplan\\PhpSms\\PhpSmsException' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/PhpSmsException.php',
-        'Toplan\\PhpSms\\PhpSmsServiceProvider' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/PhpSmsServiceProvider.php',
-        'Toplan\\PhpSms\\QcloudAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/QcloudAgent.php',
-        'Toplan\\PhpSms\\SendCloudAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/SendCloudAgent.php',
-        'Toplan\\PhpSms\\Sms' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/Sms.php',
-        'Toplan\\PhpSms\\SmsBaoAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/SmsBaoAgent.php',
-        'Toplan\\PhpSms\\SubMailAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/SubMailAgent.php',
-        'Toplan\\PhpSms\\TemplateSms' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/interfaces/TemplateSms.php',
-        'Toplan\\PhpSms\\TemplateVoice' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/interfaces/TemplateVoice.php',
-        'Toplan\\PhpSms\\UcpaasAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/UcpaasAgent.php',
-        'Toplan\\PhpSms\\Util' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/Util.php',
-        'Toplan\\PhpSms\\VoiceCode' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/interfaces/VoiceCode.php',
-        'Toplan\\PhpSms\\YunPianAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/YunPianAgent.php',
-        'Toplan\\PhpSms\\YunTongXunAgent' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/agents/YunTongXunAgent.php',
-        'Toplan\\Sms\\CacheStorage' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/Storage/CacheStorage.php',
-        'Toplan\\Sms\\Facades\\SmsManager' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/Facades/SmsManager.php',
-        'Toplan\\Sms\\LaravelSmsException' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/Exception/LaravelSmsException.php',
-        'Toplan\\Sms\\SendReminderSms' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/SendReminderSms.php',
-        'Toplan\\Sms\\SessionStorage' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/Storage/SessionStorage.php',
-        'Toplan\\Sms\\SmsController' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/SmsController.php',
-        'Toplan\\Sms\\SmsManager' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/SmsManager.php',
-        'Toplan\\Sms\\SmsManagerServiceProvider' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/SmsManagerServiceProvider.php',
-        'Toplan\\Sms\\Storage' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/Storage/Storage.php',
-        'Toplan\\Sms\\Util' => __DIR__ . '/..' . '/toplan/laravel-sms/src/Toplan/LaravelSms/Util.php',
-        'Toplan\\TaskBalance\\Balancer' => __DIR__ . '/..' . '/toplan/task-balancer/src/TaskBalancer/Balancer.php',
-        'Toplan\\TaskBalance\\Driver' => __DIR__ . '/..' . '/toplan/task-balancer/src/TaskBalancer/Driver.php',
-        'Toplan\\TaskBalance\\Task' => __DIR__ . '/..' . '/toplan/task-balancer/src/TaskBalancer/Task.php',
-        'Toplan\\TaskBalance\\TaskBalancerException' => __DIR__ . '/..' . '/toplan/task-balancer/src/TaskBalancer/TaskBalancerException.php',
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
-        'Ucpaas' => __DIR__ . '/..' . '/toplan/phpsms/src/phpsms/lib/Ucpaas.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'Whoops\\Exception\\ErrorException' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
         'Whoops\\Exception\\Formatter' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Formatter.php',

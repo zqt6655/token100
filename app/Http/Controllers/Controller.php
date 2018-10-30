@@ -52,6 +52,14 @@ class Controller extends BaseController
     public function sendSMS($phone){
 //        $code = rand(1000,9999);
         $code = 1314;
+//        $result = \Toplan\PhpSms\Facades\Sms::make()->to($phone)->data('code', $code)->send();
+//        $result = Sms::make()->to($phone)->data('code',$code)->send();
+//        dd($result);
+//        $alisms = app('alisms.api');
+//        $flag = $alisms->send('register',$phone,['code'=>$code]);
+//        dd($flag);
+//        if($flag === true){
+//        }
         $this->set_cache($phone,$code,5);
     }
 }

@@ -5,16 +5,22 @@ namespace App\Http\Controllers;
 use App\Adminuser;
 use App\Cache;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 
 class Login extends Controller
 {
     //
-    public function login(){
-        $cacheValue['user_id'] = 0;
+    public function login(Request $request){
+        $data = $request->all();
+        $this->validate_all_input($data,$this->login_rule());
+        $model = $this->getModel();
+        $login_data = $model->login($data);
+        $cacheValue['user_id'] = $login_data['id'];
         $cacheValue['login_time'] = date('Y-m-d H:i:s');
         $data['token'] = $this->saveToCache($cacheValue);
+        $data['user_id'] = $login_data['id'];
+        $data['permission'] = $login_data['permission'];
+        $data['name'] = $login_data['name'];
     }
     public function send_sms()
     {
@@ -32,8 +38,8 @@ class Login extends Controller
         $this->validate_all_input($data,$this->reg_rule());
         //验证手机验证码是否正确
         $model = $this->getModel();
-        $model->checkPhoneIsAvailable($data['phone']);
         $this->checkPhoneCode($data['phone'],$data['code']);
+        $model->checkPhoneIsAvailable($data['phone']);
         $user_id = $model->add($data);
         //注册默认权限是3
         $cacheValue['user_id'] = $user_id;
