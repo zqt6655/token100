@@ -25,7 +25,7 @@ class InvestmentLayout extends BaseModel
         return DB::table("$this->table as in")
             ->leftJoin('category as c','in.category_id','=','c.id')
             ->where('in.is_delete','=',0)
-            ->select('in.*','i.name as category_id_text')
+            ->select('in.*','c.name as category_id_text')
             ->orderBy('in.id','desc')
             ->paginate($this->perPage);
     }
@@ -33,7 +33,7 @@ class InvestmentLayout extends BaseModel
         $data= DB::table("$this->table as in")
             ->leftJoin('category as c','in.category_id','=','c.id')
             ->where('in.is_delete','=',0)
-            ->select('in.*','i.name as category_id_text')
+            ->select('in.*','c.name as category_id_text')
             ->orderBy('in.id','desc')
             ->get() ->toArray();
 //            ->toSql();
