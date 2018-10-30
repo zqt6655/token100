@@ -15,7 +15,8 @@ class Adminuser extends BaseModel
     public function add($data){
         $data = $this->check_field($data);
         //过滤不属于数据库中的字段，然后将密码加密
-        $data['password'] = Hash::make($data['password']);
+//        $data['password'] = Hash::make($data['password']);
+        $data['password'] = sha1(md5($data['password']));
         $data = $this->add_date_to_data($data);
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){
@@ -57,14 +58,15 @@ class Adminuser extends BaseModel
 
     }
     protected function login_by_phone($phone,$password){
-        $password = Hash::make($password);
-        dd($password);
+
         $data = $this::where('phone','=',$phone)
-            ->where('password','=',Hash::make($password))
-            ->select('id','name','permission')
+            ->select('id','name','permission','password')
             ->first();
         if(!$data){
-            $this->returnApiError('手机号或者密码错误');
+            $this->returnApiError('手机号未注册');
+        }
+        if( sha1(md5($password)) !=$data->password){
+            $this->returnApiError('密码错误');
         }
         return ($data->toArray());
     }

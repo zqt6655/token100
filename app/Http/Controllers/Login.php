@@ -17,10 +17,11 @@ class Login extends Controller
         $login_data = $model->login($data);
         $cacheValue['user_id'] = $login_data['id'];
         $cacheValue['login_time'] = date('Y-m-d H:i:s');
-        $data['token'] = $this->saveToCache($cacheValue);
-        $data['user_id'] = $login_data['id'];
-        $data['permission'] = $login_data['permission'];
-        $data['name'] = $login_data['name'];
+        $return_data['token'] = $this->saveToCache($cacheValue);
+        $return_data['user_id'] = $login_data['id'];
+        $return_data['permission'] = $login_data['permission'];
+        $return_data['name'] = $login_data['name'];
+        return $this->returnData($return_data);
     }
     public function send_sms()
     {
