@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Adminuser;
 use App\Cache;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class Login extends Controller
 {
@@ -14,10 +16,41 @@ class Login extends Controller
         $cacheValue['login_time'] = date('Y-m-d H:i:s');
         $data['token'] = $this->saveToCache($cacheValue);
     }
+    public function send_sms()
+    {
+        $phone = Input::get('phone');
+        if(strlen($phone) !=11){
+            return $this->returnFail('手机号必须为11位');
+        }
+        $this->sendSMS($phone);
+        return $this->returnSuccess('发送成功');
+    }
+
     //注册
     public function register(Request $request){
         $data = $request->all();
-
+        $this->validate_all_input($data,$this->reg_rule());
+        //验证手机验证码是否正确
+        $model = $this->getModel();
+        $model->checkPhoneIsAvailable($data['phone']);
+        $this->checkPhoneCode($data['phone'],$data['code']);
+        $user_id = $model->add($data);
+        //注册默认权限是3
+        $cacheValue['user_id'] = $user_id;
+        $cacheValue['login_time'] = date('Y-m-d H:i:s');
+        $cacheValue['permission'] = 3;
+        $return_data['token'] = $this->saveToCache($cacheValue);
+        $return_data['user_id'] = $user_id;
+        return $this->returnData($return_data);
+    }
+    protected function checkPhoneCode($phone,$code){
+        $cache_code = $this->get_cache($phone);
+        if($cache_code !=$code){
+            $this->returnApiError('手机验证码错误');
+            return;
+        }
+        //通过验证，则销毁验证码
+        $this->set_cache($phone,'');
     }
     protected  function  saveToCache($cacheValue){
         $token = $this->generateToken();
@@ -48,12 +81,21 @@ class Login extends Controller
         }
         return $str;
     }
-    protected function rule(){
+    protected function reg_rule(){
         return [
-            'id' => 'integer',
             'phone' => 'required|string|size:11',
-            'code' => 'required|string',
+            'code' => 'required|string|min:4',
+            'password' => 'required|string|min:6',
         ];
+    }
+    protected function login_rule(){
+        return [
+            'user' => 'required',
+            'password' => 'required|string|min:6',
+        ];
+    }
+    protected function getModel(){
+        return new Adminuser();
     }
 
 

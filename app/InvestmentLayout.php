@@ -73,13 +73,11 @@ class InvestmentLayout extends BaseModel
         $result =  DB::table($this->table)
             ->where('id','=',$id)
             ->update($data);
-        if(!$result){
-            $this->returnApiError('系统繁忙，请重试');
-        }
+
     }
     protected function check_field($data){
         $field = ['title', 'img', 'link',
-            'summary', 'category_id','user_id',
+            'summary', 'category_id','user_id','token_symbol'
         ];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {

@@ -17,6 +17,11 @@ class BaseModel extends Model
     public function returnApiError($message,$code=-1){
         throw new ApiException($message,$code);
     }
+
+    public function add_date_to_data($data,$key='add_time'){
+        $data[$key] = date('Y-m-d H:i:s');
+        return $data;
+    }
     /**
      * 获取汉字首字母
      * @param $str

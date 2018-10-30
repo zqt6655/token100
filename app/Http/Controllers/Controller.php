@@ -49,4 +49,9 @@ class Controller extends BaseController
             $this->returnApiError($message);
         }
     }
+    public function sendSMS($phone){
+//        $code = rand(1000,9999);
+        $code = 1314;
+        $this->set_cache($phone,$code,5);
+    }
 }

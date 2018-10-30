@@ -14,6 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//发送验证码
+Route::get('api/send_sms', "Login@send_sms");
+//注册
+Route::post('api/admin/register', "Login@register");
+//登录
+Route::post('api/admin/login', "Login@login");
 //文件上传
 Route::any('api/upload', "Upload@upload");
 //token检测
