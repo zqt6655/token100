@@ -20,7 +20,6 @@ class Article extends BaseModel
         }
     }
     public function get(){
-        dd($this->user_id);
         return $this::where('is_delete','=',0)
             ->orderBy('publish_time','desc')
             ->select('id','title', 'author', 'summary', 'publish_time','img','status')
