@@ -30,7 +30,16 @@ Route::get('api/capt/get', "Capt@get");
 //检验验证码
 Route::post('api/capt/validate', "Capt@validate_capt");
 
+//前端不需要token验证的接口*************开始******************
+//投资布局
+Route::get('front/investment_layout/get', "FrontCommon@inv_layout_get");
+Route::get('front/investment_layout/get_by_category', "FrontCommon@inv_layout_get_by_category");
+Route::get('front/investment_layout/get_by_alp', "FrontCommon@inv_layout_get_by_alp");
 
+//文章
+Route::get('front/article/get_publish', "FrontCommon@article_get_publish");
+Route::get('front/article/detail', "FrontCommon@article_detail");
+//前端不需要token验证的接口*************结束******************
 //文件上传
 Route::any('api/upload', "Upload@upload");
 //token检测
@@ -86,6 +95,5 @@ Route::any('api/project/get', "Project@get");
 //project_detail
 Route::post('api/project_detail/update', "ProjectDetail@update");
 Route::any('api/project_detail/get', "ProjectDetail@get");
-
 //project_lab
 Route::post('api/project_lab/update', "ProjectLab@update");

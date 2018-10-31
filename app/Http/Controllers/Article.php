@@ -58,10 +58,7 @@ class Article extends Token
     }
     public function add(Request $request){
         $data = $request->all();
-        $result = $this->validate_input($data);
-        if($result !='ok'){
-            return $this->returnFail($result);
-        }
+        $this->validate_input($data);
         $model = $this->getModel();
         $result = $model->add($data);
         if($result){
