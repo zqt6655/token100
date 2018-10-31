@@ -50,6 +50,8 @@ class InvestmentLayout extends Token
 
     protected function getModel(){
         $model = new \App\InvestmentLayout();
+        $model->user_id = $this->user_id;
+        $model->permission = $this->permission;
         return $model;
     }
     protected function validate_input($data){

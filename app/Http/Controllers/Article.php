@@ -12,7 +12,7 @@ class Article extends Token
     protected function rule(){
         return [
             'id' => 'integer',
-            'title' => 'required|string',
+            'title' => 'required|string|max:65',
             'author' => 'required|string',
             'img' => 'required|string',
             'summary' => 'required|string',
@@ -60,12 +60,9 @@ class Article extends Token
         $data = $request->all();
         $this->validate_input($data);
         $model = $this->getModel();
-        $result = $model->add($data);
-        if($result){
-            return $this->returnSuccess();
-        }else{
-            return $this->returnFail('系统繁忙，请重试一次');
-        }
+        $model->add($data);
+        return $this->returnSuccess();
+
     }
     public function update(Request $request){
         $data = $request->all();
@@ -84,6 +81,8 @@ class Article extends Token
 
     protected function getModel(){
         $model = new \App\Article();
+        $model->user_id = $this->user_id;
+        $model->permission = $this->permission;
         return $model;
     }
     public function validate_input($data){

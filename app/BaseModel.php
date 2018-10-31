@@ -14,10 +14,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    public  $user_id=0;
+    public  $permission=0;
     public function returnApiError($message,$code=-1){
         throw new ApiException($message,$code);
     }
-
     public function add_date_to_data($data,$key='add_time'){
         $data[$key] = date('Y-m-d H:i:s');
         return $data;

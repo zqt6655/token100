@@ -2,10 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Article extends Model
+class Article extends BaseModel
 {
 
     public $table='article';
@@ -16,13 +15,12 @@ class Article extends Model
         $data = $this->check_field($data);
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
-        if($id>0){
-            return true;
-        }else{
-            return false;
+        if($id<0){
+           $this->returnApiError('系统繁忙,请重试一次');
         }
     }
     public function get(){
+        dd($this->user_id);
         return $this::where('is_delete','=',0)
             ->orderBy('publish_time','desc')
             ->select('id','title', 'author', 'summary', 'publish_time','img','status')

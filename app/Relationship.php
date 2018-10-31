@@ -64,10 +64,8 @@ class Relationship extends BaseModel
         $data['updated_at'] = $time;
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table_name)->insertGetId($data);
-        if($id>0){
-            return true;
-        }else{
-            return false;
+        if($id<0){
+            $this->returnApiError('系统繁忙，请重试一次');
         }
 
     }
@@ -77,29 +75,29 @@ class Relationship extends BaseModel
             'position', 'title','industry_id',
             'category_id','note'
         ];
-        $empty = 0;
+//        $empty = 0;
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);
             }
         }
-        foreach ($field as $value){
-            if($value =='wechat' || $value =='avatar_url' || $value =='note'){
-                continue;
-            }
-            if(!isset($data[$value])){
-                $empty=1;
-                break;
-            }
-            if(isset($data[$value]) && !$data[$value]){
-                $empty=1;
-                break;
-            }
-
-        }
-        if($empty==1){
-            $this->returnApiError('必填字段中存在空值');
-        }
+//        foreach ($field as $value){
+//            if($value =='wechat' || $value =='avatar_url' || $value =='note'){
+//                continue;
+//            }
+//            if(!isset($data[$value])){
+//                $empty=1;
+//                break;
+//            }
+//            if(isset($data[$value]) && !$data[$value]){
+//                $empty=1;
+//                break;
+//            }
+//
+//        }
+//        if($empty==1){
+//            $this->returnApiError('必填字段中存在空值');
+//        }
         return $data;
     }
     public function update_by_id($data,$id){

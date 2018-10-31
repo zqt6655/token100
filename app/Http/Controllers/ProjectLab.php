@@ -37,6 +37,8 @@ class ProjectLab extends Token
 
     protected function getModel(){
         $model = new \App\ProjectLab();
+        $model->user_id = $this->user_id;
+        $model->permission = $this->permission;
         return $model;
     }
     public function validate_input($data){

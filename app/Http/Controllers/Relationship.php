@@ -5,8 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class Relationship extends Controller
+class Relationship extends Token
 {
+    protected function rule(){
+        return [
+            'name' => 'required|string',
+            'phone' => 'required|string|size:11',
+            'wechat' => 'string',
+            'email' => 'required|email',
+            'company' => 'required|string',
+            'position' => 'required|string',
+            'title' => 'required|string',
+            'industry_id' => 'required|integer',
+            'category_id' => 'required|integer',
+            'note' => 'string',
+        ];
+    }
     //
     public function group(Request $request){
         $category_id = $request->get('category_id');
@@ -36,25 +50,11 @@ class Relationship extends Controller
         return $this->returnData($data);
     }
     public function add(Request $request){
-//        $validate = Validator::make($request->all(), [
-//            'id' => 'required|integer|between:1,10',
-//            'title' => 'required|string'
-//        ]);
-//        if($validate->fails())
-//        {
-//            $message = $validate->errors()->first();
-//            return $this->returnFail($message);
-//        }
         $data = $request->all();
+        $this->validate_all_input($data,$this->rule());
         $model = $this->getModel();
-        $result = $model->add($data);
-        if($result==='必填字段中存在空值'){
-            return $this->returnFail($result);
-        }elseif ($result){
-            return $this->returnSuccess();
-        }else{
-            return $this->returnFail('系统繁忙，请重试一次');
-        }
+        $model->add($data);
+        return $this->returnSuccess();
     }
     public function update(Request $request){
         $id = $request->post('id');
@@ -63,10 +63,7 @@ class Relationship extends Controller
         }
         $data = $request->all();
         $model = $this->getModel();
-        $result = $model->update_by_id($data,$id);
-        if($result==='必填字段中存在空值'){
-            return $this->returnFail($result);
-        }
+        $model->update_by_id($data,$id);
         return $this->returnSuccess();
 
     }
@@ -90,6 +87,8 @@ class Relationship extends Controller
 
     protected function getModel(){
         $model = new \App\Relationship();
+        $model->user_id = $this->user_id;
+        $model->permission = $this->permission;
         return $model;
     }
 }

@@ -17,6 +17,7 @@ class Login extends Controller
         $login_data = $model->login($data);
         $cacheValue['user_id'] = $login_data['id'];
         $cacheValue['login_time'] = date('Y-m-d H:i:s');
+        $cacheValue['permission'] = $login_data['permission'];
         $return_data['token'] = $this->saveToCache($cacheValue);
         $return_data['user_id'] = $login_data['id'];
         $return_data['permission'] = $login_data['permission'];

@@ -1,26 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 class Token extends Controller
 {
     public $user_id=0;
+    public $permission=0;
     //用于检测用户是否携带token
     public function __construct(Request $request)
     {
 //        $token = $request->header('token');
-//        if(! $this->check($token) ){
-//            $this->returnApiError('Token值不存在，请重新登录',-99);
-//        }
+//        $this->check($token);
     }
-    public function check($token){
+    protected function check($token){
         $value = $this->get_cache($token);
         if(!$value){
-            return false;
+            $this->returnApiError('Token值不存在，请重新登录',-99);
         }
         $this->user_id = $this->get_value_from_token($value,'user_id');
+        $this->permission = $this->get_value_from_token($value,'permission');
     }
     protected function get_value_from_token($value,$key){
         if (!is_array($value)) {
