@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use Mrgoon\AliSms\AliSms;
 
 header("Access-Control-Allow-Origin: *");
 class Controller extends BaseController
@@ -50,16 +51,30 @@ class Controller extends BaseController
         }
     }
     public function sendSMS($phone){
-//        $code = rand(1000,9999);
-        $code = 1314;
-//        $result = \Toplan\PhpSms\Facades\Sms::make()->to($phone)->data('code', $code)->send();
-//        $result = Sms::make()->to($phone)->data('code',$code)->send();
-//        dd($result);
-//        $alisms = app('alisms.api');
-//        $flag = $alisms->send('register',$phone,['code'=>$code]);
-//        dd($flag);
-//        if($flag === true){
-//        }
-        $this->set_cache($phone,$code,5);
+        $code = rand(1000,9999);
+//        $code = 1314;
+        $alisms = new AliSms();
+        $response = $alisms->sendSms($phone, config('aliyunsms.template_code'), ['code'=>$code ]);
+        if($response->Code=='OK'){
+            $this->set_cache($phone,$code,5);
+            return;
+        }
+        $this->returnApiError('系统繁忙，请一分钟后重试');
+    }
+    protected  function generateToken(){
+        //产生32个随机字符串
+        $randChars = $this->generateRadomString(32);
+        //系统时间戳
+        $timestamp = $_SERVER['REQUEST_TIME_FLOAT'];
+        return md5($randChars . $timestamp);
+    }
+    protected function generateRadomString($length){
+        $str = '';
+        $strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+        $max = strlen($strPol) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $strPol[rand(0, $max)];
+        }
+        return $str;
     }
 }

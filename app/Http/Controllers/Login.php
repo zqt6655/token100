@@ -26,8 +26,12 @@ class Login extends Controller
     public function send_sms()
     {
         $phone = Input::get('phone');
+        $sms_token = Input::get('sms_token');
         if(strlen($phone) !=11){
             return $this->returnFail('手机号必须为11位');
+        }
+        if(!$this->get_cache($sms_token)){
+            return $this->returnFail('请先输入图形验证码');
         }
         $this->sendSMS($phone);
         return $this->returnSuccess('发送成功');
@@ -81,22 +85,7 @@ class Login extends Controller
         return $token;
 
     }
-    protected  function generateToken(){
-        //产生32个随机字符串
-        $randChars = $this->generateRadomString(32);
-        //系统时间戳
-        $timestamp = $_SERVER['REQUEST_TIME_FLOAT'];
-        return md5($randChars . $timestamp);
-    }
-    protected function generateRadomString($length){
-        $str = '';
-        $strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-        $max = strlen($strPol) - 1;
-        for ($i = 0; $i < $length; $i++) {
-            $str .= $strPol[rand(0, $max)];
-        }
-        return $str;
-    }
+
     protected function reg_rule(){
         return [
             'phone' => 'required|string|size:11',

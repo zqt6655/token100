@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 //login 控制器
 //发送验证码
-Route::get('api/send_sms', "Login@send_sms");
+Route::any('api/send_sms', "Login@send_sms");
 //注册
 Route::post('api/admin/register', "Login@register");
 
@@ -24,6 +24,11 @@ Route::post('api/admin/register', "Login@register");
 Route::post('api/admin/bind_email', "Login@bind_email");
 //登录
 Route::post('api/admin/login', "Login@login");
+
+//获取验证码
+Route::get('api/capt/get', "Capt@get");
+//检验验证码
+Route::post('api/capt/validate', "Capt@validate_capt");
 
 
 //文件上传

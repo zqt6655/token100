@@ -178,6 +178,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //发送短信
+        Mrgoon\AliSms\ServiceProvider::class
 
     ],
 
