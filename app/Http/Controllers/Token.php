@@ -10,10 +10,10 @@ class Token extends Controller
     //用于检测用户是否携带token
     public function __construct(Request $request)
     {
-        $token = $request->header('token');
-        if(! $this->check($token) ){
-            $this->returnApiError('Token值不存在，请重新登录',-99);
-        }
+//        $token = $request->header('token');
+//        if(! $this->check($token) ){
+//            $this->returnApiError('Token值不存在，请重新登录',-99);
+//        }
     }
     public function check($token){
         $value = $this->get_cache($token);
