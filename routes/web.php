@@ -42,6 +42,8 @@ Route::get('front/article/detail', "FrontCommon@article_detail");
 //前端不需要token验证的接口*************结束******************
 //文件上传
 Route::any('api/upload', "Upload@upload");
+//获取微信接口注入权限验证配置
+Route::any('api/wx_auth', "Upload@get_wx_auth_config");
 //token检测
 Route::any('api/token/get', "Token@get");
 //relationship

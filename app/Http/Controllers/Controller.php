@@ -52,7 +52,6 @@ class Controller extends BaseController
     }
     public function sendSMS($phone){
         $code = rand(1000,9999);
-//        $code = 1314;
         $alisms = new AliSms();
         $response = $alisms->sendSms($phone, config('aliyunsms.template_code'), ['code'=>$code ]);
         if($response->Code=='OK'){
@@ -68,7 +67,7 @@ class Controller extends BaseController
         $timestamp = $_SERVER['REQUEST_TIME_FLOAT'];
         return md5($randChars . $timestamp);
     }
-    protected function generateRadomString($length){
+    protected function generateRadomString($length=32){
         $str = '';
         $strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
         $max = strlen($strPol) - 1;
@@ -76,5 +75,29 @@ class Controller extends BaseController
             $str .= $strPol[rand(0, $max)];
         }
         return $str;
+    }
+
+    /**
+     * GET 请求
+     * @param string $url
+     */
+    public function http_get($url){
+        $oCurl = curl_init();
+        if(stripos($url,"https://")!==FALSE){
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
+        }
+        curl_setopt($oCurl, CURLOPT_URL, $url);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1 );
+        $sContent = curl_exec($oCurl);
+
+        $aStatus = curl_getinfo($oCurl);
+        curl_close($oCurl);
+        if(intval($aStatus["http_code"])==200){
+            return $sContent;
+        }else{
+            return false;
+        }
     }
 }
