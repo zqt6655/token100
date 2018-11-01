@@ -1318,6 +1318,11 @@ trait ValidatesAttributes
         return is_string($value);
     }
 
+    public function validatePhone($attribute,$value){
+        $value = trim($value);
+        return preg_match("/^1[34578]{1}\d{9}$/",$value);
+    }
+
     /**
      * Validate that an attribute is a valid timezone.
      *

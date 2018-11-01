@@ -10,7 +10,6 @@ class Project extends BaseModel
     public $table='project';
     public $timestamps = false;
     public $perPage = 10;
-
     public function add($data){
         $data = $this->check_field($data);
         $upload_time = date('Y-m-d H:i:s');
@@ -32,10 +31,40 @@ class Project extends BaseModel
     public function get(){
        return  DB::table("$this->table as p")
             ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
-            ->select('p.*','i.name as industry_id_text')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','i.name as industry_id_text','ad.name as up_name')
+           ->orderby('id','desc')
             ->get()
             ->toArray();
+    }
+    public function get_ioc(){
+        $now = date('Y-m-d H:i:s');
+        $data = DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('project_details as pd','p.id','=','pd.project_id')
+            ->where('p.is_delete','=',0)
+            ->where('pd.end_time','>',$now)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time')
+            ->orderby('id','desc')
+            ->get()
+            ->toArray();
+        if(!$data){
+            return $data;
+        }
+        $new_data = [];
+        foreach ($data as $one){
+            if($one->start_time<$now){
+                $one->is_ing = 1;
+            }else{
+                $one->is_ing = 0;
+            }
+            $one->start_time = substr($one->start_time,0,-3);
+            $one->end_time = substr($one->end_time,0,-3);
+            $new_data[] = $one;
+        }
+        return $new_data;
     }
 
     public function delete_by_id($id){

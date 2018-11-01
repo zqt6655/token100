@@ -22,6 +22,10 @@ class Project extends Token
         $model = $this->getModel();
         return $this->returnData($model->get());
     }
+    public function get_ioc(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_ioc());
+    }
 
     public function delete(){
         $id = Input::get('id');

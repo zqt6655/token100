@@ -90,7 +90,8 @@ Route::any('api/lab/get_by_alp', "Lab@get_by_alp");
 Route::post('api/project/add', "Project@add");
 Route::post('api/project/update', "Project@update");
 Route::any('api/project/delete', "Project@delete");
-Route::any('api/project/get', "Project@get");
+Route::get('api/project/get', "Project@get");
+Route::get('api/project/get_ioc', "Project@get_ioc");
 
 //project_detail
 Route::post('api/project_detail/update', "ProjectDetail@update");

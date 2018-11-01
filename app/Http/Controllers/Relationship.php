@@ -10,9 +10,12 @@ class Relationship extends Token
     protected function rule(){
         return [
             'name' => 'required|string',
-            'phone' => 'required|string|size:11',
+            'phone' => 'phone',
+            'linkman' => 'string',
+            'link_phone' => 'string',
+            'link_wechat' => 'string',
             'wechat' => 'string',
-            'email' => 'required|email',
+            'email' => 'email',
             'company' => 'required|string',
             'position' => 'required|string',
             'title' => 'required|string',

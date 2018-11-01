@@ -73,7 +73,7 @@ class Relationship extends BaseModel
         $field = ['name', 'phone', 'wechat',
             'email', 'avatar_url','company',
             'position', 'title','industry_id',
-            'category_id','note'
+            'category_id','note','linkman','link_phone','link_wechat'
         ];
 //        $empty = 0;
         foreach ($data as $key=>$val){
@@ -81,23 +81,6 @@ class Relationship extends BaseModel
                 unset($data[$key]);
             }
         }
-//        foreach ($field as $value){
-//            if($value =='wechat' || $value =='avatar_url' || $value =='note'){
-//                continue;
-//            }
-//            if(!isset($data[$value])){
-//                $empty=1;
-//                break;
-//            }
-//            if(isset($data[$value]) && !$data[$value]){
-//                $empty=1;
-//                break;
-//            }
-//
-//        }
-//        if($empty==1){
-//            $this->returnApiError('必填字段中存在空值');
-//        }
         return $data;
     }
     public function update_by_id($data,$id){
