@@ -100,3 +100,14 @@ Route::post('api/project_detail/update', "ProjectDetail@update");
 Route::any('api/project_detail/get', "ProjectDetail@get");
 //project_lab
 Route::post('api/project_lab/update', "ProjectLab@update");
+
+//user_center
+Route::get('api/user_center/get', "UserCenter@get");
+Route::post('api/user_center/update_info', "UserCenter@update_info");
+Route::post('api/user_center/update_password', "UserCenter@update_password");
+
+//member
+Route::get('api/member/get', "Member@get");
+Route::post('api/member/update', "Member@update");
+Route::post('api/member/add', "Member@add");
+Route::get('api/member/delete', "Member@delete");

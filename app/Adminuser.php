@@ -24,6 +24,13 @@ class Adminuser extends BaseModel
         }
         return $id;
     }
+
+    public function get_user_info(){
+        return $this::where('id','=',$this->user_id)
+            ->first()
+            ->makeHidden(['password','permission','is_delete','add_time','id'])
+            ->toArray();
+    }
     public function checkPhoneIsAvailable($phone){
         $exist = $this::where('phone','=',$phone)
             ->select('id')
@@ -58,7 +65,7 @@ class Adminuser extends BaseModel
         if(!$data){
             $this->returnApiError('邮箱未注册');
         }
-        if( sha1(md5($password)) !=$data->password){
+        if( $this->ecry_password($password) !=$data->password){
             $this->returnApiError('密码错误');
         }
         return ($data->toArray());
@@ -72,19 +79,43 @@ class Adminuser extends BaseModel
         if(!$data){
             $this->returnApiError('手机号未注册');
         }
-        if( sha1(md5($password)) !=$data->password){
+        if( $this->ecry_password($password) !=$data->password){
             $this->returnApiError('密码错误');
         }
         return ($data->toArray());
     }
+    protected function ecry_password($password){
+        return sha1(md5($password));
+    }
 
 
-    public function update_by_id($data,$id){
-        $data = $this->check_field($data);
-        //说明字段没有空值，插入数据库即可。
+    public function update_by_id($data){
+        $data = $this->check_up_field($data);
         return DB::table($this->table)
-            ->where('id','=',$id)
+            ->where('id','=',$this->user_id)
             ->update($data);
+    }
+    public function update_password($data){
+        $orgin_data = $this::where('id','=',$this->user_id)
+            ->first();
+        if($orgin_data->password !=$this->ecry_password($data['old_password'])){
+            $this->returnApiError('旧密码错误');
+        }
+        $orgin_data->password = $this->ecry_password($data['password']);
+        if($orgin_data->save()){
+            return [];
+        }
+        $this->returnApiError('系统繁忙，请重试一次');
+
+    }
+    protected function check_up_field($data){
+        $field = ['email', 'name', 'avatar_url'];
+        foreach ($data as $key=>$val){
+            if (!in_array($key, $field)) {
+                unset($data[$key]);
+            }
+        }
+        return $data;
     }
     protected function check_field($data){
         $field = ['email', 'phone', 'name',
