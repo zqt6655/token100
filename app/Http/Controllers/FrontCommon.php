@@ -48,4 +48,9 @@ class FrontCommon extends Controller
     protected function getArticleModel(){
         return new Article();
     }
+
+    public function get_members(){
+        $model = new \App\Member();
+        return $this->returnData($model->get());
+    }
 }
