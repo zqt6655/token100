@@ -26,7 +26,7 @@ class DiscussionComment extends BaseModel
             ->leftJoin('adminuser as ad','dm.user_id','=','ad.id')
             ->where('dm.discussion_id','=',$discussion_id)
             ->where('dm.is_delete','=',0)
-            ->select('dm.id','dm.comment','dm.add_time','ad.name','ad.phone','ad.avatar_url')
+            ->select('dm.id','dm.comment','dm.add_time','dm.user_id','ad.name','ad.phone','ad.avatar_url')
             ->orderby('dm.id','desc')
             ->get()
             ->toArray();

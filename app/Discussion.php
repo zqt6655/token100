@@ -35,7 +35,7 @@ class Discussion extends BaseModel
         $info=  DB::table("$this->table as d")
             ->leftJoin('adminuser as ad','d.user_id','=','ad.id')
             ->where('d.id','=',$id)
-            ->select('d.id','d.title','d.content','d.pics','d.add_time','ad.name','ad.phone','ad.avatar_url')
+            ->select('d.id','d.title','d.content','d.pics','d.add_time','d.user_id','ad.name','ad.phone','ad.avatar_url')
             ->first();
         if($info){
             if(!$info->name){
