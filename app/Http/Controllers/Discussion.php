@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class Discussion extends Token
 {
@@ -10,15 +11,22 @@ class Discussion extends Token
     protected function rule(){
         return [
             'id' => 'integer',
-            'member_name' => 'required|string|max:127',
-            'member_position' => 'required|string|max:255',
-            'member_introduce' => 'string|max:255',
-            'avatar_url' => 'string|max:255',
+            'title' => 'required|string|max:64',
+            'content' => 'required|string|max:1024',
+            'pics' => 'string|max:1024',
         ];
     }
     public function get(){
         $model = $this->getModel();
         return $this->returnData($model->get());
+    }
+    public function detail(){
+        $id = Input::get('id');
+        if(!is_numeric($id)){
+            return $this->returnFail('id必须为整数');
+        }
+        $model = $this->getModel();
+        return $this->returnData($model->detail($id));
     }
 
     public function delete(){

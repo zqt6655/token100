@@ -111,3 +111,14 @@ Route::get('api/member/get', "Member@get");
 Route::post('api/member/update', "Member@update");
 Route::post('api/member/add', "Member@add");
 Route::get('api/member/delete', "Member@delete");
+
+//Discussion
+Route::get('api/discussion/get', "Discussion@get");
+Route::post('api/discussion/update', "Discussion@update");
+Route::get('api/discussion/detail', "Discussion@detail");
+Route::post('api/discussion/add', "Discussion@add");
+Route::get('api/discussion/delete', "Discussion@delete");
+
+//DiscussionComment
+Route::post('api/discussion_comment/add', "DiscussionComment@add");
+Route::get('api/discussion_comment/delete', "DiscussionComment@delete");

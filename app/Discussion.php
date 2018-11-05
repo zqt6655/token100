@@ -4,6 +4,7 @@ namespace App;
 
 
 use Illuminate\Support\Facades\DB;
+use function MongoDB\BSON\toJSON;
 
 class Discussion extends BaseModel
 {
@@ -23,11 +24,34 @@ class Discussion extends BaseModel
         return [];
     }
     public function get(){
-        return $this::where('is_delete','=',0)
-            ->orderBy('order')
-            ->select('id','member_name','member_position','member_introduce','avatar_url','order')
-            ->get()
-            ->toArray();
+        return  DB::table("$this->table as d")
+            ->leftJoin('adminuser as ad','user_id','=','ad.id')
+            ->where('d.is_delete','=',0)
+            ->select('d.id','d.title','d.add_time','ad.name','ad.phone')
+            ->orderby('d.id','desc')
+            ->paginate($this->perPage);
+    }
+    public function detail($id){
+        $info=  DB::table("$this->table as d")
+            ->leftJoin('adminuser as ad','d.user_id','=','ad.id')
+            ->where('d.id','=',$id)
+            ->select('d.id','d.title','d.content','d.pics','d.add_time','ad.name','ad.phone','ad.avatar_url')
+            ->first();
+        if($info){
+            if(!$info->name){
+                $info->name = $info->phone;
+            }
+            if(!$info->pics){
+                $info->pics = [];
+            }else{
+                $info->pics = explode(',',$info->pics);
+            }
+            $dis_com =DiscussionComment::get($id);
+            $info->comment = $dis_com;
+            return($info);
+        }
+        return [];
+
     }
 
     public function delete_by_id($id){
@@ -41,7 +65,7 @@ class Discussion extends BaseModel
             ->update($data);
     }
     protected function check_field($data){
-        $field = [ 'member_name', 'member_position','member_introduce','avatar_url','order'];
+        $field = [ 'title', 'content','pics'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);
