@@ -12,15 +12,15 @@ class Token extends Controller
     //用于检测用户是否携带token
     public function __construct(Request $request)
     {
-//        $token = $request->header('token');
-//        if(!$token){
-//            $token = $request->get('token');
-//            if(!$token){
-//                $token = $request->post('token');
-//            }
-//        }
-//
-//        $this->check($token);
+        $token = $request->header('token');
+        if(!$token){
+            $token = $request->get('token');
+            if(!$token){
+                $token = $request->post('token');
+            }
+        }
+
+        $this->check($token);
     }
     protected function check($token){
         $value = $this->get_cache($token);
