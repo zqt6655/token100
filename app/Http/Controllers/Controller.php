@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Mrgoon\AliSms\AliSms;
 
 header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); // 允许请求的类型
+header('Access-Control-Allow-Headers: Content-Type,Content-Length,Accept-Encoding,X-Requested-with,Origin,token');//自定义其他的头
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
