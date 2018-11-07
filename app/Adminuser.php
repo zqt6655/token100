@@ -28,7 +28,7 @@ class Adminuser extends BaseModel
     public function get_user_info(){
         return $this::where('id','=',$this->user_id)
             ->first()
-            ->makeHidden(['password','permission','is_delete','add_time','id'])
+            ->makeHidden(['password','permission','is_delete','add_time'])
             ->toArray();
     }
     public function checkPhoneIsAvailable($phone){
@@ -89,11 +89,17 @@ class Adminuser extends BaseModel
 
     public function update_by_id($data){
         $data = $this->check_up_field($data);
+        if(isset($data['user_id'])){
+            $this->user_id = $data['user_id'];
+        }
         return DB::table($this->table)
             ->where('id','=',$this->user_id)
             ->update($data);
     }
     public function update_password($data){
+        if(isset($data['user_id'])){
+            $this->user_id = $data['user_id'];
+        }
         $orgin_data = $this::where('id','=',$this->user_id)
             ->first();
         if($orgin_data->password !=$this->ecry_password($data['old_password'])){
@@ -107,7 +113,7 @@ class Adminuser extends BaseModel
 
     }
     protected function check_up_field($data){
-        $field = ['email', 'name', 'avatar_url'];
+        $field = ['email', 'name', 'avatar_url','user_id'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);

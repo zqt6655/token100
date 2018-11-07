@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Adminuser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 
 class UserCenter extends Token
@@ -19,12 +20,18 @@ class UserCenter extends Token
         return [
             'old_password' => 'required|string|min:6',
             'password' => 'required|string|min:6|confirmed',
+            'user_id'=>'required|integer'
         ];
     }
     //
     public function get(){
         $model = $this->getModel();
+        $user_id = Input::get('user_id');
+        if(is_numeric($user_id)){
+            $model->user_id = $user_id;
+        }
         return $this->returnData($model->get_user_info());
+
     }
     public function update_info(Request $request){
         $data = $request->all();
