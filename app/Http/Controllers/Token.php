@@ -13,10 +13,14 @@ class Token extends Controller
     public function __construct(Request $request)
     {
         $token = $request->header('token');
+
         if(!$token){
-            $token = $request->get('token');
-            if(!$token){
-                $token = $request->post('token');
+            $token = $request->header('Content-Language');
+            if(!$token) {
+                $token = $request->get('token');
+                if (!$token) {
+                    $token = $request->post('token');
+                }
             }
         }
 
