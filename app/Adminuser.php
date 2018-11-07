@@ -60,7 +60,6 @@ class Adminuser extends BaseModel
     }
     protected function login_by_email($email,$password){
         $data = $this::where('email','=',$email)
-            ->select('id','name','permission','password')
             ->first();
         if(!$data){
             $this->returnApiError('邮箱未注册');
@@ -74,7 +73,6 @@ class Adminuser extends BaseModel
     protected function login_by_phone($phone,$password){
 
         $data = $this::where('phone','=',$phone)
-            ->select('id','name','permission','password')
             ->first();
         if(!$data){
             $this->returnApiError('手机号未注册');

@@ -21,7 +21,12 @@ class Login extends Controller
         $return_data['token'] = $this->saveToCache($cacheValue);
         $return_data['user_id'] = $login_data['id'];
         $return_data['permission'] = $login_data['permission'];
+        if(!$login_data['name'])
+            $return_data['name']  = $login_data['phone'];
         $return_data['name'] = $login_data['name'];
+        $return_data['phone'] = $login_data['phone'];
+        $return_data['avatar_url'] = $login_data['avatar_url'];
+        $return_data['email'] = $login_data['email'];
         return $this->returnData($return_data);
     }
     public function send_sms()
