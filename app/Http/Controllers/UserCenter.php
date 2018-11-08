@@ -48,8 +48,8 @@ class UserCenter extends Token
 
     protected function getModel(){
         $model = new Adminuser();
-        $model->user_id =17;
-//        $model->user_id = $this->user_id;
+//        $model->user_id =17;
+        $model->user_id = $this->user_id;
         $model->permission = $this->permission;
         return $model;
     }

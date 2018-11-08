@@ -100,6 +100,7 @@ class Adminuser extends BaseModel
         if(isset($data['user_id'])){
             $this->user_id = $data['user_id'];
         }
+
         $orgin_data = $this::where('id','=',$this->user_id)
             ->first();
         if($orgin_data->password !=$this->ecry_password($data['old_password'])){
