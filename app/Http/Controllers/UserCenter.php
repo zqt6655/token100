@@ -20,7 +20,7 @@ class UserCenter extends Token
         return [
             'old_password' => 'required|string|min:6',
             'password' => 'required|string|min:6|confirmed',
-            'user_id'=>'required|integer'
+            'user_id'=>'integer'
         ];
     }
     //
