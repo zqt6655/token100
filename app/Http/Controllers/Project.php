@@ -14,7 +14,7 @@ class Project extends Token
             'id' => 'integer',
             'industry_id' => 'required|integer',
             'name' => 'required|string|max:32',
-            'domain_from' => 'required|string|max:127',
+            'domain_from' => 'string|max:127',
             'token_symbol' => 'required|string|max:32',
         ];
     }

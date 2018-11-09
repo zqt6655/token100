@@ -79,7 +79,7 @@ class Project extends BaseModel
     }
     protected function check_field($data){
         $field = [ 'name', 'company_name', 'token_symbol', 'foundle', 'website', 'logo', 'country', 'grade', 'analysis',
-            'opinion', 'industry_id', 'requirements', 'refer_name', 'refer_introduce', 'domain_from'];
+            'opinion', 'industry_id', 'requirements', 'refer_name', 'refer_introduce', 'domain_from','white_book'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);

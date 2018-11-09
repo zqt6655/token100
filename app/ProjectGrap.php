@@ -43,6 +43,7 @@ class ProjectGrap extends BaseModel
         $project['country'] = $one->country;
         $project['domain_from'] = $one->url;
         $project['upload_time'] = $this->time;
+        $project['white_book'] = $one->white_paper;
         return DB::table('project')->insertGetId($project);
     }
     protected function insertToDetail($project_id,$one){

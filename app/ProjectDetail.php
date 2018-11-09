@@ -15,15 +15,45 @@ class ProjectDetail extends BaseModel
         return $detail_id;
     }
     public function get($project_id){
-        $data = $this::where('project_id','=',$project_id)
+        $data =  DB::table("$this->table as pd")
+            ->leftJoin('project as p','pd.project_id','=','p.id')
+            ->select('pd.*','p.white_book')
+            ->where('pd.project_id','=',$project_id)
             ->first();
         if(!$data){
             return [];
         }
-        $data = $data->toArray();
+        $white_book = $data->white_book;
+        if($white_book){
+            $book_list = explode(',',$white_book);
+            $book_tem_list=[];
+            foreach ($book_list as $one){
+                //后缀
+                $pic_ext = ['.jpg', '.png',  '.jpeg'];
+                $ext = strrchr($one,'.');
+                if($ext=='.pdf')
+                    $book_tem['type'] = 'pdf';
+                elseif(in_array($ext,$pic_ext))
+                    $book_tem['type'] = 'img';
+                else
+                    $book_tem['type'] = 'url';
+                if(strstr($one,'__collinstar__')){
+                    $book_tem['show_name'] = explode('__collinstar__',$one)[1];
+                    $book_tem['download_url'] = $one;
+                }else{
+                    $book_tem['show_name'] = substr($one,8,16);
+                    $book_tem['download_url'] = $one;
+                }
+                $book_tem_list[] = $book_tem;
+            }
+            $data->white_book = $book_tem_list;
+        }else{
+            $data->white_book=[];
+        }
+        $data->team_introduce = json_decode($data->team_introduce);
         $project_lab_model = new ProjectLab();
         $project_lab_info = $project_lab_model->get($project_id);
-        $data['project_lab'] = $project_lab_info;
+        $data->project_lab= $project_lab_info;
         return $data;
     }
 

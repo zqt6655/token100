@@ -17,7 +17,6 @@ class Data extends Controller
         $model = new ProjectGrap();
         $data = $model->add();
         return $this->returnData($data);
-        print_r($data);
     }
 
 }
