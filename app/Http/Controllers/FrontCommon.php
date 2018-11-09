@@ -33,7 +33,7 @@ class FrontCommon extends Controller
     //获取已经发布的文章
     public function article_get_publish(){
         $model = $this->getArticleModel();
-        return $this->returnData($model->get_publish());
+        return $this->returnData($model->get_publish_front());
     }
     //获取单篇文章的详情
     public function article_detail(){

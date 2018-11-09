@@ -133,3 +133,6 @@ Route::get('api/discussion/delete', "Discussion@delete");
 //DiscussionComment
 Route::post('api/discussion_comment/add', "DiscussionComment@add");
 Route::get('api/discussion_comment/delete', "DiscussionComment@delete");
+
+//data
+Route::any('api/data/add', "Data@add");

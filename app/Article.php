@@ -32,6 +32,15 @@ class Article extends BaseModel
             ->select('id','title', 'author', 'summary', 'publish_time','img')
             ->paginate($this->perPage);
     }
+    public function get_publish_front(){
+        return $this::where('is_delete','=',0)
+            ->where('status','=',1)
+            ->orderBy('publish_time','desc')
+            ->select('id','title', 'author', 'summary', 'publish_time','img')
+            ->get()
+            ->toArray();
+//            ->paginate(9);
+    }
 
     public function detail($id){
         return $this::where('id','=',$id)
