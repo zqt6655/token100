@@ -44,6 +44,8 @@ class ProjectGrap extends BaseModel
         $project['rate'] = $one->rate;
         $project['domain_from'] = explode('/ico/',$one->url)[0];
         $project['upload_time'] = $this->time;
+        $project['from'] = 0;
+        $project['show_name'] = '系统';
         $project['white_book'] = $one->white_paper;
         return DB::table('project')->insertGetId($project);
     }

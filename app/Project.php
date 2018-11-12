@@ -14,6 +14,9 @@ class Project extends BaseModel
         $data = $this->check_field($data);
         $upload_time = date('Y-m-d H:i:s');
         $data['upload_time'] = $upload_time;
+        $data['from'] = 1;
+        $data['user_id'] = $this->user_id;
+        $detail_data['show_name'] = '后台';
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){
@@ -33,6 +36,8 @@ class Project extends BaseModel
         $data = $this->check_field($data);
         $upload_time = date('Y-m-d H:i:s');
         $data['upload_time'] = $upload_time;
+        $data['from'] = 2;
+        $detail_data['show_name'] = '前台';
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){
@@ -40,6 +45,7 @@ class Project extends BaseModel
         }
         //插入项目详情，预先获取到详情id
         $detail_data['project_id'] = $id;
+
         $detail_data['upload_time'] = $upload_time;
         $detail_id =  ProjectDetail::add($detail_data);
         //返回项目id和详情id
