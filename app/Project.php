@@ -37,6 +37,7 @@ class Project extends BaseModel
         $upload_time = date('Y-m-d H:i:s');
         $data['upload_time'] = $upload_time;
         $data['from'] = 2;
+        $data['is_delete'] = 1;
         $detail_data['show_name'] = '前台';
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);

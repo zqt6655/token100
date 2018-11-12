@@ -82,7 +82,10 @@ class ProjectDetail extends BaseModel
             $this->returnApiError('请传入需要修改的字段');
         }
         if(isset($data['final'])  && $data['final']==1){
-//            $data['']
+            //如果是最后一页更新，则将前台上传的项目is_delete变为0
+            return DB::table('project')
+                ->where('id','=',$data['project_id'])
+                ->update(['is_delete'=>0]);
         }
         //说明字段没有空值，插入数据库即可。
         return DB::table($this->table)
@@ -93,7 +96,7 @@ class ProjectDetail extends BaseModel
         $field = ['project_contacts','project_introduce', 'problem',
             'framework', 'strength','tokenmodel', 'project_strategy','project_community', 'investplan',
             'project_otherinfo', 'team_introduce', 'investprogress', 'start_time','end_time', 'coin_total','circulate_num', 'platform',
-            'accept_coin', 'limit_zone','sorf_cap', 'hard_cap', 'is_kyc','is_aml', 'ratio','final'];
+            'accept_coin', 'limit_zone','sorf_cap', 'hard_cap', 'is_kyc','is_aml', 'ratio','final','project_id'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);
