@@ -45,7 +45,7 @@ class Project extends BaseModel
         }
         //插入项目详情，预先获取到详情id
         $detail_data['project_id'] = $id;
-
+        $detail_data['project_contacts'] = $data['project_contacts'];
         $detail_data['upload_time'] = $upload_time;
         $detail_id =  ProjectDetail::add($detail_data);
         //返回项目id和详情id
@@ -62,9 +62,6 @@ class Project extends BaseModel
                 'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name')
            ->orderby('id','desc')
            ->paginate($this->perPage);
-//       dd($data);
-//            ->get()
-//            ->toArray();
        foreach ($data as $one){
            if($one->from !=1){
                $one->up_name = $one->show_name;
@@ -89,7 +86,6 @@ class Project extends BaseModel
         if(!$data){
             return $data;
         }
-        $new_data = [];
         foreach ($data as $one){
             if($one->start_time<$now){
                 $one->is_ing = 1;
@@ -98,9 +94,8 @@ class Project extends BaseModel
             }
             $one->start_time = substr($one->start_time,0,-3);
             $one->end_time = substr($one->end_time,0,-3);
-            $new_data[] = $one;
         }
-        return $new_data;
+        return $data;
     }
 
     public function delete_by_id($id){

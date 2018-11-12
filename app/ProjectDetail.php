@@ -17,7 +17,8 @@ class ProjectDetail extends BaseModel
     public function get($project_id){
         $data =  DB::table("$this->table as pd")
             ->leftJoin('project as p','pd.project_id','=','p.id')
-            ->select('pd.*','p.white_book')
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->select('pd.*','p.*','i.name as industry_id_text')
             ->where('pd.project_id','=',$project_id)
             ->first();
         if(!$data){
@@ -50,10 +51,18 @@ class ProjectDetail extends BaseModel
         }else{
             $data->white_book=[];
         }
-        $data->team_introduce = json_decode($data->team_introduce);
+        if($data->team_introduce)
+            $data->team_introduce = json_decode($data->team_introduce);
+        if($data->project_contacts)
+            $data->project_contacts = json_decode($data->project_contacts);
         $project_lab_model = new ProjectLab();
         $project_lab_info = $project_lab_model->get($project_id);
         $data->project_lab= $project_lab_info;
+        unset($data->from);
+        unset($data->show_name);
+        unset($data->is_delete);
+        unset($data->show_name);
+        unset($data->show_name);
         return $data;
     }
 
@@ -67,11 +76,24 @@ class ProjectDetail extends BaseModel
             ->where('id','=',$id)
             ->update($data);
     }
+    public function update_front_by_id($data,$id){
+        $data = $this->check_field($data);
+        if(!$data){
+            $this->returnApiError('请传入需要修改的字段');
+        }
+        if(isset($data['final'])  && $data['final']==1){
+//            $data['']
+        }
+        //说明字段没有空值，插入数据库即可。
+        return DB::table($this->table)
+            ->where('id','=',$id)
+            ->update($data);
+    }
     protected function check_field($data){
         $field = ['project_contacts','project_introduce', 'problem',
             'framework', 'strength','tokenmodel', 'project_strategy','project_community', 'investplan',
             'project_otherinfo', 'team_introduce', 'investprogress', 'start_time','end_time', 'coin_total','circulate_num', 'platform',
-            'accept_coin', 'limit_zone','sorf_cap', 'hard_cap', 'is_kyc','is_aml', 'ratio'];
+            'accept_coin', 'limit_zone','sorf_cap', 'hard_cap', 'is_kyc','is_aml', 'ratio','final'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);
