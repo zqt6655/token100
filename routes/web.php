@@ -50,6 +50,11 @@ Route::get('front/article/detail', "FrontCommon@article_detail");
 
 //成员
 Route::get('front/member/get', "FrontCommon@get_members");
+
+//添加项目
+Route::post('front/project/add', "FrontCommon@add_project");
+//修改项目
+Route::post('front/project_detail/update', "FrontCommon@update_project");
 //前端不需要token验证的接口*************结束******************
 //文件上传
 Route::any('api/upload', "Upload@upload");
