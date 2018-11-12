@@ -41,7 +41,8 @@ class ProjectGrap extends BaseModel
         $project['website'] = $one->url;
         $project['logo'] = $one->logo;
         $project['country'] = $one->country;
-        $project['domain_from'] = $one->url;
+        $project['rate'] = $one->rate;
+        $project['domain_from'] = explode('/ico/',$one->url)[0];
         $project['upload_time'] = $this->time;
         $project['white_book'] = $one->white_paper;
         return DB::table('project')->insertGetId($project);
