@@ -64,7 +64,6 @@ class FrontCommon extends Controller
     protected function project_rule(){
         return [
             'id' => 'integer',
-            'industry_id' => 'required|integer',
             'name' => 'required|string|max:32',
             'token_symbol' => 'required|string|max:32',
         ];

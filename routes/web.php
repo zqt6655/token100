@@ -141,3 +141,4 @@ Route::get('api/discussion_comment/delete', "DiscussionComment@delete");
 
 //data
 Route::any('api/data/add', "Data@add");
+Route::any('api/data/rating', "Data@add_ratingToken");

@@ -73,7 +73,7 @@ class ProjectDetail extends BaseModel
         }
         //说明字段没有空值，插入数据库即可。
         return DB::table($this->table)
-            ->where('id','=',$id)
+            ->where('project_id','=',$id)
             ->update($data);
     }
     public function update_front_by_id($data,$id){

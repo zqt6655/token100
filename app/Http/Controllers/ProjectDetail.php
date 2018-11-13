@@ -11,7 +11,7 @@ class ProjectDetail extends Token
     //
     protected function rule(){
         return [
-            'id' => 'integer',
+            'project_id' => 'integer',
             'project_contacts' => 'string|max:255',
             'project_introduce' => 'string|max:255',
             'problem' => 'string|max:255',
@@ -36,12 +36,12 @@ class ProjectDetail extends Token
     public function update(Request $request){
         $data = $request->all();
         $this->validate_input($data);
-        if(!isset($data['id'])){
-            return $this->returnFail('id不能为空');
+        if(!isset($data['project_id'])){
+            return $this->returnFail('project_id不能为空');
         }
 
         $model = $this->getModel();
-        $model->update_by_id($data,$data['id']);
+        $model->update_by_id($data,$data['project_id']);
         return $this->returnSuccess();
     }
 
