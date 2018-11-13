@@ -83,10 +83,13 @@ class ProjectDetail extends BaseModel
         }
         if(isset($data['final'])  && $data['final']==1){
             //如果是最后一页更新，则将前台上传的项目is_delete变为0
-            return DB::table('project')
+            DB::table('project')
                 ->where('id','=',$data['project_id'])
                 ->update(['is_delete'=>0]);
+            unset($data['final']);
+            unset($data['project_id']);
         }
+
         //说明字段没有空值，插入数据库即可。
         return DB::table($this->table)
             ->where('id','=',$id)

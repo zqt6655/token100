@@ -36,7 +36,7 @@ class Login extends Controller
         if(strlen($phone) !=11){
             return $this->returnFail('手机号必须为11位');
         }
-        if(!$this->get_cache($sms_token)){
+        if(!$this->get_cache('sms_'.$sms_token)){
             return $this->returnFail('请先输入图形验证码');
         }
         $this->sendSMS($phone);

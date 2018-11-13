@@ -19,7 +19,8 @@ class Capt extends Controller
         $phrase = $builder->getPhrase();
         //把内容存入cache
         $cap_token = $this->generateToken();
-        $this->set_cache($cap_token,$phrase,3);
+        //将该token添加验证码前缀标示
+        $this->set_cache('capt_'.$cap_token,$phrase,3);
         //生成图片
 //        header("Cache-Control: no-cache, must-revalidate");
 //        header('Content-Type: image/jpeg');
@@ -32,13 +33,14 @@ class Capt extends Controller
     public function validate_capt(Request $request){
         $data = $request->all();
         $this->validate_all_input($data,$this->rule());
-        $cache_capt = $this->get_cache($data['capt_token']);
+        $cache_capt = $this->get_cache('capt_'.$data['capt_token']);
         if($data['capt']==$cache_capt){
             //清空验证码缓存
             $this->set_cache($data['capt_token'],'',1);
             //写入短信验证码缓存,5分钟有效期
             $sms_token = $this->generateToken();
-            $this->set_cache($sms_token,'12',4);
+            //添加手机验证码头部标示
+            $this->set_cache('sms_'.$sms_token,'12',5);
             $return_data['sms_token'] = $sms_token;
             return $this->returnData($return_data);
         }else{
