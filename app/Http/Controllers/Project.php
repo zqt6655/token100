@@ -11,7 +11,7 @@ class Project extends Token
     //
     protected function rule(){
         return [
-            'id' => 'integer',
+            'project_id' => 'integer',
             'industry_id' => 'required|integer',
             'name' => 'required|string|max:32',
             'domain_from' => 'string|max:127',
@@ -28,7 +28,7 @@ class Project extends Token
     }
 
     public function delete(){
-        $id = Input::get('id');
+        $id = Input::get('project_id');
         if(!is_numeric($id)){
             return $this->returnFail('id必须为整数');
         }
@@ -45,11 +45,11 @@ class Project extends Token
     public function update(Request $request){
         $data = $request->all();
         $this->validate_input($data);
-        if(!isset($data['id'])){
+        if(!isset($data['project_id'])){
             return $this->returnFail('id不能为空');
         }
         $model = $this->getModel();
-        $model->update_by_id($data,$data['id']);
+        $model->update_by_id($data,$data['project_id']);
         return $this->returnSuccess();
     }
 
