@@ -11,17 +11,17 @@ class ProjectDetail extends Token
     //
     protected function rule(){
         return [
-            'project_id' => 'integer',
-            'project_contacts' => 'string|max:255',
-            'project_introduce' => 'string|max:255',
-            'problem' => 'string|max:255',
-            'framework' => 'string|max:255',
-            'strength' => 'string|max:255',
-            'tokenmodel' => 'string|max:255',
-            'project_strategy' => 'string|max:255',
-            'project_community' => 'string|max:255',
-            'investplan' => 'string|max:255',
-            'project_otherinfo' => 'string|max:255',
+            'project_id' => 'required|integer',
+//            'project_contacts' => 'string',
+//            'project_introduce' => 'string',
+//            'problem' => 'string',
+//            'framework' => 'string',
+//            'strength' => 'string',
+//            'tokenmodel' => 'string',
+//            'project_strategy' => 'string|max:255',
+//            'project_community' => 'string|max:255',
+//            'investplan' => 'string|max:255',
+//            'project_otherinfo' => 'string|max:255',
         ];
     }
     public function get(){

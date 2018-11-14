@@ -64,6 +64,7 @@ class Data extends Controller
         $detail['accept_coin'] = $one->accept_coin;
         $detail['sorf_cap'] = $one->sorf_cap;
         $detail['hard_cap'] = $one->hard_cap;
+        $detail['circulate_num'] = $one->circulate_num;
         $detail['ratio'] = '';
         $detail['upload_time'] = $this->time;
         DB::table('project_details')->insert($detail);
