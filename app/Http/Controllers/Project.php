@@ -28,7 +28,7 @@ class Project extends Token
     }
 
     public function delete(){
-        $id = Input::get('project_id');
+        $id = Input::get('id');
         if(!is_numeric($id)){
             return $this->returnFail('id必须为整数');
         }
