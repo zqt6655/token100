@@ -38,7 +38,7 @@ class Project extends BaseModel
         $data['upload_time'] = $upload_time;
         $data['from'] = 2;
         $data['is_delete'] = 1;
-        $detail['show_name'] = '前台';
+        $data['show_name'] = '前台';
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){
