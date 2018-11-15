@@ -45,6 +45,8 @@ class Data extends Controller
         $project['domain_from'] = 'https://www.ratingtoken.io';
         $project['upload_time'] = $this->time;
         $project['from'] = 0;
+        $project['is_market'] = $one->is_market;
+        $project['show_name'] = '系统';
         $project['show_name'] = '系统';
         $project['white_book'] = $one->white_paper;
         return DB::table('project')->insertGetId($project);
@@ -67,6 +69,9 @@ class Data extends Controller
         $detail['circulate_num'] = $one->circulate_num;
         $detail['ratio'] = '';
         $detail['upload_time'] = $this->time;
+        $detail['market_time'] = $one->market_time;
+        $detail['coin_total'] = $one->total_num;
+        $detail['market_num'] = $one->deal_num;
         DB::table('project_details')->insert($detail);
     }
 
