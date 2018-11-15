@@ -61,6 +61,9 @@ class Login extends Controller
         $this->checkPhoneCode($data['phone'],$data['code']);
         $model->checkPhoneIsAvailable($data['phone']);
         $user_id = $model->add($data);
+        //注册成功,将手机验证码有效期删除
+        //通过验证，则销毁验证码
+        $this->set_cache($data['phone'],'');
         //注册默认权限是3
         $cacheValue['user_id'] = $user_id;
         $cacheValue['login_time'] = date('Y-m-d H:i:s');
@@ -75,8 +78,7 @@ class Login extends Controller
             $this->returnApiError('手机验证码错误');
             return;
         }
-        //通过验证，则销毁验证码
-        $this->set_cache($phone,'');
+
     }
     protected  function  saveToCache($cacheValue){
         $token = $this->generateToken();

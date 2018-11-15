@@ -67,6 +67,8 @@ class Adminuser extends BaseModel
         if( $this->ecry_password($password) !=$data->password){
             $this->returnApiError('密码错误');
         }
+        $data->last_login = date('Y-m-d H:i:s');
+        $data->save();
         return ($data->toArray());
 
     }
@@ -80,6 +82,8 @@ class Adminuser extends BaseModel
         if( $this->ecry_password($password) !=$data->password){
             $this->returnApiError('密码错误');
         }
+        $data->last_login = date('Y-m-d H:i:s');
+        $data->save();
         return ($data->toArray());
     }
     protected function ecry_password($password){

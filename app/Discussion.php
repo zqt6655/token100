@@ -16,6 +16,7 @@ class Discussion extends BaseModel
     public function add($data){
         $data = $this->check_field($data);
         $data = $this->add_date_to_data($data);
+        $data['user_id'] = $this->user_id;
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){

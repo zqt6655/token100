@@ -14,6 +14,7 @@ class Article extends BaseModel
     public function add($data){
         $data = $this->check_field($data);
         //说明字段没有空值，插入数据库即可。
+        $data['user_id'] = $this->user_id;
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){
            $this->returnApiError('系统繁忙,请重试一次');

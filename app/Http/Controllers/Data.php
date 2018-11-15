@@ -47,7 +47,6 @@ class Data extends Controller
         $project['from'] = 0;
         $project['is_market'] = $one->is_market;
         $project['show_name'] = '系统';
-        $project['show_name'] = '系统';
         $project['white_book'] = $one->white_paper;
         return DB::table('project')->insertGetId($project);
     }
