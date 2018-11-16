@@ -28,7 +28,7 @@ class Discussion extends BaseModel
         return  DB::table("$this->table as d")
             ->leftJoin('adminuser as ad','user_id','=','ad.id')
             ->where('d.is_delete','=',0)
-            ->select('d.id','d.title','d.add_time','ad.name','ad.phone')
+            ->select('d.id','d.title','d.add_time','ad.name','ad.phone','d.user_id')
             ->orderby('d.id','desc')
             ->paginate($this->perPage);
     }
@@ -36,7 +36,7 @@ class Discussion extends BaseModel
         $info=  DB::table("$this->table as d")
             ->leftJoin('adminuser as ad','d.user_id','=','ad.id')
             ->where('d.id','=',$id)
-            ->select('d.id','d.title','d.content','d.pics','d.add_time','d.user_id','ad.name','ad.phone','ad.avatar_url')
+            ->select('d.id','d.title','d.content','d.pics','d.add_time','d.user_id','ad.name','ad.phone','ad.avatar_url','d.user_id')
             ->first();
         if($info){
             if(!$info->name){
