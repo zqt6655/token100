@@ -42,7 +42,7 @@ class Data extends Controller
         $project['website'] = $one->website;
         $project['logo'] = $one->logo;
         $project['rate'] = $one->rate;
-        $project['domain_from'] = 'https://www.ratingtoken.io';
+        $project['domain_from'] = $one->domain;
         $project['upload_time'] = $this->time;
         $project['from'] = 0;
         $project['is_market'] = $one->is_market;

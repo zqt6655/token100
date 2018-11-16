@@ -109,6 +109,7 @@ Route::post('api/project/add', "Project@add");
 Route::post('api/project/update', "Project@update");
 Route::any('api/project/delete', "Project@delete");
 Route::get('api/project/get', "Project@get");
+Route::get('api/project/search', "Project@search");
 Route::get('api/project/get_ioc', "Project@get_ioc");
 
 //project_detail

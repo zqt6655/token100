@@ -27,6 +27,15 @@ class Project extends Token
         return $this->returnData($model->get_ioc());
     }
 
+    public function search(){
+        $keyword = Input::get('keyword');
+        if(!$keyword){
+            return $this->returnFail('keyword不能为空');
+        }
+        $model = $this->getModel();
+        return $this->returnData($model->search($keyword));
+    }
+
     public function delete(){
         $id = Input::get('id');
         if(!is_numeric($id)){

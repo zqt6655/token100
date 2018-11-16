@@ -73,6 +73,28 @@ class Project extends BaseModel
        }
        return $data;
     }
+    public function search($keyword){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
+            ->where('p.is_delete','=',0)
+            ->where(function($query) use ($keyword){
+                $query->where('p.name', 'like', '%'.$keyword.'%')
+                    ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
+            })
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name')
+            ->paginate($this->perPage);
+        foreach ($data as $one){
+            if($one->from !=1){
+                $one->up_name = $one->show_name;
+            }
+            unset($one->show_name);
+            unset($one->from);
+            unset($one->user_id);
+        }
+        return $data;
+    }
     public function get_ioc(){
         $now = date('Y-m-d H:i:s');
         $data = DB::table("$this->table as p")
