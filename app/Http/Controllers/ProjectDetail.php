@@ -39,8 +39,12 @@ class ProjectDetail extends Token
         $url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?convert=CNY&symbol='.$symbol;
         $header = array('X-CMC_PRO_API_KEY:ec1b6600-6c2d-46cf-8859-9ba678b57a29');
         $price = $this->http_get($url,$header);
-        if($price)
-            return $this->returnData(json_decode($price,true)['data'][$symbol]['quote']['CNY']['price']);
+        if($price){
+            $price = json_decode($price,true);
+            if($price['data']){
+                return $this->returnData($price['data'][$symbol]['quote']['CNY']['price']);
+            }
+        }
         return $this->returnFail('暂无');
     }
 
