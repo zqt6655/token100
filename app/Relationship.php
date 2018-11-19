@@ -62,7 +62,6 @@ class Relationship extends BaseModel
         $time = time();
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
-        $data['user_id'] = $this->user_id;
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table_name)->insertGetId($data);
         if($id<0){

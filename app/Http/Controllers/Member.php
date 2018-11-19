@@ -50,8 +50,6 @@ class Member extends Token
 
     protected function getModel(){
         $model = new \App\Member();
-        $model->user_id = $this->user_id;
-        $model->permission = $this->permission;
         return $model;
     }
 }
