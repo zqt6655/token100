@@ -53,6 +53,8 @@ class ProjectDetail extends BaseModel
         }
         if($data->team_introduce)
             $data->team_introduce = json_decode($data->team_introduce);
+        if($data->score)
+            $data->score = json_decode($data->score);
         if($data->project_contacts)
             $data->project_contacts = json_decode($data->project_contacts);
         $project_lab_model = new ProjectLab();
@@ -61,8 +63,6 @@ class ProjectDetail extends BaseModel
         unset($data->from);
         unset($data->show_name);
         unset($data->is_delete);
-        unset($data->show_name);
-        unset($data->show_name);
         return $data;
     }
 
