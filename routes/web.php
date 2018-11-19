@@ -115,6 +115,7 @@ Route::get('api/project/get_ioc', "Project@get_ioc");
 //project_detail
 Route::post('api/project_detail/update', "ProjectDetail@update");
 Route::any('api/project_detail/get', "ProjectDetail@get");
+Route::any('api/project_detail/get_price', "ProjectDetail@get_price");
 //project_lab
 Route::post('api/project_lab/update', "ProjectLab@update");
 
