@@ -13,8 +13,8 @@ class Member extends Token
             'id' => 'integer',
             'member_name' => 'required|string|max:127',
             'member_position' => 'required|string|max:255',
-            'member_introduce' => 'string|max:255',
-            'avatar_url' => 'string|max:255',
+//            'member_introduce' => 'string|max:255',
+//            'avatar_url' => 'string|max:255',
         ];
     }
     public function get(){

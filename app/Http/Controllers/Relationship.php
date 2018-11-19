@@ -11,17 +11,17 @@ class Relationship extends Token
         return [
             'name' => 'required|string',
             'phone' => 'phone',
-            'linkman' => 'string',
-            'link_phone' => 'string',
-            'link_wechat' => 'string',
-            'wechat' => 'string',
+//            'linkman' => 'string',
+//            'link_phone' => 'string',
+//            'link_wechat' => 'string',
+//            'wechat' => 'string',
             'email' => 'email',
             'company' => 'required|string',
             'position' => 'required|string',
             'title' => 'required|string',
             'industry_id' => 'required|integer',
             'category_id' => 'required|integer',
-            'note' => 'string',
+//            'note' => 'string',
         ];
     }
     //

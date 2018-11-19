@@ -13,7 +13,6 @@ class Discussion extends Token
             'id' => 'integer',
             'title' => 'required|string|max:64',
             'content' => 'required|string|max:1024',
-            'pics' => 'string|max:1024',
         ];
     }
     public function get(){

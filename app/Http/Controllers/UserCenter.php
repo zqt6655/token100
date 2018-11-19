@@ -13,7 +13,7 @@ class UserCenter extends Token
         return [
             'name' => 'required|string',
             'email' => 'email',
-            'avatar_url' => 'string',
+//            'avatar_url' => 'string',
         ];
     }
     protected function password_rule(){
