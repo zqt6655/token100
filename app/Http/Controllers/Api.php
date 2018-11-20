@@ -11,11 +11,5 @@ namespace App\Http\Controllers;
 
 class Api extends Controller
 {
-    public function get_industry_list(){
-        $model =  new \App\Industry();
-        $indus = $model->get_industry_list();
-        $data['data'] = $indus;
-        $data['code'] = 0;
-        return $data;
-    }
+
 }

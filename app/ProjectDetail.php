@@ -99,7 +99,7 @@ class ProjectDetail extends BaseModel
         $field = ['project_contacts','project_introduce', 'problem',
             'framework', 'strength','tokenmodel', 'project_strategy','project_community', 'investplan',
             'project_otherinfo', 'team_introduce', 'investprogress', 'start_time','end_time', 'coin_total','circulate_num', 'platform',
-            'accept_coin', 'limit_zone','sorf_cap', 'hard_cap', 'is_kyc','is_aml', 'ratio','final','project_id'];
+            'accept_coin', 'limit_zone','sorf_cap', 'hard_cap', 'is_kyc','is_aml', 'ratio','final','project_id','score'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);
