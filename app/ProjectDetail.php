@@ -24,6 +24,23 @@ class ProjectDetail extends BaseModel
         if(!$data){
             return [];
         }
+        if($data->is_market==1){
+            $data->is_ing = '已结束';
+        }else{
+            $now = date('Y-m-d H:i:s');
+            if($data->start_time<$now){
+                $data->is_ing = '未开始';
+            }elseif($data->end_time>$now){
+                $data->is_ing = '已结束';
+            }else{
+                $data->is_ing = '进行中';
+            }
+        }
+
+
+        $data->start_time = substr($data->start_time,0,-3);
+        $data->end_time = substr($data->end_time,0,-3);
+
         $white_book = $data->white_book;
         if($white_book){
             $book_list = explode(',',$white_book);
