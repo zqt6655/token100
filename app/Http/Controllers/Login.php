@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Input;
 
 class Login extends Controller
 {
+    public function fun1(){
+        return 'fun1';
+    }
+    public function fun2(){
+        return 'fun2';
+    }
     //
     public function login(Request $request){
         $data = $request->all();

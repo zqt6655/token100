@@ -45,6 +45,9 @@ class Upload extends Controller
         }
         return $this->returnFail('未获取到上传文件或上传过程出错');
     }
+    public function show(){
+        return response()->file('');
+    }
 
     //获取微信接口注入权限验证配置
     public function get_wx_auth_config(){

@@ -22,125 +22,147 @@
 Route::get('/', function () {
     return view('welcome');
 });
-//login 控制器
-//发送验证码
-Route::any('api/send_sms', "Login@send_sms");
-//注册
-Route::post('api/admin/register', "Login@register");
-
-//绑定邮箱
-Route::post('api/admin/bind_email', "Login@bind_email");
-//登录
-Route::post('api/admin/login', "Login@login");
-
-//获取验证码
-Route::get('api/capt/get', "Capt@get");
-//检验验证码
-Route::post('api/capt/validate', "Capt@validate_capt");
-
 //前端不需要token验证的接口*************开始******************
 //投资布局
-Route::get('front/investment_layout/get', "FrontCommon@inv_layout_get");
-Route::get('front/investment_layout/get_by_category', "FrontCommon@inv_layout_get_by_category");
-Route::get('front/investment_layout/get_by_alp', "FrontCommon@inv_layout_get_by_alp");
-
-//文章
-Route::get('front/article/get_publish', "FrontCommon@article_get_publish");
-Route::get('front/article/detail', "FrontCommon@article_detail");
-
-//成员
-Route::get('front/member/get', "FrontCommon@get_members");
-
-//添加项目
-Route::post('front/project/add', "FrontCommon@add_project");
-//修改项目
-Route::post('front/project_detail/update', "FrontCommon@update_project");
+Route::prefix('front/investment_layout')->group(function() {
+    Route::get('get', "FrontCommon@inv_layout_get");
+    Route::get('get_by_category', "FrontCommon@inv_layout_get_by_category");
+    Route::get('get_by_alp', "FrontCommon@inv_layout_get_by_alp");
+});
+Route::prefix('front/')->group(function() {
+    //文章
+    Route::get('article/get_publish', "FrontCommon@article_get_publish");
+    Route::get('article/detail', "FrontCommon@article_detail");
+    //成员
+    Route::get('member/get', "FrontCommon@get_members");
+    //添加项目
+    Route::post('project/add', "FrontCommon@add_project");
+    //修改项目
+    Route::post('project_detail/update', "FrontCommon@update_project");
+});
 //前端不需要token验证的接口*************结束******************
-//文件上传
-Route::any('api/upload', "Upload@upload");
-//获取微信接口注入权限验证配置
-Route::any('api/wx_auth', "Upload@get_wx_auth_config");
-//token检测
-Route::any('api/token/get', "Token@get");
-//relationship
-Route::any('api/relationship/add', "Relationship@add")->name("api/relationship/add");
-Route::any('api/relationship/update', "Relationship@update")->name("api/relationship/update");
-Route::any('api/relationship/delete', "Relationship@delete")->name("api/relationship/delete");
-Route::any('api/relationship/group', "Relationship@group")->name("api/relationship/group");
-Route::any('api/relationship/detail', "Relationship@detail")->name("api/relationship/detail");
-Route::any('api/relationship/search', "Relationship@search");
 
-//category
-Route::any('api/category/get', "Category@get");
+
+//后端api接口*************开始******************
+Route::prefix('api/')->group(function() {
+//发送验证码
+    Route::any('send_sms', "Login@send_sms");
+//注册
+    Route::post('admin/register', "Login@register");
+//绑定邮箱
+    Route::post('admin/bind_email', "Login@bind_email");
+//登录
+    Route::post('admin/login', "Login@login");
+//获取验证码
+    Route::get('capt/get', "Capt@get");
+//检验验证码
+    Route::post('capt/validate', "Capt@validate_capt");
+//文件上传
+    Route::any('upload', "Upload@upload");
+//获取微信接口注入权限验证配置
+    Route::any('wx_auth', "Upload@get_wx_auth_config");
+    //category
+    Route::any('category/get', "Category@get");
 //industry
-Route::any('api/industry/get', "Industry@get");
+    Route::any('industry/get', "Industry@get");
 //job_title
-Route::any('api/job_title/get', "JobTitle@get");
+    Route::any('job_title/get', "JobTitle@get");
 //job_position
-Route::any('api/job_position/get', "JobPosition@get");
+    Route::any('job_position/get', "JobPosition@get");
+//project_lab
+    Route::post('project_lab/update', "ProjectLab@update");
+});
+
+//relationship
+Route::prefix('api/relationship/')->group(function() {
+    Route::any('add', "Relationship@add");
+    Route::any('update', "Relationship@update");
+    Route::any('delete', "Relationship@delete");
+    Route::any('group', "Relationship@group");
+    Route::any('detail', "Relationship@detail");
+});
 
 //article
-Route::any('api/article/add', "Article@add");
-Route::any('api/article/update', "Article@update");
-Route::any('api/article/pub_cancel', "Article@pub_cancel");
-Route::any('api/article/delete', "Article@delete");
-Route::any('api/article/get', "Article@get");
-Route::any('api/article/get_publish', "Article@get_publish");
-Route::any('api/article/detail', "Article@detail");
-
+Route::prefix('api/article/')->group(function() {
+    Route::any('add', "Article@add");
+    Route::any('update', "Article@update");
+    Route::any('pub_cancel', "Article@pub_cancel");
+    Route::any('delete', "Article@delete");
+    Route::any('get', "Article@get");
+    Route::any('get_publish', "Article@get_publish");
+    Route::any('detail', "Article@detail");
+});
 //investmentLayout
-Route::any('api/investment_layout/add', "InvestmentLayout@add");
-Route::any('api/investment_layout/update', "InvestmentLayout@update");
-Route::any('api/investment_layout/delete', "InvestmentLayout@delete");
-Route::any('api/investment_layout/get', "InvestmentLayout@get");
-Route::any('api/investment_layout/get_by_category', "InvestmentLayout@get_by_category");
-Route::any('api/investment_layout/get_by_alp', "InvestmentLayout@get_by_alp");
-
+Route::prefix('api/investment_layout/')->group(function() {
+    Route::any('add', "InvestmentLayout@add");
+    Route::any('update', "InvestmentLayout@update");
+    Route::any('delete', "InvestmentLayout@delete");
+    Route::any('get', "InvestmentLayout@get");
+    Route::any('get_by_category', "InvestmentLayout@get_by_category");
+    Route::any('get_by_alp', "InvestmentLayout@get_by_alp");
+});
 //lab
-Route::post('api/lab/add', "Lab@add");
-Route::post('api/lab/update', "Lab@update");
-Route::any('api/lab/delete', "Lab@delete");
-Route::any('api/lab/get', "Lab@get");
-Route::any('api/lab/get_by_industry', "Lab@get_by_industry");
-Route::any('api/lab/get_by_alp', "Lab@get_by_alp");
+Route::prefix('api/lab/')->group(function() {
+    Route::post('add', "Lab@add");
+    Route::post('update', "Lab@update");
+    Route::any('delete', "Lab@delete");
+    Route::any('get', "Lab@get");
+    Route::any('get_by_industry', "Lab@get_by_industry");
+    Route::any('get_by_alp', "Lab@get_by_alp");
+});
 
 //project
-Route::post('api/project/add', "Project@add");
-Route::post('api/project/update', "Project@update");
-Route::any('api/project/delete', "Project@delete");
-Route::get('api/project/get', "Project@get");
-Route::get('api/project/search', "Project@search");
-Route::get('api/project/get_ioc', "Project@get_ioc");
+Route::prefix('api/project/')->group(function() {
+    Route::post('add', "Project@add");
+    Route::post('update', "Project@update");
+    Route::any('delete', "Project@delete");
+    Route::get('get', "Project@get");
+    Route::get('search', "Project@search");
+    Route::get('get_ioc', "Project@get_ioc");
+});
 
 //project_detail
-Route::post('api/project_detail/update', "ProjectDetail@update");
-Route::any('api/project_detail/get', "ProjectDetail@get");
-Route::any('api/project_detail/get_price', "ProjectDetail@get_price");
-//project_lab
-Route::post('api/project_lab/update', "ProjectLab@update");
+Route::prefix('api/project_detail/')->group(function() {
+    Route::post('update', "ProjectDetail@update");
+    Route::any('get', "ProjectDetail@get")->name('project_detail/get');
+    Route::any('get_price', "ProjectDetail@get_price");
+});
+//project_team
+Route::prefix('api/project_team/')->group(function() {
+    Route::post('update', "ProjectTeam@update");
+    Route::post('add', "ProjectTeam@add");
+    Route::any('delete', "ProjectTeam@delete");
+    Route::get('get', "ProjectTeam@get");
+});
 
 //user_center
-Route::get('api/user_center/get', "UserCenter@get");
-Route::post('api/user_center/update_info', "UserCenter@update_info");
-Route::post('api/user_center/update_password', "UserCenter@update_password");
-
+Route::prefix('api/user_center/')->group(function() {
+    Route::get('get', "UserCenter@get");
+    Route::post('update_info', "UserCenter@update_info");
+    Route::post('update_password', "UserCenter@update_password");
+});
 //member
-Route::get('api/member/get', "Member@get");
-Route::post('api/member/update', "Member@update");
-Route::post('api/member/add', "Member@add");
-Route::get('api/member/delete', "Member@delete");
-
+Route::prefix('api/member/')->group(function() {
+    Route::get('get', "Member@get");
+    Route::post('update', "Member@update");
+    Route::post('add', "Member@add");
+    Route::get('delete', "Member@delete");
+});
 //Discussion
-Route::get('api/discussion/get', "Discussion@get");
-Route::post('api/discussion/update', "Discussion@update");
-Route::get('api/discussion/detail', "Discussion@detail");
-Route::post('api/discussion/add', "Discussion@add");
-Route::get('api/discussion/delete', "Discussion@delete");
-
+Route::prefix('api/discussion/')->group(function() {
+    Route::get('get', "Discussion@get");
+    Route::post('update', "Discussion@update");
+    Route::get('detail', "Discussion@detail");
+    Route::post('add', "Discussion@add");
+    Route::get('delete', "Discussion@delete");
+});
 //DiscussionComment
-Route::post('api/discussion_comment/add', "DiscussionComment@add");
-Route::get('api/discussion_comment/delete', "DiscussionComment@delete");
-
+Route::prefix('api/discussion_comment/')->group(function() {
+    Route::post('add', "DiscussionComment@add");
+    Route::get('delete', "DiscussionComment@delete");
+});
 //data
-Route::any('api/data/add', "Data@add");
-Route::any('api/data/rating', "Data@add_ratingToken");
+Route::prefix('api/data/')->group(function() {
+    Route::any('add', "Data@add");
+    Route::any('rating', "Data@add_ratingToken");
+});
