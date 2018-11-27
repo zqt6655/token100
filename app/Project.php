@@ -123,13 +123,13 @@ class Project extends BaseModel
 //            ->get()
 //            ->toArray();
         if(!$data){
-            return $data;
+            return [];
         }
         foreach ($data as $one){
             if($one->start_time<$now){
-                $one->is_ing = 1;
+                $one->is_ing = '进行中';
             }else{
-                $one->is_ing = 0;
+                $one->is_ing = '未开始';
             }
             $one->start_time = substr($one->start_time,0,-3);
             $one->end_time = substr($one->end_time,0,-3);
