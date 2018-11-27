@@ -27,6 +27,7 @@ class Project extends Token
         return $this->returnData($model->get_ioc());
     }
 
+    //项目搜索
     public function search(){
         $keyword = Input::get('keyword');
         if(!$keyword){
@@ -35,6 +36,16 @@ class Project extends Token
         $model = $this->getModel();
         return $this->returnData($model->search($keyword));
     }
+    //项目ico搜索
+    public function search_ico(){
+        $keyword = Input::get('keyword');
+        if(!$keyword){
+            return $this->returnFail('keyword不能为空');
+        }
+        $model = $this->getModel();
+        return $this->returnData($model->search_ioc($keyword));
+    }
+
 
     public function delete(){
         $id = Input::get('id');

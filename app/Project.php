@@ -64,7 +64,6 @@ class Project extends BaseModel
                 'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name','pd.start_time','pd.end_time','p.is_market')
            ->orderby('id','desc')
            ->paginate($this->perPage);
-       $new_data = [];
        foreach ($data as $one){
            if($one->is_market==1){
                $one->is_ing = '已结束';
@@ -84,9 +83,8 @@ class Project extends BaseModel
            unset($one->show_name);
            unset($one->from);
            unset($one->user_id);
-           $new_data[] = $one;
        }
-       return $new_data;
+       return $data;
     }
     public function search($keyword){
         $data=  DB::table("$this->table as p")
@@ -120,8 +118,35 @@ class Project extends BaseModel
             ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time')
             ->orderby('id','desc')
             ->paginate($this->perPage);
-//            ->get()
-//            ->toArray();
+        if(!$data){
+            return [];
+        }
+        foreach ($data as $one){
+            if($one->start_time<$now){
+                $one->is_ing = '进行中';
+            }else{
+                $one->is_ing = '未开始';
+            }
+            $one->start_time = substr($one->start_time,0,-3);
+            $one->end_time = substr($one->end_time,0,-3);
+        }
+        return $data;
+    }
+
+    public function search_ioc($keyword){
+        $now = date('Y-m-d H:i:s');
+        $data = DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('project_details as pd','p.id','=','pd.project_id')
+            ->where('p.is_delete','=',0)
+            ->where('pd.end_time','>',$now)
+            ->where(function($query) use ($keyword){
+                $query->where('p.name', 'like', '%'.$keyword.'%')
+                    ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
+            })
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time')
+            ->orderby('id','desc')
+            ->paginate($this->perPage);
         if(!$data){
             return [];
         }

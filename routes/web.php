@@ -123,6 +123,7 @@ Route::prefix('api/project/')->group(function() {
     Route::get('get', "Project@get");
     Route::get('search', "Project@search");
     Route::get('get_ico', "Project@get_ico");
+    Route::get('search_ico', "Project@search_ico");
     //测试
 });
 
