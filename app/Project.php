@@ -119,8 +119,9 @@ class Project extends BaseModel
             ->where('pd.end_time','>',$now)
             ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time')
             ->orderby('id','desc')
-            ->get()
-            ->toArray();
+            ->paginate($this->perPage);
+//            ->get()
+//            ->toArray();
         if(!$data){
             return $data;
         }
