@@ -16,11 +16,13 @@ class Adminuser extends BaseModel
         $data = $this->check_field($data);
         //过滤不属于数据库中的字段，然后将密码加密
 //        $data['password'] = Hash::make($data['password']);
+        $time = date('Y-m-d H:i:s');
         $data['password'] = sha1(md5($data['password']));
-        $data = $this->add_date_to_data($data);
+        $data['add_time'] = $time;
+        $data['last_login'] = $time;
         $id = DB::table($this->table)->insertGetId($data);
         if($id<0){
-            $this->returnApiError('系统繁忙，请重新发送验证码，再试一次。');
+            $this->returnApiError('系统繁忙，请重新点击发送验证码，再试一次。');
         }
         return $id;
     }

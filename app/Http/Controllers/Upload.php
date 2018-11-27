@@ -45,8 +45,11 @@ class Upload extends Controller
         }
         return $this->returnFail('未获取到上传文件或上传过程出错');
     }
-    public function show(){
-        return response()->file('');
+    public function preshow(){
+        return response()->file('uploads/pdf/1541753828463__collinstar__154164368606317381.pdf');
+    }
+    public function download(){
+        return response()->download('uploads/pdf/1541753828463__collinstar__154164368606317381.pdf');
     }
 
     //获取微信接口注入权限验证配置

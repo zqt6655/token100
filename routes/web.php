@@ -59,6 +59,10 @@ Route::prefix('api/')->group(function() {
     Route::post('capt/validate', "Capt@validate_capt");
 //文件上传
     Route::any('upload', "Upload@upload");
+    //文件预览
+    Route::any('preshow', "Upload@preshow");
+    //文件下载
+    Route::any('download', "Upload@download");
 //获取微信接口注入权限验证配置
     Route::any('wx_auth', "Upload@get_wx_auth_config");
     //category
@@ -155,14 +159,26 @@ Route::prefix('api/discussion/')->group(function() {
     Route::get('detail', "Discussion@detail");
     Route::post('add', "Discussion@add");
     Route::get('delete', "Discussion@delete");
+
 });
 //DiscussionComment
 Route::prefix('api/discussion_comment/')->group(function() {
     Route::post('add', "DiscussionComment@add");
     Route::get('delete', "DiscussionComment@delete");
 });
-//data
+//清洗入库爬取的项目data
 Route::prefix('api/data/')->group(function() {
     Route::any('add', "Data@add");
     Route::any('rating', "Data@add_ratingToken");
+});
+//基金交易详情,回币、购买、卖出
+Route::prefix('api/found_project/')->group(function() {
+    Route::get('get', "FoundProject@get_by_project_id");
+    Route::post('back', "FoundProject@add_back");
+    Route::post('buy', "FoundProject@add_buy");
+    Route::post('sell', "FoundProject@add_sell");
+    Route::post('delete', "FoundProject@delete");
+    Route::get('back_info', "FoundProject@get_back_info");
+    Route::get('buy_info', "FoundProject@get_buy_info");
+    Route::get('sell_info', "FoundProject@get_sell_info");
 });

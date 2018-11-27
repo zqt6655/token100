@@ -4,7 +4,6 @@ namespace App;
 
 
 use Illuminate\Support\Facades\DB;
-use function MongoDB\BSON\toJSON;
 
 class ProjectTeam extends BaseModel
 {
