@@ -122,7 +122,7 @@ Route::prefix('api/project/')->group(function() {
     Route::any('delete', "Project@delete");
     Route::get('get', "Project@get");
     Route::get('search', "Project@search");
-    Route::get('get_ioc', "Project@get_ioc");
+    Route::get('get_ico', "Project@get_ico");
 });
 
 //project_detail

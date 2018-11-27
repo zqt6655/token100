@@ -22,7 +22,7 @@ class Project extends Token
         $model = $this->getModel();
         return $this->returnData($model->get());
     }
-    public function get_ioc(){
+    public function get_ico(){
         $model = $this->getModel();
         return $this->returnData($model->get_ioc());
     }

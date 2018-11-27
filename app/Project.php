@@ -56,22 +56,37 @@ class Project extends BaseModel
     }
     public function get(){
        $data=  DB::table("$this->table as p")
+           ->leftJoin('project_details as pd','pd.project_id','=','p.id')
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
-                'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name')
+                'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name','pd.start_time','pd.end_time','p.is_market')
            ->orderby('id','desc')
            ->paginate($this->perPage);
+       $new_data = [];
        foreach ($data as $one){
+           if($one->is_market==1){
+               $one->is_ing = '已结束';
+           }else{
+               $now = date('Y-m-d H:i:s');
+               if($one->start_time<$now){
+                   $one->is_ing = '未开始';
+               }elseif($one->end_time>$now){
+                   $one->is_ing = '已结束';
+               }else{
+                   $one->is_ing = '进行中';
+               }
+           }
            if($one->from !=1){
                $one->up_name = $one->show_name;
            }
            unset($one->show_name);
            unset($one->from);
            unset($one->user_id);
+           $new_data[] = $one;
        }
-       return $data;
+       return $new_data;
     }
     public function search($keyword){
         $data=  DB::table("$this->table as p")
