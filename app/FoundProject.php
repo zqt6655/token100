@@ -30,8 +30,9 @@ class FoundProject extends BaseModel
 //            ->select('pf.found_id','pf.project_id','pf.op_type','pf.total_price','pf.num','pf.user_id','pf.status','f.name','pf.status','pf.status')
             ->select('fp.*','f.name','f.unit')
             ->orderBy('fp.pay_coin_time','desc')
-            ->get()
-            ->toArray();
+            ->paginate(10);
+//            ->get()
+//            ->toArray();
         if($data){
             $new_data = [];
             $buy=[];

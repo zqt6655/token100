@@ -63,6 +63,7 @@ class Project extends BaseModel
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
                 'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name','pd.start_time','pd.end_time','p.is_market')
            ->orderby('id','desc')
+//           ->simplePaginate($this->perPage);
            ->paginate($this->perPage);
        foreach ($data as $one){
            if($one->is_market==1){
@@ -79,6 +80,13 @@ class Project extends BaseModel
            }
            if($one->from !=1){
                $one->up_name = $one->show_name;
+           }
+           if($one->start_time && $one->end_time){
+               $one->start_time = substr($one->start_time,0,-3);
+               $one->end_time = substr($one->end_time,0,-3);
+           }else{
+               $one->start_time = '';
+               $one->end_time = '';
            }
            unset($one->show_name);
            unset($one->from);
@@ -102,6 +110,7 @@ class Project extends BaseModel
             if($one->from !=1){
                 $one->up_name = $one->show_name;
             }
+
             unset($one->show_name);
             unset($one->from);
             unset($one->user_id);
@@ -133,7 +142,7 @@ class Project extends BaseModel
         return $data;
     }
 
-    public function search_ioc($keyword){
+    public function search_ico($keyword){
         $now = date('Y-m-d H:i:s');
         $data = DB::table("$this->table as p")
             ->leftJoin('industries as i','p.industry_id','=','i.id')

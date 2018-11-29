@@ -43,7 +43,7 @@ class Project extends Token
             return $this->returnFail('keyword不能为空');
         }
         $model = $this->getModel();
-        return $this->returnData($model->search_ioc($keyword));
+        return $this->returnData($model->search_ico($keyword));
     }
 
 

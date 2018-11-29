@@ -179,7 +179,7 @@ Route::prefix('api/found_project/')->group(function() {
     Route::post('back', "FoundProject@add_back");
     Route::post('buy', "FoundProject@add_buy");
     Route::post('sell', "FoundProject@add_sell");
-    Route::post('delete', "FoundProject@delete");
+    Route::any('delete', "FoundProject@delete");
     Route::get('back_info', "FoundProject@get_back_info");
     Route::get('buy_info', "FoundProject@get_buy_info");
     Route::get('sell_info', "FoundProject@get_sell_info");
