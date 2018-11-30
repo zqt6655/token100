@@ -111,6 +111,14 @@ class FoundProject extends BaseModel
 //        dd($data);
         return(DB::table($this->table)->insertGetId($data));
     }
+    //更新回币记录
+    public function update_back($data,$id){
+        $data = $this->check_field($data);
+        $data['pay_coin_time'] = $data['pay_coin_time'].':00';
+        return DB::table($this->table)
+            ->where('id','=',$id)
+            ->update($data);
+    }
 
     //购买之前，获取当前所有项目可用资金
     public function get_buy_info(){
@@ -145,6 +153,14 @@ class FoundProject extends BaseModel
         $data['op_type'] = 0;
         $data['pay_coin_time'] = $data['pay_coin_time'].':00';
         return(DB::table($this->table)->insertGetId($data));
+    }
+    //更新回币记录
+    public function update_buy($data,$id){
+        $data = $this->check_field($data);
+        $data['pay_coin_time'] = $data['pay_coin_time'].':00';
+        return DB::table($this->table)
+            ->where('id','=',$id)
+            ->update($data);
     }
 //购买之前，获取当前所有项目可用资金
     public function get_sell_info($project_id){
@@ -223,6 +239,14 @@ class FoundProject extends BaseModel
             return DB::table($this->table)->insert($all_record);
         }
         return $this->returnApiError('info字段不能为空');
+    }
+    //更新回币记录
+    public function update_sell($data,$id){
+        $data = $this->check_field($data);
+        $data['pay_coin_time'] = $data['pay_coin_time'].':00';
+        return DB::table($this->table)
+            ->where('id','=',$id)
+            ->update($data);
     }
     public function delete_by_id($id){
         return DB::table($this->table)

@@ -183,4 +183,7 @@ Route::prefix('api/found_project/')->group(function() {
     Route::get('back_info', "FoundProject@get_back_info");
     Route::get('buy_info', "FoundProject@get_buy_info");
     Route::get('sell_info', "FoundProject@get_sell_info");
+    Route::post('update_back', "FoundProject@update_back");
+    Route::post('update_buy', "FoundProject@update_buy");
+    Route::post('update_sell', "FoundProject@update_sell");
 });
