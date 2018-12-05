@@ -88,6 +88,9 @@ class ProjectDetail extends BaseModel
         if(!$data){
             $this->returnApiError('请传入需要修改的字段');
         }
+        //如果更新score，则更新修改时间
+        if( isset($data['score']))
+            $data['score_time'] = date('Y-m-d H:i:s');
         //说明字段没有空值，插入数据库即可。
         return DB::table($this->table)
             ->where('project_id','=',$id)
