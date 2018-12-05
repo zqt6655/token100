@@ -54,43 +54,73 @@ class Project extends BaseModel
         $new_data['project_detail_id'] = $detail_id;
         return $new_data;
     }
+    public function get_front(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.from','=',2)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','p.from','p.show_name as up_name','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        return $data;
+    }
+    public function get_system(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.from','=',0)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','p.from','p.show_name as up_name','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        return $data;
+    }
+
+    public function get_back(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.from','=',1)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','i.name as industry_id_text','ad.name as up_name','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        return $data;
+    }
+    public function get_grade(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->whereNotNull('p.grade')
+            ->where('p.grade','<>','')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        return $data;
+    }
     public function get(){
        $data=  DB::table("$this->table as p")
-           ->leftJoin('project_details as pd','pd.project_id','=','p.id')
+//           ->leftJoin('project_details as pd','pd.project_id','=','p.id')
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
-                'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name','pd.start_time','pd.end_time','p.is_market')
-           ->orderby('id','desc')
+                'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name','p.is_market','p.is_invest')
+           ->orderby('p.id','desc')
 //           ->simplePaginate($this->perPage);
            ->paginate($this->perPage);
        foreach ($data as $one){
-           if($one->is_market==1){
-               $one->is_ing = '已结束';
-           }else{
-               $now = date('Y-m-d H:i:s');
-               if($one->start_time<$now){
-                   $one->is_ing = '未开始';
-               }elseif($one->end_time>$now){
-                   $one->is_ing = '已结束';
-               }else{
-                   $one->is_ing = '进行中';
-               }
-           }
            if($one->from !=1){
                $one->up_name = $one->show_name;
            }
-           if($one->start_time && $one->end_time){
-               $one->start_time = substr($one->start_time,0,-3);
-               $one->end_time = substr($one->end_time,0,-3);
-           }else{
-               $one->start_time = '';
-               $one->end_time = '';
-           }
-           unset($one->show_name);
            unset($one->from);
-           unset($one->user_id);
        }
        return $data;
     }
@@ -104,15 +134,12 @@ class Project extends BaseModel
                     ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
             })
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
-                'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name')
+                'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name','p.is_invest')
             ->paginate($this->perPage);
         foreach ($data as $one){
             if($one->from !=1){
                 $one->up_name = $one->show_name;
             }
-
-            unset($one->show_name);
-            unset($one->from);
             unset($one->user_id);
         }
         return $data;
@@ -124,8 +151,8 @@ class Project extends BaseModel
             ->leftJoin('project_details as pd','p.id','=','pd.project_id')
             ->where('p.is_delete','=',0)
             ->where('pd.end_time','>',$now)
-            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time')
-            ->orderby('id','desc')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time','p.is_invest')
+            ->orderby('p.id','desc')
             ->paginate($this->perPage);
         if(!$data){
             return [];
@@ -153,8 +180,8 @@ class Project extends BaseModel
                 $query->where('p.name', 'like', '%'.$keyword.'%')
                     ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
             })
-            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time')
-            ->orderby('id','desc')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time','p.is_invest')
+            ->orderby('p.id','desc')
             ->paginate($this->perPage);
         if(!$data){
             return [];
@@ -170,9 +197,35 @@ class Project extends BaseModel
         }
         return $data;
     }
+    //获取已经转入投资的项目
+    public function get_invest(){
+        $data = DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+//            ->leftJoin('project_details as pd','p.id','=','pd.project_id')
+            ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',1)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','p.is_invest')
+            ->orderby('p.id','desc')
+            ->paginate($this->perPage);
+        if(!$data){
+            return [];
+        }
+    }
+    //项目撤离投资
+    public function invest_off($id){
+        return DB::table("$this->table")
+            ->where('id','=',$id)
+            ->update(['is_invest'=>0,'invest_user_id'=>$this->user_id]);
+    }
+    //项目转入投资
+    public function invest_on($id){
+        return DB::table("$this->table")
+            ->where('id','=',$id)
+            ->update(['is_invest'=>1,'invest_user_id'=>$this->user_id]);
+    }
 
     public function delete_by_id($id){
-        $this::where('id','=',$id)->update(['is_delete'=>1]);
+        return $this::where('id','=',$id)->update(['is_delete'=>1]);
     }
     public function update_by_id($data,$id){
         $data = $this->check_field($data);

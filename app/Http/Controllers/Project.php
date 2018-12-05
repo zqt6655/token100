@@ -18,14 +18,37 @@ class Project extends Token
             'token_symbol' => 'required|string|max:32',
         ];
     }
+    //获取所有的项目
     public function get(){
         $model = $this->getModel();
         return $this->returnData($model->get());
     }
+    public function get_grade(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_grade());
+    }
+
+    //筛选前端上传的项目
+    public function get_front(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_front());
+    }
+    //筛选后台上传的项目
+    public function get_back(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_back());
+    }
+    //筛选爬虫抓取的项目
+    public function get_system(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_system());
+    }
+    //查询即将或正在ico的项目
     public function get_ico(){
         $model = $this->getModel();
         return $this->returnData($model->get_ioc());
     }
+
 
     //项目搜索
     public function search(){
@@ -45,8 +68,7 @@ class Project extends Token
         $model = $this->getModel();
         return $this->returnData($model->search_ico($keyword));
     }
-
-
+    //删除项目
     public function delete(){
         $id = Input::get('id');
         if(!is_numeric($id)){
@@ -55,6 +77,29 @@ class Project extends Token
         $model = $this->getModel();
         $model->delete_by_id($id);
         return $this->returnSuccess();
+    }
+    //查询已经转入投资的项目
+    public function get_invest(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_invest());
+    }
+    //撤出投资
+    public function invest_off(){
+        $id = Input::get('id');
+        if(!is_numeric($id)){
+            return $this->returnFail('id必须为整数');
+        }
+        $model = $this->getModel();
+        return $this->returnData( $model->invest_off($id) );
+    }
+    //转入投资
+    public function invest_on(){
+        $id = Input::get('id');
+        if(!is_numeric($id)){
+            return $this->returnFail('id必须为整数');
+        }
+        $model = $this->getModel();
+        return $this->returnData( $model->invest_on($id) );
     }
     public function add(Request $request){
         $data = $request->all();

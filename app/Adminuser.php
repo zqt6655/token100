@@ -56,6 +56,9 @@ class Adminuser extends BaseModel
     }
     public function login($data){
         if(strstr($data['user'],'@')){
+            if(!strstr($data['user'],'collinstar.com.cn')){
+                $this->returnApiError('只支持科银邮箱登陆');
+            }
             return $this->login_by_email($data['user'],$data['password']);
         }
         return $this->login_by_phone($data['user'],$data['password']);
@@ -83,6 +86,11 @@ class Adminuser extends BaseModel
         }
         if( $this->ecry_password($password) !=$data->password){
             $this->returnApiError('密码错误');
+        }
+        $email = $data->email;
+        //如果邮箱不是科银的，则不让登陆
+        if(!strstr($email,'@collinstar.com.cn')){
+            $this->returnApiError('请先绑定科银邮箱');
         }
         $data->last_login = date('Y-m-d H:i:s');
         $data->save();

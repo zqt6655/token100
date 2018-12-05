@@ -121,10 +121,18 @@ Route::prefix('api/project/')->group(function() {
     Route::post('update', "Project@update");
     Route::any('delete', "Project@delete");
     Route::get('get', "Project@get");
+    Route::get('get_front', "Project@get_front");
+    Route::get('get_back', "Project@get_back");
+    Route::get('get_system', "Project@get_system");
+    Route::get('get_grade', "Project@get_grade");
     Route::get('search', "Project@search");
     Route::get('get_ico', "Project@get_ico");
     Route::get('search_ico', "Project@search_ico");
-    //测试
+    Route::get('get_invest', "Project@get_invest");
+    Route::get('invest_on', "Project@invest_on");
+    Route::get('invest_off', "Project@invest_off");
+
+
 });
 
 //project_detail
