@@ -84,6 +84,7 @@ Route::prefix('api/relationship/')->group(function() {
     Route::any('delete', "Relationship@delete");
     Route::any('group', "Relationship@group");
     Route::any('detail', "Relationship@detail");
+    Route::any('search', "Relationship@search");
 });
 
 //article
@@ -131,8 +132,10 @@ Route::prefix('api/project/')->group(function() {
     Route::get('get_invest', "Project@get_invest");
     Route::get('invest_on', "Project@invest_on");
     Route::get('invest_off', "Project@invest_off");
-
-
+    Route::get('get_wait', "Project@get_wait");
+    Route::get('get_continue', "Project@get_continue");
+    Route::get('get_hatch', "Project@get_hatch");
+    Route::get('get_reject', "Project@get_reject");
 });
 
 //project_detail
@@ -180,6 +183,7 @@ Route::prefix('api/discussion_comment/')->group(function() {
 Route::prefix('api/data/')->group(function() {
     Route::any('add', "Data@add");
     Route::any('rating', "Data@add_ratingToken");
+    Route::any('exchange', "Data@add_exchange");
 });
 //基金交易详情,回币、购买、卖出
 Route::prefix('api/found_project/')->group(function() {
@@ -194,4 +198,12 @@ Route::prefix('api/found_project/')->group(function() {
     Route::post('update_back', "FoundProject@update_back");
     Route::post('update_buy', "FoundProject@update_buy");
     Route::post('update_sell', "FoundProject@update_sell");
+});
+
+//项目尽调
+Route::prefix('api/project_survey/')->group(function() {
+    Route::any('add', "ProjectSurvey@add");
+    Route::any('get', "ProjectSurvey@get");
+    Route::any('update', "ProjectSurvey@update");
+    Route::any('delete', "ProjectSurvey@delete");
 });

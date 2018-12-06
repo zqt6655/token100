@@ -24,7 +24,7 @@ class Relationship extends Token
 //            'note' => 'string',
         ];
     }
-    //
+    //分组查询
     public function group(Request $request){
         $category_id = $request->get('category_id');
         $perPage = $request->get('perPage',0);

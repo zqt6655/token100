@@ -21,7 +21,8 @@ class Upload extends Controller
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $rule = ['jpg', 'png',  'jpeg', 'pdf'];
             $file = $request->file('file');
-            $orig_name = $file->getClientOriginalName();
+            //去除原名中所有的空格
+            $orig_name = $this->trimall($file->getClientOriginalName());
             $extension = $file->extension(); //$store_result = $file->store('photo');
             if (!in_array($extension, $rule)) {
                 return $this->returnFail('格式不正确');
@@ -45,6 +46,12 @@ class Upload extends Controller
         }
         return $this->returnFail('未获取到上传文件或上传过程出错');
     }
+    private function trimall($str)//删除空格
+    {
+        $oldchar=array(" ","　","\t","\n","\r");
+        $newchar=array("","","","","");
+        return str_replace($oldchar,$newchar,$str);
+}
     public function preshow(){
         return response()->file('uploads/pdf/1541753828463__collinstar__154164368606317381.pdf');
     }

@@ -10,6 +10,14 @@ class Project extends BaseModel
     public $table='project';
     public $timestamps = false;
     public $perPage = 10;
+    public function getOpinionAttribute($value){
+        //0待上会，1持续观察，2执行孵化，3拒绝
+        $Opinion = [0=>'待上会',1=>'持续观察',2=>'执行孵化',3=>'拒绝'];
+//        print_r($arr[$value]);
+//        die;
+//        return $arr[$value];
+
+    }
     public function add($data){
         $data = $this->check_field($data);
         $upload_time = date('Y-m-d H:i:s');
@@ -37,7 +45,6 @@ class Project extends BaseModel
         $upload_time = date('Y-m-d H:i:s');
         $data['upload_time'] = $upload_time;
         $data['from'] = 2;
-        $data['is_delete'] = 1;
         $data['show_name'] = '前台';
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table)->insertGetId($data);
@@ -59,6 +66,8 @@ class Project extends BaseModel
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->where('p.is_delete','=',0)
             ->where('p.from','=',2)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
                 'p.opinion','p.user_id','p.from','p.show_name as up_name','i.name as industry_id_text','p.is_market','p.is_invest')
             ->orderby('p.id','desc')
@@ -71,6 +80,8 @@ class Project extends BaseModel
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->where('p.is_delete','=',0)
             ->where('p.from','=',0)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
                 'p.opinion','p.user_id','p.from','p.show_name as up_name','i.name as industry_id_text','p.is_market','p.is_invest')
             ->orderby('p.id','desc')
@@ -85,6 +96,8 @@ class Project extends BaseModel
             ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
             ->where('p.from','=',1)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
                 'p.opinion','p.user_id','i.name as industry_id_text','ad.name as up_name','p.is_market','p.is_invest')
             ->orderby('p.id','desc')
@@ -96,39 +109,188 @@ class Project extends BaseModel
         $data=  DB::table("$this->table as p")
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->where('p.is_delete','=',0)
-            ->whereNotNull('p.grade')
             ->where('p.grade','<>','')
+            ->where('p.is_invest','=',0)
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
                 'p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest')
             ->orderby('p.id','desc')
 //           ->simplePaginate($this->perPage);
             ->paginate($this->perPage);
-        return $data;
+        $opinion = [0=>'待上会',1=>'持续观察',2=>'投行孵化',3=>'拒绝'];
+        foreach ($data as $one){
+            $one->opinion = $opinion[$one->opinion];
+        }
+        $continue_num = 0;
+        $hatch_num = 0;
+        $reject_num = 0;
+        $data2 =  DB::table("$this->table as p")
+            ->where('p.is_delete','=',0)
+            ->where('p.grade','<>','')
+            ->where('p.is_invest','=',0)
+            ->where('p.opinion','<>',0)
+            ->pluck('p.opinion');
+//            ->select('p.opinion')
+//            ->get()
+//            ->toArray();
+        foreach ($data2 as $one){
+            if($one ==1)
+                $continue_num++;
+            else if($one==2)
+                $hatch_num++;
+            else if($one==3)
+                $reject_num++;
+        }
+        $total = $data->total();
+        $wait_num = $total - $continue_num - $hatch_num - $reject_num;
+        $returnData['total'] = $total;
+        $returnData['wait_num'] = $wait_num;
+        $returnData['continue_num'] = $continue_num;
+        $returnData['hatch_num'] = $hatch_num;
+        $returnData['reject_num'] = $reject_num;
+        $returnData['data'] = $data;
+        return $returnData;
     }
+    public function get_wait(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.opinion','=',0)
+            ->where('p.grade','<>','')
+            ->where('p.is_invest','=',0)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        $opinion = [0=>'待上会',1=>'持续观察',2=>'投行孵化',3=>'拒绝'];
+        foreach ($data as $one){
+            $one->opinion = $opinion[$one->opinion];
+        }
+        $returnData['data'] = $data;
+        return $returnData;
+//        return $data;
+    }
+
+    public function get_continue(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.opinion','=',1)
+            ->where('p.grade','<>','')
+            ->where('p.is_invest','=',0)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        $opinion = [0=>'待上会',1=>'持续观察',2=>'投行孵化',3=>'拒绝'];
+        foreach ($data as $one){
+            $one->opinion = $opinion[$one->opinion];
+        }
+        $returnData['data'] = $data;
+        return $returnData;
+//        return $data;
+    }
+    public function get_hatch(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.opinion','=',2)
+            ->where('p.grade','<>','')
+            ->where('p.is_invest','=',0)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        $opinion = [0=>'待上会',1=>'持续观察',2=>'投行孵化',3=>'拒绝'];
+        foreach ($data as $one){
+            $one->opinion = $opinion[$one->opinion];
+        }
+        $returnData['data'] = $data;
+        return $returnData;
+//        return $data;
+    }
+    public function get_reject(){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.opinion','=',3)
+            ->where('p.grade','<>','')
+            ->where('p.is_invest','=',0)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
+                'p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        $opinion = [0=>'待上会',1=>'持续观察',2=>'投行孵化',3=>'拒绝'];
+        foreach ($data as $one){
+            $one->opinion = $opinion[$one->opinion];
+        }
+        $returnData['data'] = $data;
+        return $returnData;
+//        return $data;
+    }
+
     public function get(){
        $data=  DB::table("$this->table as p")
 //           ->leftJoin('project_details as pd','pd.project_id','=','p.id')
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',0)
+           ->where('p.grade','=','')
             ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
                 'p.opinion','p.user_id','p.from','p.show_name','i.name as industry_id_text','ad.name as up_name','p.is_market','p.is_invest')
            ->orderby('p.id','desc')
 //           ->simplePaginate($this->perPage);
            ->paginate($this->perPage);
+        $opinion = [0=>'待上会',1=>'持续观察',2=>'执行孵化',3=>'拒绝'];
        foreach ($data as $one){
            if($one->from !=1){
                $one->up_name = $one->show_name;
            }
+           $one->opinion = $opinion[$one->opinion];
            unset($one->from);
        }
-       return $data;
+       $front_num = 0;
+       $back_num = 0;
+       //查询前台和后台项目总和
+        $data2 =  DB::table("$this->table as p")
+            ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
+            ->where('p.from','<>',0)
+            ->select('from')
+            ->get()
+            ->toArray();
+        foreach ($data2 as $one){
+            if($one->from ==1)
+                $back_num++;
+            else
+                $front_num++;
+        }
+//        print_r($data);
+//        $data->items->front_num = $front_num;
+//        $data->items->back_num = $back_num;
+//        print_r($data);
+//        print_r($data->total());
+//        die;
+        $total = $data->total();
+        $returnData['total'] = $total;
+        $returnData['front_num'] = $front_num;
+        $returnData['back_num'] = $back_num;
+        $returnData['system_num'] = $total-$front_num-$back_num;
+        $returnData['data'] = $data;
+       return $returnData;
     }
     public function search($keyword){
         $data=  DB::table("$this->table as p")
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
             ->where(function($query) use ($keyword){
                 $query->where('p.name', 'like', '%'.$keyword.'%')
                     ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
@@ -150,6 +312,8 @@ class Project extends BaseModel
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->leftJoin('project_details as pd','p.id','=','pd.project_id')
             ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
             ->where('pd.end_time','>',$now)
             ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','pd.start_time','pd.end_time','p.is_invest')
             ->orderby('p.id','desc')
@@ -175,6 +339,8 @@ class Project extends BaseModel
             ->leftJoin('industries as i','p.industry_id','=','i.id')
             ->leftJoin('project_details as pd','p.id','=','pd.project_id')
             ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
             ->where('pd.end_time','>',$now)
             ->where(function($query) use ($keyword){
                 $query->where('p.name', 'like', '%'.$keyword.'%')

@@ -27,6 +27,22 @@ class Project extends Token
         $model = $this->getModel();
         return $this->returnData($model->get_grade());
     }
+    public function get_wait(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_wait());
+    }
+    public function get_continue(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_continue());
+    }
+    public function get_hatch(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_hatch());
+    }
+    public function get_reject(){
+        $model = $this->getModel();
+        return $this->returnData($model->get_reject());
+    }
 
     //筛选前端上传的项目
     public function get_front(){

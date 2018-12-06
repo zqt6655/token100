@@ -59,9 +59,7 @@ class Relationship extends BaseModel
     }
     public function add($data){
         $data = $this->check_field($data);
-        $time = time();
-        $data['created_at'] = $time;
-        $data['updated_at'] = $time;
+        $data = $this->add_date_to_data($data);
         //说明字段没有空值，插入数据库即可。
         $id = DB::table($this->table_name)->insertGetId($data);
         if($id<0){
