@@ -148,7 +148,8 @@ class Project extends BaseModel
         $returnData['hatch_num'] = $hatch_num;
         $returnData['reject_num'] = $reject_num;
         $returnData['data'] = $data;
-        return $returnData;
+//        return $returnData;
+        return $data;
     }
     public function get_wait(){
         $data=  DB::table("$this->table as p")
@@ -253,36 +254,31 @@ class Project extends BaseModel
            $one->opinion = $opinion[$one->opinion];
            unset($one->from);
        }
-       $front_num = 0;
-       $back_num = 0;
-       //查询前台和后台项目总和
-        $data2 =  DB::table("$this->table as p")
-            ->where('p.is_delete','=',0)
-            ->where('p.is_invest','=',0)
-            ->where('p.grade','=','')
-            ->where('p.from','<>',0)
-            ->select('from')
-            ->get()
-            ->toArray();
-        foreach ($data2 as $one){
-            if($one->from ==1)
-                $back_num++;
-            else
-                $front_num++;
-        }
-//        print_r($data);
-//        $data->items->front_num = $front_num;
-//        $data->items->back_num = $back_num;
-//        print_r($data);
-//        print_r($data->total());
-//        die;
-        $total = $data->total();
-        $returnData['total'] = $total;
-        $returnData['front_num'] = $front_num;
-        $returnData['back_num'] = $back_num;
-        $returnData['system_num'] = $total-$front_num-$back_num;
-        $returnData['data'] = $data;
-       return $returnData;
+//       $front_num = 0;
+//       $back_num = 0;
+//       查询前台和后台项目总和
+//        $data2 =  DB::table("$this->table as p")
+//            ->where('p.is_delete','=',0)
+//            ->where('p.is_invest','=',0)
+//            ->where('p.grade','=','')
+//            ->where('p.from','<>',0)
+//            ->select('from')
+//            ->get()
+//            ->toArray();
+//        foreach ($data2 as $one){
+//            if($one->from ==1)
+//                $back_num++;
+//            else
+//                $front_num++;
+//        }
+//        $total = $data->total();
+//        $returnData['total'] = $total;
+//        $returnData['front_num'] = $front_num;
+//        $returnData['back_num'] = $back_num;
+//        $returnData['system_num'] = $total-$front_num-$back_num;
+//        $returnData['data'] = $data;
+        return $data;
+//       return $returnData;
     }
     public function search($keyword){
         $data=  DB::table("$this->table as p")
@@ -376,6 +372,7 @@ class Project extends BaseModel
         if(!$data){
             return [];
         }
+        return $data;
     }
     //项目撤离投资
     public function invest_off($id){
