@@ -126,10 +126,12 @@ Route::prefix('api/project/')->group(function() {
     Route::get('get_back', "Project@get_back");
     Route::get('get_system', "Project@get_system");
     Route::get('get_grade', "Project@get_grade");
+    Route::get('search_grade', "Project@search_grade");
     Route::get('search', "Project@search");
     Route::get('get_ico', "Project@get_ico");
     Route::get('search_ico', "Project@search_ico");
     Route::get('get_invest', "Project@get_invest");
+    Route::get('search_invest', "Project@search_invest");
     Route::get('invest_on', "Project@invest_on");
     Route::get('invest_off', "Project@invest_off");
     Route::get('get_wait', "Project@get_wait");
@@ -206,4 +208,12 @@ Route::prefix('api/project_survey/')->group(function() {
     Route::any('get', "ProjectSurvey@get");
     Route::any('update', "ProjectSurvey@update");
     Route::any('delete', "ProjectSurvey@delete");
+});
+
+//基金
+Route::prefix('api/found/')->group(function() {
+    Route::any('add', "Found@add");
+    Route::any('get', "Found@get");
+    Route::any('update', "Found@update");
+    Route::any('delete', "Found@delete");
 });

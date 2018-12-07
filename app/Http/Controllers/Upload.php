@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Input;
 
 class Upload extends Controller
 {
-    public $size=1024*1024*5;
+    public $size=1024*1024*30;
     public $appid='';
     public $access_token='';
     public function upload(Request $request)

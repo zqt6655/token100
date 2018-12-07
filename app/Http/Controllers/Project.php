@@ -23,9 +23,28 @@ class Project extends Token
         $model = $this->getModel();
         return $this->returnData($model->get());
     }
+    //查询已经评级项目
     public function get_grade(){
         $model = $this->getModel();
         return $this->returnData($model->get_grade());
+    }
+    //搜索已经评级项目
+    public function search_grade(){
+        $keyword = Input::get('keyword');
+        if(!$keyword){
+            return $this->returnFail('keyword不能为空');
+        }
+        $model = $this->getModel();
+        return $this->returnData($model->search_grade($keyword));
+    }
+    //搜索已经投资项目
+    public function search_invest(){
+        $keyword = Input::get('keyword');
+        if(!$keyword){
+            return $this->returnFail('keyword不能为空');
+        }
+        $model = $this->getModel();
+        return $this->returnData($model->search_invest($keyword));
     }
     public function get_wait(){
         $model = $this->getModel();
@@ -66,7 +85,7 @@ class Project extends Token
     }
 
 
-    //项目搜索
+    //项目池搜索
     public function search(){
         $keyword = Input::get('keyword');
         if(!$keyword){

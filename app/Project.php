@@ -13,8 +13,6 @@ class Project extends BaseModel
     public function getOpinionAttribute($value){
         //0待上会，1持续观察，2执行孵化，3拒绝
         $Opinion = [0=>'待上会',1=>'持续观察',2=>'执行孵化',3=>'拒绝'];
-//        print_r($arr[$value]);
-//        die;
 //        return $arr[$value];
 
     }
@@ -108,17 +106,21 @@ class Project extends BaseModel
     public function get_grade(){
         $data=  DB::table("$this->table as p")
             ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
             ->where('p.grade','<>','')
             ->where('p.is_invest','=',0)
-            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.analysis',
-                'p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest','p.show_name','ad.name as up_name','p.from')
             ->orderby('p.id','desc')
 //           ->simplePaginate($this->perPage);
             ->paginate($this->perPage);
         $opinion = [0=>'待上会',1=>'持续观察',2=>'投行孵化',3=>'拒绝'];
         foreach ($data as $one){
             $one->opinion = $opinion[$one->opinion];
+            if($one->from !=1){
+                $one->up_name = $one->show_name;
+            }
+            unset($one->show_name);
         }
         $continue_num = 0;
         $hatch_num = 0;
@@ -150,6 +152,30 @@ class Project extends BaseModel
         $returnData['data'] = $data;
 //        return $returnData;
         return $data;
+    }
+    public function search_grade($keyword){
+        $data=  DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.grade','<>','')
+            ->where('p.is_invest','=',0)
+            ->where(function($query) use ($keyword){
+                $query->where('p.name', 'like', '%'.$keyword.'%')
+                    ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
+            })
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.upload_time','p.requirements','p.grade','p.opinion','p.user_id','i.name as industry_id_text','p.is_market','p.is_invest','p.show_name','ad.name as up_name','p.from')
+            ->orderby('p.id','desc')
+//           ->simplePaginate($this->perPage);
+            ->paginate($this->perPage);
+        foreach ($data as $one){
+            if($one->from !=1){
+                $one->up_name = $one->show_name;
+            }
+            unset($one->show_name);
+        }
+        return $data;
+
     }
     public function get_wait(){
         $data=  DB::table("$this->table as p")
@@ -280,6 +306,7 @@ class Project extends BaseModel
         return $data;
 //       return $returnData;
     }
+    //查询项目池
     public function search($keyword){
         $data=  DB::table("$this->table as p")
             ->leftJoin('industries as i','p.industry_id','=','i.id')
@@ -363,15 +390,121 @@ class Project extends BaseModel
     public function get_invest(){
         $data = DB::table("$this->table as p")
             ->leftJoin('industries as i','p.industry_id','=','i.id')
-//            ->leftJoin('project_details as pd','p.id','=','pd.project_id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
             ->where('p.is_invest','=',1)
-            ->select('p.id','p.name','p.logo','p.token_symbol','p.country','i.name as industry_id_text','p.is_invest')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.show_name','ad.name as up_name','p.from','i.name as industry_id_text','p.requirements')
             ->orderby('p.id','desc')
             ->paginate($this->perPage);
         if(!$data){
             return [];
         }
+//        return $data;
+        //保存分页中项目的id
+        $ids = [];
+        foreach ($data as $one){
+            $ids[]= $one->id;
+            if($one->from !=1){
+                $one->up_name = $one->show_name;
+            }
+            unset($one->show_name);
+            unset($one->from);
+        }
+        //去投资记录中，查询对应的回币记录
+        $record = DB::table("found_project")
+            ->whereIn('project_id',$ids)
+            ->where('op_type','=',0)
+            ->select('project_id','num','status','pay_coin_time')
+            ->get()
+            ->toArray();
+        foreach ($data as $one){
+            $one->pay_coin_time='';
+            $one->should_back=0;
+            $one->back=0;
+            foreach ($record as $key=>$r){
+                if($one->id == $r->project_id){
+                    $one->pay_coin_time = $r->pay_coin_time;
+                    if($r->status==1)
+                        $one->should_back +=$r->num;
+                    else
+                        $one->back +=$r->num;
+                    unset($record[$key]);
+                }
+            }
+            if($one->should_back==0)
+                $one->status= '待打币';
+            elseif ($one->should_back==$one->back)
+                $one->status= '已回币';
+            else
+                $one->status= '待回币';
+            unset($one->should_back);
+            unset($one->back);
+        }
+
+        return $data;
+    }
+    public function search_wait_back(){
+
+    }
+    //搜索已经转入投资的项目
+    public function search_invest($keyword){
+        $data = DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',1)
+            ->where(function($query) use ($keyword){
+                $query->where('p.name', 'like', '%'.$keyword.'%')
+                    ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
+            })
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.show_name','ad.name as up_name','p.from','i.name as industry_id_text','p.requirements')
+            ->orderby('p.id','desc')
+            ->paginate($this->perPage);
+        if(!$data){
+            return [];
+        }
+//        return $data;
+        //保存分页中项目的id
+        $ids = [];
+        foreach ($data as $one){
+            $ids[]= $one->id;
+            if($one->from !=1){
+                $one->up_name = $one->show_name;
+            }
+            unset($one->show_name);
+            unset($one->from);
+        }
+        //去投资记录中，查询对应的回币记录
+        $record = DB::table("found_project")
+            ->whereIn('project_id',$ids)
+            ->where('op_type','=',0)
+            ->select('project_id','num','status','pay_coin_time')
+            ->get()
+            ->toArray();
+        foreach ($data as $one){
+            $one->pay_coin_time='';
+            $one->should_back=0;
+            $one->back=0;
+            foreach ($record as $key=>$r){
+                if($one->id == $r->project_id){
+                    $one->pay_coin_time = $r->pay_coin_time;
+                    if($r->status==1)
+                        $one->should_back +=$r->num;
+                    else
+                        $one->back +=$r->num;
+                    unset($record[$key]);
+                }
+            }
+            if($one->should_back==0)
+                $one->status= '待打币';
+            elseif ($one->should_back==$one->back)
+                $one->status= '已回币';
+            else
+                $one->status= '待回币';
+            unset($one->should_back);
+            unset($one->back);
+        }
+
         return $data;
     }
     //项目撤离投资
