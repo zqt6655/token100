@@ -46,6 +46,11 @@ class Project extends Token
         $model = $this->getModel();
         return $this->returnData($model->search_invest($keyword));
     }
+    //搜索待回币记录
+    public function search_wait_back(){
+        $model = $this->getModel();
+        return $this->returnData($model->search_wait_back());
+    }
     public function get_wait(){
         $model = $this->getModel();
         return $this->returnData($model->get_wait());

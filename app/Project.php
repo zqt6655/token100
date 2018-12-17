@@ -454,7 +454,11 @@ class Project extends BaseModel
         return $data;
     }
     public function search_wait_back(){
-
+        //去投资记录中，查询对应的回币记录
+        $record = DB::table("found_project")
+            ->select('project_id','num','status','pay_coin_time')
+            ->get()
+            ->toArray();
     }
     //搜索已经转入投资的项目
     public function search_invest($keyword){

@@ -221,8 +221,10 @@ class FoundProject extends BaseModel
                 $total +=$one['num'];
                 $one_record['found_id'] = $one['found_id'];
                 $one_record['num'] = $one['num'];
-                $num = $one['num']/$data['num']*$data['total_price'];
-                $one_record['total_price'] = sprintf('%.5f',$num);
+                //基金获得的卖出的价格
+                //单个基金的数量，除以卖出总数的数量，乘以卖出的金额，就是其中一个基金的金额
+                $total_price = $one['num']/$data['num']*$data['total_price'];
+                $one_record['total_price'] = sprintf('%.5f',$total_price);
                 $one_record['user_id'] = $this->user_id;
                 //卖出，可用
                 $one_record['status'] = 0;
@@ -234,8 +236,8 @@ class FoundProject extends BaseModel
                     $one_record['pay_coin_address'] = $data['pay_coin_address'];
                 $all_record[] = $one_record;
             }
-            if($total != $data['num'])
-                $this->returnApiError('传入的基金数量与总数不一致');
+            if($total != $data['total_price'])
+                $this->returnApiError('获取总额与多个基金总和不一致');
             return DB::table($this->table)->insert($all_record);
         }
         return $this->returnApiError('info字段不能为空');
