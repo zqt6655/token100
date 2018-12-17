@@ -28,12 +28,12 @@ class ProjectDetail extends BaseModel
             $data->is_ing = '已结束';
         }else{
             $now = date('Y-m-d H:i:s');
-            if($data->start_time<$now){
-                $data->is_ing = '未开始';
-            }elseif($data->end_time>$now){
+            if($data->end_time<$now){
                 $data->is_ing = '已结束';
-            }else{
+            }elseif($data->start_time<$now && $data->end_time>$now){
                 $data->is_ing = '进行中';
+            }else{
+                $data->is_ing = '未开始';
             }
         }
 

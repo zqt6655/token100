@@ -56,7 +56,7 @@ class Adminuser extends BaseModel
     }
     public function login($data){
         if(strstr($data['user'],'@')){
-            if(!strstr($data['user'],'collinstar.com.cn')){
+            if(!strstr($data['user'],'collinstar.com')){
                 $this->returnApiError('只支持科银邮箱登陆');
             }
             return $this->login_by_email($data['user'],$data['password']);
