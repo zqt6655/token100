@@ -83,7 +83,7 @@ class Relationship extends BaseModel
     }
     public function update_by_id($data,$id){
         $data = $this->check_field($data);
-        $data['updated_at'] = time();
+//        $data['updated_at'] = time();
         //说明字段没有空值，插入数据库即可。
         DB::table($this->table_name)
             ->where('id','=',$id)

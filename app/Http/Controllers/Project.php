@@ -146,7 +146,7 @@ class Project extends Token
         $data = $request->all();
         $this->validate_input($data);
         if(!isset($data['project_id'])){
-            return $this->returnFail('id不能为空');
+            return $this->returnFail('project_id不能为空');
         }
         $model = $this->getModel();
         $model->update_by_id($data,$data['project_id']);

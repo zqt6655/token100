@@ -399,7 +399,8 @@ class Project extends BaseModel
         if(!$data){
             return [];
         }
-//        return $data;
+        $total = $data->total();
+
         //保存分页中项目的id
         $ids = [];
         foreach ($data as $one){
@@ -417,6 +418,10 @@ class Project extends BaseModel
             ->select('project_id','num','status','pay_coin_time')
             ->get()
             ->toArray();
+        //        $total = $data->total();
+//        $wait_pay=0;
+//        $wait_back=0;
+//        $wait_back=0;
         foreach ($data as $one){
             $one->pay_coin_time='';
             $one->should_back=0;
@@ -440,7 +445,12 @@ class Project extends BaseModel
             unset($one->should_back);
             unset($one->back);
         }
-
+//        $returnData['total'] = $total;
+//        $returnData['front_num'] = $front_num;
+//        $returnData['back_num'] = $back_num;
+//        $returnData['system_num'] = $total-$front_num-$back_num;
+//        $returnData['data'] = $data;
+//       return $returnData;
         return $data;
     }
     public function search_wait_back(){
