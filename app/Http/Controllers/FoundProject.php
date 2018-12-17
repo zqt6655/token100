@@ -11,6 +11,7 @@ class FoundProject extends Token
     {
         $rule = [];
         $rule['get'] = [ 'project_id' => 'required|integer'];
+        $rule['found_detail'] = [ 'id' => 'required|integer'];
         $rule['delete'] = [ 'id' => 'required|integer'];
         $rule['add_back'] = [ 'project_id' => 'required|integer','pay_coin_time' => 'required|string','num'=>'required|integer'];
         $rule['update_back'] = [ 'id' => 'required|integer','pay_coin_time' => 'required|string','num'=>'required|integer'];
@@ -91,6 +92,12 @@ class FoundProject extends Token
         $this->validate_all_input($data,$this->rule()['delete']);
         $model = $this->getModel();
         return $this->returnData($model->delete_by_id($data['id']));
+    }
+    public function found_detail(Request $request){
+        $data = $request->all();
+        $this->validate_all_input($data,$this->rule()['found_detail']);
+        $model = $this->getModel();
+        return $this->returnData($model->found_detail($data['id']));
     }
 
     protected function getModel(){

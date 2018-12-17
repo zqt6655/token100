@@ -162,6 +162,26 @@ class FoundProject extends BaseModel
             ->where('id','=',$id)
             ->update($data);
     }
+    public function found_detail($id){
+        $data = DB::table("$this->table as fp")
+            ->leftJoin('project as p','fp.project_id','=','p.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
+            ->where('found_id','=',$id)
+            ->where('fp.is_delete','=',0)
+            ->distinct('fp.project_id')
+            ->select('p.logo','p.name','p.token_symbol','p.grade','p.show_name','ad.name as up_name','p.from')
+            ->get()
+            ->toArray();
+        foreach ($data as $one){
+            if($one->from !=1){
+                $one->up_name = $one->show_name;
+            }
+            unset($one->from);
+            unset($one->show_name);
+        }
+        return $data;
+//        print_r($data);
+    }
 //购买之前，获取当前所有项目可用资金
     public function get_sell_info($project_id){
         $data = DB::table("found as f")

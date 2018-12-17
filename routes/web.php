@@ -202,6 +202,7 @@ Route::prefix('api/found_project/')->group(function() {
     Route::post('update_back', "FoundProject@update_back");
     Route::post('update_buy', "FoundProject@update_buy");
     Route::post('update_sell', "FoundProject@update_sell");
+
 });
 
 //项目尽调
@@ -218,4 +219,5 @@ Route::prefix('api/found/')->group(function() {
     Route::any('get', "Found@get");
     Route::any('update', "Found@update");
     Route::any('delete', "Found@delete");
+    Route::get('detail', "FoundProject@found_detail");
 });
