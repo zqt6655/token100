@@ -131,6 +131,8 @@ Route::prefix('api/project/')->group(function() {
     Route::get('get_ico', "Project@get_ico");
     Route::get('search_ico', "Project@search_ico");
     Route::get('get_invest', "Project@get_invest");
+    //查找待回币项目
+    Route::get('get_wait_back', "Project@search_wait_back");
     Route::get('search_invest', "Project@search_invest");
     Route::get('invest_on', "Project@invest_on");
     Route::get('invest_off', "Project@invest_off");

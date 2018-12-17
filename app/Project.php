@@ -150,8 +150,8 @@ class Project extends BaseModel
         $returnData['hatch_num'] = $hatch_num;
         $returnData['reject_num'] = $reject_num;
         $returnData['data'] = $data;
-//        return $returnData;
-        return $data;
+        return $returnData;
+//        return $data;
     }
     public function search_grade($keyword){
         $data=  DB::table("$this->table as p")
@@ -280,31 +280,31 @@ class Project extends BaseModel
            $one->opinion = $opinion[$one->opinion];
            unset($one->from);
        }
-//       $front_num = 0;
-//       $back_num = 0;
+       $front_num = 0;
+       $back_num = 0;
 //       查询前台和后台项目总和
-//        $data2 =  DB::table("$this->table as p")
-//            ->where('p.is_delete','=',0)
-//            ->where('p.is_invest','=',0)
-//            ->where('p.grade','=','')
-//            ->where('p.from','<>',0)
-//            ->select('from')
-//            ->get()
-//            ->toArray();
-//        foreach ($data2 as $one){
-//            if($one->from ==1)
-//                $back_num++;
-//            else
-//                $front_num++;
-//        }
-//        $total = $data->total();
-//        $returnData['total'] = $total;
-//        $returnData['front_num'] = $front_num;
-//        $returnData['back_num'] = $back_num;
-//        $returnData['system_num'] = $total-$front_num-$back_num;
-//        $returnData['data'] = $data;
-        return $data;
-//       return $returnData;
+        $data2 =  DB::table("$this->table as p")
+            ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',0)
+            ->where('p.grade','=','')
+            ->where('p.from','<>',0)
+            ->select('from')
+            ->get()
+            ->toArray();
+        foreach ($data2 as $one){
+            if($one->from ==1)
+                $back_num++;
+            else
+                $front_num++;
+        }
+        $total = $data->total();
+        $returnData['total'] = $total;
+        $returnData['front_num'] = $front_num;
+        $returnData['back_num'] = $back_num;
+        $returnData['system_num'] = $total-$front_num-$back_num;
+        $returnData['data'] = $data;
+//        return $data;
+       return $returnData;
     }
     //查询项目池
     public function search($keyword){
@@ -399,7 +399,7 @@ class Project extends BaseModel
         if(!$data){
             return [];
         }
-        $total = $data->total();
+//        $total = $data->total();
 
         //保存分页中项目的id
         $ids = [];
@@ -415,6 +415,7 @@ class Project extends BaseModel
         $record = DB::table("found_project")
             ->whereIn('project_id',$ids)
             ->where('op_type','=',0)
+            ->where('is_delete','=',0)
             ->select('project_id','num','status','pay_coin_time')
             ->get()
             ->toArray();
@@ -454,11 +455,69 @@ class Project extends BaseModel
         return $data;
     }
     public function search_wait_back(){
+        $data = DB::table("$this->table as p")
+            ->leftJoin('industries as i','p.industry_id','=','i.id')
+            ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
+            ->where('p.is_delete','=',0)
+            ->where('p.is_invest','=',1)
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.show_name','ad.name as up_name','p.from','i.name as industry_id_text','p.requirements')
+            ->orderby('p.id','desc')
+            ->get()
+            ->toArray();
+        if(!$data){
+            return [];
+        }
+        //保存分页中项目的id
+        $ids = [];
+        foreach ($data as $one){
+            $ids[]= $one->id;
+            if($one->from !=1){
+                $one->up_name = $one->show_name;
+            }
+            unset($one->show_name);
+            unset($one->from);
+        }
         //去投资记录中，查询对应的回币记录
         $record = DB::table("found_project")
+            ->whereIn('project_id',$ids)
+            ->where('op_type','=',0)
+            ->where('is_delete','=',0)
             ->select('project_id','num','status','pay_coin_time')
             ->get()
             ->toArray();
+
+        foreach ($data as $k=>$one){
+            $one->pay_coin_time='';
+            $one->should_back=0;
+            $one->back=0;
+            foreach ($record as $key=>$r){
+                if($one->id == $r->project_id){
+                    $one->pay_coin_time = $r->pay_coin_time;
+                    if($r->status==1)
+                        $one->should_back +=$r->num;
+                    else
+                        $one->back +=$r->num;
+                    unset($record[$key]);
+                }
+            }
+            if($one->should_back==0)
+                unset($data[$k]);
+//                $one->status= '待打币';
+            elseif ($one->should_back==$one->back)
+                unset($data[$k]);
+//                $one->status= '已回币';
+//            else
+//                $one->status= '待回币';
+            unset($one->should_back);
+            unset($one->back);
+        }
+//        $returnData['total'] = $total;
+//        $returnData['front_num'] = $front_num;
+//        $returnData['back_num'] = $back_num;
+//        $returnData['system_num'] = $total-$front_num-$back_num;
+//        $returnData['data'] = $data;
+//       return $returnData;
+        return $data;
     }
     //搜索已经转入投资的项目
     public function search_invest($keyword){

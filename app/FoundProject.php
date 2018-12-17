@@ -30,9 +30,9 @@ class FoundProject extends BaseModel
 //            ->select('pf.found_id','pf.project_id','pf.op_type','pf.total_price','pf.num','pf.user_id','pf.status','f.name','pf.status','pf.status')
             ->select('fp.*','f.name','f.unit')
             ->orderBy('fp.pay_coin_time','desc')
-            ->paginate(10);
-//            ->get()
-//            ->toArray();
+//            ->paginate(10);
+            ->get()
+            ->toArray();
         if($data){
             $new_data = [];
             $buy=[];
@@ -202,8 +202,6 @@ class FoundProject extends BaseModel
         $new_data['num_info'] = $num;
         return $new_data;
 
-
-
     }
     public function add_sell($data){
         //首先，取出info中的信息
@@ -236,7 +234,7 @@ class FoundProject extends BaseModel
                     $one_record['pay_coin_address'] = $data['pay_coin_address'];
                 $all_record[] = $one_record;
             }
-            if($total != $data['total_price'])
+            if($total != $data['num'])
                 $this->returnApiError('获取总额与多个基金总和不一致');
             return DB::table($this->table)->insert($all_record);
         }
