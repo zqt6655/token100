@@ -166,10 +166,11 @@ class FoundProject extends BaseModel
         $data = DB::table("$this->table as fp")
             ->leftJoin('project as p','fp.project_id','=','p.id')
             ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
-            ->where('found_id','=',$id)
+            ->where('fp.found_id','=',$id)
             ->where('fp.is_delete','=',0)
+            ->where('p.is_delete','=',0)
             ->distinct('fp.project_id')
-            ->select('p.logo','p.name','p.token_symbol','p.grade','p.show_name','ad.name as up_name','p.from')
+            ->select('p.logo','p.name','p.token_symbol','p.grade','p.show_name','ad.name as up_name','p.from','p.id')
             ->get()
             ->toArray();
         foreach ($data as $one){
