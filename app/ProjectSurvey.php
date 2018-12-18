@@ -41,7 +41,7 @@ class ProjectSurvey extends BaseModel
             ->update(['is_delete'=>1]);
     }
     protected function check_field($data){
-        $field = [ 'project_id', 'title','url'];
+        $field = [ 'project_id', 'title','url','survey_man'];
         foreach ($data as $key=>$val){
             if (!in_array($key, $field)) {
                 unset($data[$key]);

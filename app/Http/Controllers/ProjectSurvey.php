@@ -18,8 +18,8 @@ class ProjectSurvey extends Token
     {
         $rule = [];
         $rule['get'] = [ 'project_id' => 'required|integer'];
-        $rule['add'] = [ 'project_id' => 'required|integer','title' => 'required|string','url'=>'required|string'];
-        $rule['update'] = [ 'id' => 'required|integer','title' => 'required|string','url'=>'required|string'];
+        $rule['add'] = [ 'project_id' => 'required|integer','title' => 'required|string','url'=>'required|string','survey_man'=>'required|string'];
+        $rule['update'] = [ 'id' => 'required|integer','title' => 'required|string','url'=>'required|string','survey_man'=>'required|string'];
         $rule['delete'] = [ 'id' => 'required|integer'];
         return $rule;
     }
