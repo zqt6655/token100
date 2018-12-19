@@ -70,6 +70,12 @@ class Found extends BaseModel
             ->update($data);
     }
     public function delete_by_id($id){
+        //删除基金之前，先查询该基金是否有在投项目
+        //如果有，则提示得先去删除投资记录
+        //如果没有，则删除
+        $result = DB::table('found_project')->where('found_id','=',$id)->where('is_delete','=',0)->get()->toArray();
+        if($result)
+            return $this->returnApiError('请先删除该基金下的所有投资记录');
         return DB::table($this->table)->where('id','=',$id)
             ->update(['is_delete'=>1]);
     }
