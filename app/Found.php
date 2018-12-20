@@ -17,8 +17,10 @@ class Found extends BaseModel
             ->get()
             ->toArray();
         $data_fp = DB::table("found_project as fp")
+            ->leftJoin('project as p','p.id','=','fp.project_id')
+            ->where('p.is_delete','=',0)
             ->where('fp.is_delete','=',0)
-            ->where('fp.op_type','=',0)//买入
+//            ->where('fp.op_type','=',0)//买入
             ->select('fp.found_id','fp.total_price','fp.project_id')
             ->get()
             ->toArray();

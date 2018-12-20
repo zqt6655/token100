@@ -242,7 +242,7 @@ class FoundProject extends BaseModel
                 $one_record['num'] = $one['num'];
                 //基金获得的卖出的价格
                 //单个基金的数量，除以卖出总数的数量，乘以卖出的金额，就是其中一个基金的金额
-                $total_price = $one['num']/$data['num']*$data['total_price'];
+                $total_price = ($one['num']/$data['num'])*$data['total_price'];
                 $one_record['total_price'] = sprintf('%.5f',$total_price);
                 $one_record['user_id'] = $this->user_id;
                 //卖出，可用
