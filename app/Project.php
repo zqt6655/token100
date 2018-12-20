@@ -393,7 +393,7 @@ class Project extends BaseModel
             ->leftJoin('adminuser as ad','p.user_id','=','ad.id')
             ->where('p.is_delete','=',0)
             ->where('p.is_invest','=',1)
-            ->select('p.id','p.name','p.logo','p.token_symbol','p.show_name','ad.name as up_name','p.from','i.name as industry_id_text','p.requirements')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.show_name','ad.name as up_name','p.from','i.name as industry_id_text','p.requirements','p.upload_time')
             ->orderby('p.id','desc')
             ->paginate($this->perPage);
         if(!$data){
@@ -530,7 +530,7 @@ class Project extends BaseModel
                 $query->where('p.name', 'like', '%'.$keyword.'%')
                     ->orWhere('p.token_symbol', 'like', '%'.$keyword.'%');
             })
-            ->select('p.id','p.name','p.logo','p.token_symbol','p.show_name','ad.name as up_name','p.from','i.name as industry_id_text','p.requirements')
+            ->select('p.id','p.name','p.logo','p.token_symbol','p.show_name','ad.name as up_name','p.from','i.name as industry_id_text','p.requirements','p.upload_time')
             ->orderby('p.id','desc')
             ->paginate($this->perPage);
         if(!$data){
