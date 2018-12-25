@@ -21,11 +21,13 @@ class Found extends BaseModel
             ->where('p.is_delete','=',0)
             ->where('fp.is_delete','=',0)
 //            ->where('fp.op_type','=',0)//买入
-            ->select('fp.found_id','fp.total_price','fp.project_id')
+            ->select('fp.found_id','fp.total_price','fp.project_id','fp.op_type')
             ->get()
             ->toArray();
+
         foreach ($data_found as $one){
             $one->invest = 0;
+            $one->back_can_invest = 0;
             $one->project_num = 0;
             $one->project_set = [];
             foreach ($data_fp as $key=>$two){
@@ -39,13 +41,18 @@ class Found extends BaseModel
                         $one->project_num++;
                         array_push($one->project_set,$two->project_id);
                     }
-                    $one->invest += $two->total_price;
+                    //如果操作是0，说明是买入，如果是1，说明是回币，剩余可投数应增加
+                    if($two->op_type==0)
+                        $one->invest += $two->total_price;
+                    else
+                        $one->back_can_invest += $two->total_price;
                 }
             }
-            $one->rest = $one->account - $one->invest;
+            $one->rest = $one->account - $one->invest + $one->back_can_invest;
             $rate = ($one->account/$one->plan_account)*100;
             $one->rate = round($rate,2).'%';
             unset($one->project_set);
+            unset($one->back_can_invest);
             unset($one->add_time);
             unset($one->is_delete);
         }

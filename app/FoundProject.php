@@ -131,14 +131,32 @@ class FoundProject extends BaseModel
             return [];
         $new_data = [];
         foreach ($data as $one) {
-            $sum = DB::table("$this->table")
-                ->where('is_delete', '=', 0)
-                ->where('op_type', '=', 0)
-                ->where('status', '=', 1)
+//            $sum = DB::table("$this->table")
+//                ->where('is_delete', '=', 0)
+//                ->where('op_type', '=', 0)
+//                ->where('status', '=', 1)
+//                ->where('found_id', '=', $one->id)
+//                ->sum('total_price');
+
+            $found_data = DB::table("$this->table")
                 ->where('found_id', '=', $one->id)
-                ->sum('total_price');
-            $one->buy_num = $sum;
-            $one->rest_num = $one->account - $sum;
+                ->where('is_delete', '=', 0)
+                ->select('op_type','total_price')
+                ->get()
+                ->toArray();
+            $buy_num = 0;
+            $back_num = 0;
+            foreach ($found_data as $two){
+                //如果type为0，说明是买，如果为1，说明是卖出返回
+                if($two->op_type==0)
+                    $buy_num +=$two->total_price;
+                else
+                    $back_num +=$two->total_price;
+            }
+
+            $one->buy_num = $buy_num;
+            //剩余可投等于 总账户-已经买的 + 卖出返回的
+            $one->rest_num = $one->account - $buy_num + $back_num;
             $new_data[] = $one;
         }
         return $new_data;
@@ -170,18 +188,52 @@ class FoundProject extends BaseModel
             ->where('fp.is_delete','=',0)
             ->where('p.is_delete','=',0)
             ->distinct('fp.project_id')
-            ->select('p.logo','p.name','p.token_symbol','p.grade','p.show_name','ad.name as up_name','p.from','p.id')
+            ->select('p.logo','p.name','p.token_symbol','p.grade','p.show_name','ad.name as up_name','p.from','p.id','fp.project_id')
             ->get()
             ->toArray();
-        foreach ($data as $one){
+        //将该基金下的所有投资过的项目id放入到数组中
+        $project_ids = [];
+        foreach ($data as $key=>$one){
             if($one->from !=1){
                 $one->up_name = $one->show_name;
             }
+            $project_ids[] = $one->project_id;
             unset($one->from);
             unset($one->show_name);
         }
+//        查询项目集合内的所有项目的购买记录
+        $invest_data = DB::table("$this->table as fp")
+            ->leftJoin('found as f','fp.found_id','=','f.id')
+            ->whereIn('project_id',$project_ids)
+            ->where('fp.is_delete','=',0)
+            ->where('fp.status','=',1)
+            ->select('fp.found_id','fp.total_price','fp.project_id','f.unit')
+            ->get()
+            ->toArray();
+//        return $invest_data;
+        foreach ($data as $one){
+            $one->ETH = 0;
+            $one->BTC = 0;
+            $one->USDT = 0;
+            foreach ($invest_data as $two){
+                if($two->project_id == $one->project_id){
+                    $uni = $two->unit;
+                    $one->$uni += $two->total_price;
+                }
+            }
+            $one->buy_info = '';
+            if($one->ETH != 0)
+                $one->buy_info .=$one->ETH.'ETH.';
+            if($one->BTC != 0)
+                $one->buy_info .=$one->BTC.'BTC.';
+            if($one->USDT != 0)
+                $one->buy_info .=$one->USDT.'USDT.';
+            unset($one->ETH);
+            unset($one->BTC);
+            unset($one->USDT);
+        }
+
         return $data;
-//        print_r($data);
     }
 //购买之前，获取当前所有项目可用资金
     public function get_sell_info($project_id){

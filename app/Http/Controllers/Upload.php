@@ -19,23 +19,25 @@ class Upload extends Controller
     public function upload(Request $request)
     {
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
-            $rule = ['jpg', 'png',  'jpeg', 'pdf'];
+            $rule = ['jpg', 'png',  'jpeg', 'pdf','xlsx','docx','xls','pptx'];
             $file = $request->file('file');
             //去除原名中所有的空格
             $orig_name = $this->trimall($file->getClientOriginalName());
             $extension = $file->extension(); //$store_result = $file->store('photo');
             if (!in_array($extension, $rule)) {
-                return $this->returnFail('格式不正确');
+                return $this->returnFail('格式不支持');
             }
             $size = $file->getSize();
             if($size>$this->size){
-                return $this->returnFail('文件不能超过5M');
+                return $this->returnFail('文件不能超过30M');
             }
             $houzui = time() . rand(100, 999).'__collinstar__';
             $new_name = $houzui.str_replace('.' . $extension, '', $orig_name) . '.' . $extension;
             if ($extension == 'pdf') {
                 $store_result = $file->storeAs('pdf', $new_name);
-            } elseif ($extension == 'jpeg') {
+            } elseif ($extension == 'xlsx' || $extension == 'xls' || $extension == 'docx' || $extension == 'pptx') {
+                $store_result = $file->storeAs('office', $new_name);
+            }elseif ($extension == 'jpeg') {
                 $new_name = $houzui .str_replace('.jpg', '', $orig_name) .  '.jpg';
                 $store_result = $file->storeAs('photo', $new_name);
             } else {
