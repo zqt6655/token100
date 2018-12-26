@@ -180,6 +180,107 @@ class FoundProject extends BaseModel
             ->where('id','=',$id)
             ->update($data);
     }
+    //项目投资回报率
+    /*
+     * 传入对应的项目id，以及几天的回报率
+     * **/
+    public function rate_of_return($project_id,$days){
+        $data = DB::table("$this->table as fp")
+            ->leftJoin('project as p','fp.project_id','=','p.id')
+            ->where('fp.project_id','=',$project_id)
+            ->where('fp.is_delete','=',0)
+            ->select('fp.op_type','fp.total_price','fp.num','fp.status','fp.pay_coin_time','fp.current_price','p.token_symbol')
+//            ->orderBy('pay_coin_time','asc')
+            ->get()
+            ->toArray();
+
+        //计算出对应天数的日期
+        $dates = [];
+        for($i=$days-1;$i>=0;$i--){
+            $one_date = date('Y-m-d',strtotime("-$i days"));
+            $dates[] = $one_date;
+        }
+        //如果没有记录，说明这个项目没有投资记录，收益率为0
+        if(!$data){
+            $return_data = [];
+            foreach ($dates as $one){
+                $return_data[] = ['date'=>$one,'rate'=>'0'];
+            }
+            return $return_data;
+        }
+
+        $rest_num = 0; //剩余多少数字币
+        $capital = 0;  //本金等值多少USDT
+        $sell_capital = 0; //已经卖出的币等值多少USDT
+        $new_data = [];
+        $token_symbol = '';
+        $first_day = false;
+        $is_sell = false; //是否有卖出记录标识
+        foreach ($dates as $date){
+            if(!$first_day)
+                $first_day = $date;
+            foreach ($data as $key=>$one){
+//                print_r($one);
+                //如果打币时间小于当前日期
+                if( $one->pay_coin_time<$date.' 23:59:59'){
+                    if($one->op_type==0 && $one->status==1){
+                        //如果是投资记录，剩余数字币增加
+                        //投入的本金增加
+                        $rest_num +=$one->num;
+                        $capital +=$one->current_price;
+                    }elseif($one->op_type==1){
+                        //如果是卖出记录，剩余数字币减去卖出的数量
+                        //记录一共卖出等值多少的USDT
+                        $rest_num -=$one->num;
+                        $sell_capital +=$one->current_price;
+                    }
+                    //将处理过的数据unset，提高效率
+                    unset($data[$key]);
+                }
+                if($one->op_type==1){
+                    //有卖出记录，说明数字币可以交易
+                    $token_symbol = $one->token_symbol;
+                    $is_sell=true;
+                }
+
+            }
+            $new_data[$date] = ['rest_num'=>$rest_num,'sell_capital'=>$sell_capital];
+        }
+        $return_data = [];
+        //如果该项目没有卖出过，默认该币不能交易，收益率为-100%.
+        if(!$is_sell){
+            foreach ($new_data as $key=>$val){
+                $return_data[] = ['date'=>$key,'rate'=>'-100'];
+            }
+        }else{
+            //拿着token_symbol去查询实时价格
+            $price_list = DB::table('symbol_price')
+                ->where('token_symbol','=',$token_symbol)
+                ->where('date','>',$first_day)
+                ->select('date','price')
+                ->get()
+                ->toArray();
+
+            foreach ($new_data as $key=>$val){
+                $price = 0;
+                foreach ($price_list as $k=>$one){
+                    //如果日期在表中能找到，则取当天的价格
+                    //否则默认价格为0
+                    if($one->date == $key){
+                        $price = $one->price;
+                        unset($price_list[$k]);
+                    }
+                }
+                //收益率 = （剩余数字币的USDT价格 + 卖出的币的USDT的价格）除以 （投资本金对应的USDT的价格），保留小数点后4位
+                $rate = round( (($val['rest_num']* $price + $val['sell_capital']) / $capital),4 )*100;
+                $return_data[] = ['date'=>$key,'rate'=>$rate];
+            }
+        }
+        return $return_data;
+
+
+    }
+    //基金投过的项目列表
     public function found_detail($id){
         $data = DB::table("$this->table as fp")
             ->leftJoin('project as p','fp.project_id','=','p.id')
