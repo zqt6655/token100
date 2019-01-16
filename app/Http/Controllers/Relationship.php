@@ -21,6 +21,7 @@ class Relationship extends Token
             'title' => 'required|string',
             'industry_id' => 'required|integer',
             'category_id' => 'required|integer',
+            'category_name' => 'required|string',
 //            'note' => 'string',
         ];
     }

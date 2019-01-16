@@ -20,18 +20,20 @@ class Relationship extends BaseModel
     public $perPage=10;
     public function get_all(){
         return DB::table("$this->table_name as r")
-            ->leftJoin('category as c','r.category_id','=','c.id')
-            ->where('r.is_delete','=',0)
-            ->select('r.*','c.name as category_id_text')
+//            ->leftJoin('category as c','r.category_id','=','c.id')
+//            ->where('r.is_delete','=',0)
+//            ->select('r.*','c.name as category_id_text')
+            ->select('r.*')
             ->orderBy('id','desc')
             ->paginate($this->perPage);
     }
     public function get_by_category_id($category_id){
         return DB::table("$this->table_name as r")
-            ->leftJoin('category as c','r.category_id','=','c.id')
+//            ->leftJoin('category as c','r.category_id','=','c.id')
             ->where('r.is_delete','=',0)
             ->where('r.category_id','=',$category_id)
-            ->select('r.*','c.name as category_id_text')
+//            ->select('r.*','c.name as category_id_text')
+//            ->select('r.*')
             ->orderBy('id','desc')
             ->paginate($this->perPage);
     }
@@ -71,7 +73,7 @@ class Relationship extends BaseModel
         $field = ['name', 'phone', 'wechat',
             'email', 'avatar_url','company',
             'position', 'title','industry_id',
-            'category_id','note','linkman','link_phone','link_wechat'
+            'category_id','category_name','note','linkman','link_phone','link_wechat'
         ];
 //        $empty = 0;
         foreach ($data as $key=>$val){
@@ -92,7 +94,7 @@ class Relationship extends BaseModel
 
     public function search($keyword){
         return DB::table("$this->table_name as r")
-            ->leftJoin('category as c','r.category_id','=','c.id')
+//            ->leftJoin('category as c','r.category_id','=','c.id')
             ->where('r.is_delete', '=', 0)
 //            $this::where('is_delete', '=', 0)
             ->where(function($query) use ($keyword){
@@ -104,7 +106,8 @@ class Relationship extends BaseModel
                     ->orWhere('r.title', 'like', '%'.$keyword.'%');
             })
 
-            ->select('r.*','c.name as category_id_text')
+//            ->select('r.*','c.name as category_id_text')
+            ->select('r.*')
             ->orderBy('r.id','desc')
             ->paginate($this->perPage);
 //            ->get()->makeHidden(['is_delete','created_at','updated_at'])->toArray();
